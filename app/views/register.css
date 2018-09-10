@@ -1,0 +1,17 @@
+label {
+	width: 200px;
+}
+
+form {
+	width:60%;
+}
+
+#registerFormContainer {
+	padding: 20px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+	flex-flow: column;
+
+}
