@@ -1,14 +1,19 @@
 
 <?php 
-	include_once "../partials/header.php";
-?>
-<?php  
+	include_once "../partials/header.php"; 
 	require_once('../controllers/connect.php');
+	session_start();
 ?>
 
 	<link rel="stylesheet" type="text/css" href="./register.css">
 </head>
 <body>
+
+	<?php 
+		if(isset($_SESSION['user_data'])) {
+			header('Location: ./catalog.php');
+		}
+	 ?>
 
 	<h1>Board Game Store - Register</h1>
 
@@ -54,7 +59,6 @@
 	  </div>
 	  <button type="submit" class="btn btn-primary">Register</button>
 	</form>
-
 	</div>
 
 <?php 

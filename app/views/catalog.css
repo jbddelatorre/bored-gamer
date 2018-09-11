@@ -1,7 +1,46 @@
-/*#catalogContainer {
-	display: flex;
-}*/
 
-.carousel-item {
-	height:500px;
+#catalogContainer {
+	display: flex;
+	padding: 15px;
+	/*width:90vw;*/
+	flex-wrap: wrap;
 }
+
+#filterbarContainer {
+	flex:1;
+	width:33%;
+}
+
+#rightSide {
+	display: flex;
+	flex:3;
+	width:66%;
+	padding: 0 10px;
+	flex-direction: column;
+	align-items: center;
+}
+
+.list-group {
+	margin-bottom: 10px;
+}
+
+#itemsForSale {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#cardContainer {
+	width: 33%;
+	padding:5px;
+}
+/*
+.carousel-item {
+	height:600px;
+	width:70vw;
+	
+}
+
+img {
+	height:40vh;
+	width:70vw;
+}*/

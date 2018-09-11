@@ -9,9 +9,8 @@ form {
 #registerFormContainer {
 	padding: 20px;
 	display: flex;
-	justify-content: space-around;
 	align-items: center;
 	width: 100%;
 	flex-flow: column;
-
+	min-height: 90vh;
 }

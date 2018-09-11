@@ -17,7 +17,7 @@
 	// var_dump(mysqli_query($conn, $sql_query));
 
 	if (mysqli_query($conn, $sql_query)) {
-		header("Location: ../views/register.php");
+		header("Location: ../views/after_registration.php");
 
 	} else {
 		echo "Error: " . $sql_query . "<br>" . mysqli_error($conn);
