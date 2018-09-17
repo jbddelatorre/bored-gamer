@@ -34,10 +34,15 @@
 								echo '<th>Price</th>';
 								echo '<th>Item Description</th>';
 								echo '<th>Subtotal</th>';
+								echo '<th class="td-short"></th>';
 							echo '</tr>';
 
 						foreach($cart as $cart_item) {
 							$sql = "SELECT * from items where id='$cart_item[id]'";
+
+							if ($cart_item['qty'] <= 0) {
+								continue;
+							}
 
 							$result = mysqli_query($conn, $sql);
 							$row = mysqli_fetch_assoc($result);
@@ -51,6 +56,7 @@
 								echo "<td>".$row['price']."</td>";
 								echo "<td>".$row['item_desc']."</td>";
 								echo "<td>PHP ". $subtotal."</td>";
+								echo "<td><button onClick = deleteItem(". $row['id'] .") class='btn btn-danger'>DELETE</button></td>";
 								$totalprice = $totalprice + $subtotal;
 							echo '</tr>';
 						}
@@ -59,7 +65,7 @@
 								echo "<td></td>";
 								echo "<td></td>";
 								echo "<td></td>";
-								echo "<td><strong>TOTAL PRICE</strong></td>";
+								echo "<td><strong>Total Price</strong></td>";
 								echo "<td><strong>PHP ".$totalprice."</strong></td>";
 							echo '</tr>';
 
@@ -72,6 +78,21 @@
 			</div>
 		</div>
 
+
+<script type="text/javascript">
+	const deleteItem = (id) => {
+		$.ajax({
+			url: '../controllers/delete_cart_item.php',
+			data: {id:id},
+			type:'POST',
+			success: (data) => {
+				console.log(data);
+				window.location.reload();
+			}
+		}) 
+	}
+
+</script>
 
 <?php 
 	include_once '../partials/footer.php';

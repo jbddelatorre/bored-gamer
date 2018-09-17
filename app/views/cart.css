@@ -4,6 +4,10 @@
 	justify-content: center;
 }
 
+td {
+	width: 15%;
+}
+
 table {
 	margin-bottom: 20px;
 }

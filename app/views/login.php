@@ -10,7 +10,6 @@
 	
 	<?php 
 		if(isset($_SESSION['user_data'])) {
-			$_SESSION['cart'] = array('id' => 'asdasd');
 			header('Location: ./catalog.php');
 		}
 	 ?>

@@ -2,6 +2,8 @@
 	include_once '../partials/header.php';
 	require_once('../controllers/connect.php');
 	session_start();
+	// $_SESSION['game_id_filter'] = 'ALL';
+	// $_SESSION['type_id_filter'] = 'ALL';
 ?>
 
 	<link rel='stylesheet' type='text/css' href='./catalog.css'>
@@ -34,53 +36,56 @@
 		<div id='filterbarContainer'>
 			<ul class='list-group'>
 			  <li class='list-group borderless'>Filter by Game</li>
-			  <li class='list-group-item'>Board Games</li>
-			  <li class='list-group-item'>Card Games</li>
-			  <li class='list-group-item'>Special Games</li>
+			  <li class='list-group-item' onClick = set_filter('board_games')>Board Games</li>
+			  <li class='list-group-item' onClick = set_filter('card_games')>Card Games</li>
+			  <li class='list-group-item' onClick = set_filter('special_games')>Special Games</li>
 			</ul>
 			<ul class='list-group'>
 			  <li class='list-group borderless'>Filter by Type</li>
-			  <li class='list-group-item'>Strategy</li>
-			  <li class='list-group-item'>Party / Socialize</li>
-			  <li class='list-group-item'>For Fun</li>
-			  <li class='list-group-item'>Kids</li>
-			  <li class='list-group-item'>Cooperative</li>
-			  <li class='list-group-item'>Puzzle</li>
+			  <li class='list-group-item' onClick = set_filter('strategy')>Strategy</li>
+			  <li class='list-group-item' onClick = set_filter('party')>Party / Socialize</li>
+			  <li class='list-group-item' onClick = set_filter('for_fun')>For Fun</li>
+			  <li class='list-group-item' onClick = set_filter('kids')>Kids</li>
+			  <li class='list-group-item' onClick = set_filter('cooperative')>Cooperative</li>
+			  <li class='list-group-item' onClick = set_filter('puzzle')>Puzzle</li>
+			</ul>	
+			<ul class='list-group'>
+			  <li class='list-group borderless'>Remove Filters</li>
 			</ul>	
 		</div>
 
 		<div id='rightSide'>
-			<div id='carouselContainer' class='carousel slide' data-ride='carousel'>
-			  <ol class='carousel-indicators'>
-			    <li data-target='#carouselExampleIndicators' data-slide-to='0' class='active'></li>
-			    <li data-target='#carouselExampleIndicators' data-slide-to='1'></li>
-			    <li data-target='#carouselExampleIndicators' data-slide-to='2'></li>
-			  </ol>
-			  <div class='carousel-inner'>
-			    <div class='carousel-item active'>
-			      <img class='d-block w-100' src='../assets/image/carousel-image1.jpg' alt='First slide'>
+			<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+			  <div class="carousel-inner">
+			    <div class="carousel-item active">
+			      <img class="d-block w-100" src="../assets/image/carousel-image1.jpg" alt="First slide">
 			    </div>
-			    <div class='carousel-item'>
-			      <img class='d-block w-100' src='../assets/image/carousel-image2.jpg' alt='Second slide'>
+			    <div class="carousel-item">
+			      <img class="d-block w-100" src="../assets/image/carousel-image2.jpg" alt="Second slide">
 			    </div>
-			    <div class='carousel-item'>
-			      <img class='d-block w-100' src='../assets/image/carousel-image3.jpg' alt='Third slide'>
+			    <div class="carousel-item">
+			      <img class="d-block w-100" src="../assets/image/carousel-image3.jpg" alt="Third slide">
 			    </div>
 			  </div>
-			  <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'>
-			    <span class='carousel-control-prev-icon' aria-hidden='true'></span>
-			    <span class='sr-only'>Previous</span>
-			  </a>
-			  <a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'>
-			    <span class='carousel-control-next-icon' aria-hidden='true'></span>
-			    <span class='sr-only'>Next</span>
-			  </a>
 			</div>
 			<h2 id="forSaleHeader">Board Games</h2>
 			<div id='itemsForSale'>
 
-				<?php 
-					$sql = 'SELECT * FROM items';
+				<?php
+					$sql = "SELECT * FROM items";
+					// if (isset($_SESSION['game_id_filter']) && isset($_SESSION['type_id_filter'])) {
+					// 	
+					// } else {
+					// 	if (!isset($_SESSION['game_id_filter']) && !isset($_SESSION['type_id_filter']))
+					// 	if (isset($_SESSION['game_id_filter'])) {
+					// 		$sql = $sql . " where categories_id = $gamefilter";
+					// 	} 
+					// 	if (isset($_SESSION['type_id_filter'])) {
+					// 		$sql = $sql . " where game_types_id = $typefilter";
+					// 	}
+					// }
+
+					// echo $sql;
 
 					$result = mysqli_query($conn, $sql);
 
@@ -117,10 +122,24 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+	const set_filter = (filter) => {
+
+		$.ajax({
+			url: '../controllers/filter_items.php',
+			data: {filter: filter},
+			type: 'GET',
+			success: (data) => {
+				console.log(data);
+			}
+		})
+
+	}
+
+
 
 	const addToCart = (id) => {
 		const qty_dom = document.querySelector(`input[id="qty${id}"]`)
-		qty = qty_dom.value;
+		qty = Math.floor(qty_dom.value);
 
 		if (qty < 1) {
 			qty = 1;
@@ -135,6 +154,7 @@
 			}
 		})
 	}
+
 </script>
 
 	
