@@ -21,7 +21,7 @@
 
 #rightSide {
 	display: flex;
-	flex:3;
+	flex:5;
 	width:66%;
 	padding: 0 10px;
 	flex-direction: column;

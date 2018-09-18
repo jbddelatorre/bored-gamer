@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="./register.css">
 </head>
 <body>
-
+	<?php include_once '../partials/navbar.php'; ?>
 	<?php 
 		if(isset($_SESSION['user_data'])) {
 			header('Location: ./catalog.php');

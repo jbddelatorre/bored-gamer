@@ -9,6 +9,8 @@
 	<link rel='stylesheet' type='text/css' href='./catalog.css'>
 </head>
 <body>
+	<?php include_once '../partials/navbar.php'; ?>
+	<?php include_once '../partials/subnavbar.php'; ?>
 
 	<div class="appViewBox">
 	
@@ -123,16 +125,37 @@
 
 <script type="text/javascript">
 	const set_filter = (filter) => {
-
 		$.ajax({
 			url: '../controllers/filter_items.php',
 			data: {filter: filter},
 			type: 'GET',
 			success: (data) => {
-				console.log(data);
+				let dataParse = JSON.parse(data);
+
+				const dataFiltered = dataParse.filter;
+				const login = dataParse.login;
+
+				$('#itemsForSale').empty();
+
+				for (let key in dataFiltered) {
+					$('#itemsForSale').append(`
+						<div id='cardContainer'>
+							<div class='card' style='width: 18rem;'>
+								<img class='card-img-top' src="${dataFiltered[key]['item_image']}" alt='Card image cap'>
+								<div class='card-body'>
+									<h5 class='card-title'>${dataFiltered[key]["name"]}</h5>
+									<p class='card-text'>${dataFiltered[key]["item_desc"]}</p>
+									<h6> <strong>PHP</strong>${dataFiltered[key]["price"]}<span><input type='number' id=qty${dataFiltered[key]['id']} class='item-qty' name='inputQuantity' min='1' value='1'></span> QTY</h6>
+									${login 
+										? `<a onClick=addToCart(${dataFiltered[key]['id']}) class='btn btn-primary'>Add To Cart</a>`
+										: `<a href="./login.php" class='btn btn-primary'>Add To Cart</a>`	
+									}
+								</div>
+							</div>
+					</div>`)
+				}
 			}
 		})
-
 	}
 
 
@@ -162,3 +185,5 @@
 <?php 
 	include_once '../partials/footer.php';
 ?>
+
+

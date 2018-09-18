@@ -46,7 +46,26 @@
 		$sql = "SELECT * FROM items";
 	}
 	
-	echo $sql;
+	$result = mysqli_query($conn, $sql);
+
+	$row = mysqli_fetch_assoc($result);
+
+	$filtered_items = array();
+
+	while($row = mysqli_fetch_assoc($result)) {
+		array_push($filtered_items, $row);
+	}
+
+	if (isset($_SESSION['user_data'])) {
+		$login = 1;
+	} else {
+		$login = 0;
+	}
+
+	$data_response = array('login' => isset($_SESSION['user_data']), 'filter' => $filtered_items);
+
+	echo json_encode($data_response);
+	// echo json_encode($filtered_items);
 
 
 	// $type = 
