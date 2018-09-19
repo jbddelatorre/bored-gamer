@@ -14,7 +14,7 @@
 		}
 	 ?>
 
-
+	 <div class="appViewBox">
 		<h1>Board Game Store - CartPage</h1>
 		<a href="./catalog.php">go to catalog</a>
 		<a href="../controllers/clear_cart.php">CLEAR CART</a>
@@ -52,11 +52,11 @@
 							echo '<tr>';
 								echo "<td><img src=".$row['item_image']."></td>";
 								echo "<td>".$row['name']."</td>";
-								echo "<td>". $cart_item['qty'] ."</td>";
+								echo "<td id='cartQty".$row['id']."'><input id='cartQty".$row['id']."' type='number' name='cartQuantityInput' value='". $cart_item['qty'] ."'></td>"; //multiple id mistake, fix this, change innerhtml to inputvalue
 								echo "<td>".$row['price']."</td>";
 								echo "<td>".$row['item_desc']."</td>";
-								echo "<td>PHP ". $subtotal."</td>";
-								echo "<td><button onClick = deleteItem(". $row['id'] .") class='btn btn-danger'>DELETE</button></td>";
+								echo "<td>PHP <span class='subtotal-element'>". $subtotal."</span></td>";
+								echo "<td><button id=".$row['id']." class='btn btn-danger button-delete-item'>DELETE</button></td>";
 								$totalprice = $totalprice + $subtotal;
 							echo '</tr>';
 						}
@@ -66,10 +66,11 @@
 								echo "<td></td>";
 								echo "<td></td>";
 								echo "<td><strong>Total Price</strong></td>";
-								echo "<td><strong>PHP ".$totalprice."</strong></td>";
+								echo "<td><strong>PHP <span id='totalPriceCart'>".$totalprice."</span></strong></td>";
 							echo '</tr>';
 
 							echo '</table>';
+							echo '<button>Checkout</button>';
 					} else {
 						echo '<p>Empty Cart</p>';
 					}
@@ -77,17 +78,70 @@
 				 ?>
 			</div>
 		</div>
+		</div>
 
 
 <script type="text/javascript">
+	const deletebuttons = document.querySelectorAll('.button-delete-item');
+
+	deletebuttons.forEach(ele => {
+		ele.addEventListener("click", (event)=> {
+			const id = event.target.id;
+
+			deleteItem(id);
+
+			const deletedQuantity = document.querySelector(`#cartQty${id}`).innerHTML;	
+			
+			const totalPriceElement = document.querySelector('#totalPriceCart');
+			const totalPrice = parseInt(totalPriceElement.innerHTML);
+			const subtotal = ele.parentElement.previousSibling.lastChild.innerHTML;
+			const cartQuantity = document.querySelector('#cartQuantity').textContent;
+
+			
+			totalPriceElement.innerHTML = totalPrice - subtotal;
+	
+			document.querySelector('#cartQuantity').textContent = cartQuantity - deletedQuantity;
+
+			ele.parentElement.parentElement.remove();
+
+
+			const table_rows = document.querySelectorAll('tr')
+			if (table_rows.length <= 2) {
+				$('#cartContainer').empty();
+				$('#cartContainer').append(`
+					<p>Empty Cart</p>`)
+			}
+		})
+	});
+
+
+
+
 	const deleteItem = (id) => {
 		$.ajax({
 			url: '../controllers/delete_cart_item.php',
 			data: {id:id},
 			type:'POST',
 			success: (data) => {
-				console.log(data);
-				window.location.reload();
+				// let dataParse = JSON.parse(data);
+
+				// $('#cartListItems').empty();
+
+				// for(let key in dataParse) {
+				// 	$('#cartListItems').append(`
+				// 		<td><img src="${}"></td>
+				// 		<td></td>
+				// 		<td></td>
+				// 		<td></td>
+				// 		<td></td>
+				// 		<td></td>
+				// 		<td></td>
+				// 		`
+				// 		);
+				// }
+
+				// console.log(dataParse);
+				// window.location.reload();
 			}
 		}) 
 	}

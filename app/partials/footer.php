@@ -1,11 +1,12 @@
 
 <style type="text/css">
 	footer {
-	/*width: 100vw;*/
+	/*position: absolute;*/
 	margin: 0 auto;
 	text-align: center;
 	/*height:50px;*/
-	bottom: 0;
+	/*bottom: 0;*/
+	width: 100%;
 }
 </style>
 

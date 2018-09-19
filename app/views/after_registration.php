@@ -6,7 +6,7 @@
 
 	<style type="text/css">
 		#afterRegistrationContainer {
-			min-height: 88vh;
+	
 		}
 
 	</style>
@@ -18,12 +18,13 @@
 			header('Location: ./catalog.php');
 		}
 	 ?>
-
+	<div class="appViewBox">
 	<h1>Board Game - Registration Complete</h1>
 
 	<div id='afterRegistrationContainer'>
 		<p>Registration Complete - Go to <a href="./login.php">Login</a></p>
 	</div>
+	<div>
 
 <?php 
 	include_once "../partials/footer.php";

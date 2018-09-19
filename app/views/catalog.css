@@ -78,3 +78,12 @@ img {
 	transform: translateY(0);
 	z-index: 200;
 }
+
+.selected-filter {
+	background-color: red;
+}
+
+#filterbarContainer .list-group-item:hover,
+#clearFilter:hover {
+	cursor: pointer;
+}

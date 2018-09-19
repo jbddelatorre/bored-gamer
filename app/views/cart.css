@@ -1,5 +1,4 @@
 #cartApp {
-	min-height: 88vh;
 	display: flex;
 	justify-content: center;
 }
@@ -19,4 +18,8 @@ table *{
 img {
 	width: 120px;
 	height: 120px;
+}
+
+input[type="number"] {
+	width: 80px;
 }

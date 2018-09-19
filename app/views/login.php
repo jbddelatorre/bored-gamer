@@ -13,7 +13,7 @@
 			header('Location: ./catalog.php');
 		}
 	 ?>
-
+	 <div class="appViewBox">
 
 		<h1>Board Game Store - Login</h1>
 
@@ -44,7 +44,7 @@
 			</div>
 			
 		</div>
-
+	</div>
 
 <?php 
 	include_once '../partials/footer.php';

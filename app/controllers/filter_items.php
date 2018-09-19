@@ -30,6 +30,11 @@
 		$_SESSION['type_id_filter'] = $type_id;
 	}
 
+	if ($filter === 'none') {
+		$_SESSION['game_id_filter'] = null;
+		$_SESSION['type_id_filter'] = null;
+	}
+
 	$g = $_SESSION['game_id_filter'];
 	$t = $_SESSION['type_id_filter'];
 
@@ -43,7 +48,7 @@
 		$sql = "SELECT * FROM items where game_types_id = '$g' AND categories_id = '$t'";
 	}
 	if (!isset($g) && !isset($t)) {
-		$sql = "SELECT * FROM items";
+		
 	}
 	
 	$result = mysqli_query($conn, $sql);

@@ -10,113 +10,95 @@
 </head>
 <body>
 	<?php include_once '../partials/navbar.php'; ?>
-	<?php include_once '../partials/subnavbar.php'; ?>
+	
 
 	<div class="appViewBox">
 	
-	<h1>Board Game Store - Catalog</h1>
-	<h2>Welcome 
-		<span><?php 
-			if(!isset($_SESSION['user_data'])) echo 'Guest';
-			else echo $_SESSION['user_data']['first_name'];?>
-		</span>
-		<span><?php 
-			if(!isset($_SESSION['user_data'])) echo '<a href="./login.php">Login</a>';
-			else echo '<a href="../controllers/logout.php">Logout</a>';?>
-		</span>
-		<span><?php 
-			if(!isset($_SESSION['user_data'])) echo '<a href="./register.php">Register</a>';
-			else echo '<a href="./cart.php">Go to my Cart</a>'; ?>
-		</span>
-		<span>
+		<h1>Board Game Store - Catalog</h1>
 
-		</span>
-	</h2>
-
-
-	<div id='catalogContainer'>
-		<div id='filterbarContainer'>
-			<ul class='list-group'>
-			  <li class='list-group borderless'>Filter by Game</li>
-			  <li class='list-group-item' onClick = set_filter('board_games')>Board Games</li>
-			  <li class='list-group-item' onClick = set_filter('card_games')>Card Games</li>
-			  <li class='list-group-item' onClick = set_filter('special_games')>Special Games</li>
-			</ul>
-			<ul class='list-group'>
-			  <li class='list-group borderless'>Filter by Type</li>
-			  <li class='list-group-item' onClick = set_filter('strategy')>Strategy</li>
-			  <li class='list-group-item' onClick = set_filter('party')>Party / Socialize</li>
-			  <li class='list-group-item' onClick = set_filter('for_fun')>For Fun</li>
-			  <li class='list-group-item' onClick = set_filter('kids')>Kids</li>
-			  <li class='list-group-item' onClick = set_filter('cooperative')>Cooperative</li>
-			  <li class='list-group-item' onClick = set_filter('puzzle')>Puzzle</li>
-			</ul>	
-			<ul class='list-group'>
-			  <li class='list-group borderless'>Remove Filters</li>
-			</ul>	
-		</div>
-
-		<div id='rightSide'>
-			<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img class="d-block w-100" src="../assets/image/carousel-image1.jpg" alt="First slide">
-			    </div>
-			    <div class="carousel-item">
-			      <img class="d-block w-100" src="../assets/image/carousel-image2.jpg" alt="Second slide">
-			    </div>
-			    <div class="carousel-item">
-			      <img class="d-block w-100" src="../assets/image/carousel-image3.jpg" alt="Third slide">
-			    </div>
-			  </div>
+		<div id='catalogContainer'>
+			<div id='filterbarContainer'>
+				<ul class='list-group'>
+				  <li class='list-group borderless'>Filter by Game</li>
+				  <li id='board_games'class='list-group-item game-filter-list-item' onClick = set_filter('board_games')>Board Games</li>
+				  <li id='card_games'class='list-group-item game-filter-list-item' onClick = set_filter('card_games')>Card Games</li>
+				  <li id='special_games'class='list-group-item game-filter-list-item' onClick = set_filter('special_games')>Special Games</li>
+				</ul>
+				<ul class='list-group'>
+				  <li class='list-group borderless'>Filter by Type</li>
+				  <li id='strategy' class='list-group-item type-filter-list-item' onClick = set_filter('strategy')>Strategy</li>
+				  <li id='party' class='list-group-item type-filter-list-item' onClick = set_filter('party')>Party / Socialize</li>
+				  <li id='for_fun' class='list-group-item type-filter-list-item' onClick = set_filter('for_fun')>For Fun</li>
+				  <li id='kids' class='list-group-item type-filter-list-item' onClick = set_filter('kids')>Kids</li>
+				  <li id='cooperative' class='list-group-item type-filter-list-item' onClick = set_filter('cooperative')>Cooperative</li>
+				  <li id='puzzle' class='list-group-item type-filter-list-item' onClick = set_filter('puzzle')>Puzzle</li>
+				</ul>	
+				<ul class='list-group'>
+				  <li id="clearFilter" class='list-group borderless' onClick = set_filter('none')>Remove Filters</li>
+				</ul>	
 			</div>
-			<h2 id="forSaleHeader">Board Games</h2>
-			<div id='itemsForSale'>
 
-				<?php
-					$sql = "SELECT * FROM items";
-					// if (isset($_SESSION['game_id_filter']) && isset($_SESSION['type_id_filter'])) {
-					// 	
-					// } else {
-					// 	if (!isset($_SESSION['game_id_filter']) && !isset($_SESSION['type_id_filter']))
-					// 	if (isset($_SESSION['game_id_filter'])) {
-					// 		$sql = $sql . " where categories_id = $gamefilter";
-					// 	} 
-					// 	if (isset($_SESSION['type_id_filter'])) {
-					// 		$sql = $sql . " where game_types_id = $typefilter";
-					// 	}
-					// }
+			<div id='rightSide'>
+				<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+				  <div class="carousel-inner">
+				    <div class="carousel-item active">
+				      <img class="d-block w-100" src="../assets/image/carousel-image1.jpg" alt="First slide">
+				    </div>
+				    <div class="carousel-item">
+				      <img class="d-block w-100" src="../assets/image/carousel-image2.jpg" alt="Second slide">
+				    </div>
+				    <div class="carousel-item">
+				      <img class="d-block w-100" src="../assets/image/carousel-image3.jpg" alt="Third slide">
+				    </div>
+				  </div>
+				</div>
+				<h2 id="forSaleHeader">Board Games</h2>
+				<div id='itemsForSale'>
 
-					// echo $sql;
+					<?php
+						$sql = "SELECT * FROM items";
+						// if (isset($_SESSION['game_id_filter']) && isset($_SESSION['type_id_filter'])) {
+						// 	
+						// } else {
+						// 	if (!isset($_SESSION['game_id_filter']) && !isset($_SESSION['type_id_filter']))
+						// 	if (isset($_SESSION['game_id_filter'])) {
+						// 		$sql = $sql . " where categories_id = $gamefilter";
+						// 	} 
+						// 	if (isset($_SESSION['type_id_filter'])) {
+						// 		$sql = $sql . " where game_types_id = $typefilter";
+						// 	}
+						// }
 
-					$result = mysqli_query($conn, $sql);
+						// echo $sql;
 
-					if (mysqli_num_rows($result) > 0) {
+						$result = mysqli_query($conn, $sql);
 
-						while($row = mysqli_fetch_assoc($result)) {
-							echo "<div id='cardContainer'>
-								<div class='card' style='width: 18rem;'>
-								  <img class='card-img-top' src='". $row['item_image'] ."' alt='Card image cap'>
-								  <div class='card-body'>
-								    <h5 class='card-title'>". $row['name'] ."</h5>
-								    <p class='card-text'>". $row['item_desc'] ."</p>
-								    <h6> <strong>PHP</strong> ". $row['price'] ."<span><input type='number' id=qty".$row['id']." class='item-qty' name='inputQuantity' min='1' value='1'></span> QTY</h6>
-								    ";
-								    	if(isset($_SESSION['user_data'])) {
-											echo "<a onClick=addToCart(".$row['id'].") class='btn btn-primary'>Add To Cart</a>";
-										} else {
-											echo "<a href='./login.php' class='btn btn-primary'>Add To Cart</a>";
-										}
-								     echo "</div>
-								</div>
-							</div>";  
+						if (mysqli_num_rows($result) > 0) {
+
+							while($row = mysqli_fetch_assoc($result)) {
+								echo "<div id='cardContainer'>
+									<div class='card' style='width: 18rem;'>
+									  <img class='card-img-top' src='". $row['item_image'] ."' alt='Card image cap'>
+									  <div class='card-body'>
+									    <h5 class='card-title'>". $row['name'] ."</h5>
+									    <p class='card-text'>". $row['item_desc'] ."</p>
+									    <h6> <strong>PHP</strong> ". $row['price'] ."<span><input type='number' id=qty".$row['id']." class='item-qty' name='inputQuantity' min='1' value='1'></span> QTY</h6>
+									    ";
+									    	if(isset($_SESSION['user_data'])) {
+												echo "<a onClick=addToCart(".$row['id'].") class='btn btn-primary'>Add To Cart</a>";
+											} else {
+												echo "<a href='./login.php' class='btn btn-primary'>Add To Cart</a>";
+											}
+									     echo "</div>
+									</div>
+								</div>";  
+							}
 						}
-					}
-				 ?>
+					 ?>
 
+				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 
 
@@ -125,6 +107,28 @@
 
 <script type="text/javascript">
 	const set_filter = (filter) => {
+
+		if(filter === 'board_games' || filter === 'card_games' || filter === 'special_games') {
+			const selected_li = document.querySelector(`#${filter}`);
+			const all_game_type = $('.game-filter-list-item')
+
+			$.each(all_game_type, (index, value) => {
+				value.classList.remove('selected-filter');
+			})
+				selected_li.classList.add('selected-filter');
+		} 
+		if (filter === 'none') {
+		} else {
+			const selected_li = document.querySelector(`#${filter}`);
+			const all_game_type = $('.type-filter-list-item')
+
+			$.each(all_game_type, (index, value) => {
+				value.classList.remove('selected-filter');
+			})
+
+				selected_li.classList.add('selected-filter');
+		} 
+
 		$.ajax({
 			url: '../controllers/filter_items.php',
 			data: {filter: filter},
@@ -136,6 +140,12 @@
 				const login = dataParse.login;
 
 				$('#itemsForSale').empty();
+
+				if (dataParse.filter.length === 0) {
+					$('#itemsForSale').append(
+						`<p>Item not found</p>`
+						);
+				}
 
 				for (let key in dataFiltered) {
 					$('#itemsForSale').append(`
@@ -159,7 +169,6 @@
 	}
 
 
-
 	const addToCart = (id) => {
 		const qty_dom = document.querySelector(`input[id="qty${id}"]`)
 		qty = Math.floor(qty_dom.value);
@@ -173,7 +182,8 @@
 			data: {id: id, qty: qty},
 			type: 'POST',
 			success: (data) => {
-				console.log(data);
+				const cartQty = document.querySelector('#cartQuantity')
+				cartQty.textContent = data;
 			}
 		})
 	}

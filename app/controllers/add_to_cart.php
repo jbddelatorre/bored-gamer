@@ -16,20 +16,22 @@
 			$duplicate = true;
 
 			$_SESSION['cart'][$key]['qty'] += $qty;
-			echo 'duplicate';
 		} 
 	}
 
 	if ($duplicate == false) {
-		echo 'success';
 		array_push($_SESSION['cart'], array('id' => $id, 'qty' => $qty));
 	}
 
-	
+	$cartQuantity = 0;
 
-	$cart = $_SESSION['cart'];
+	foreach($_SESSION['cart'] as $key => $cart_item) {
+		$cartQuantity += $cart_item['qty'];
+	}
 
-	// var_dump($cart);
+	$_SESSION['cartQuantity'] = $cartQuantity;
+
+	echo $cartQuantity;
 
 	
 ?>
