@@ -48,7 +48,7 @@
 		$sql = "SELECT * FROM items where game_types_id = '$g' AND categories_id = '$t'";
 	}
 	if (!isset($g) && !isset($t)) {
-		
+		$sql = "SELECT * FROM items";
 	}
 	
 	$result = mysqli_query($conn, $sql);
@@ -72,5 +72,6 @@
 	echo json_encode($data_response);
 	// echo json_encode($filtered_items);
 
+	// echo $sql;
 
 	// $type = 

@@ -8,7 +8,7 @@
 
 	<link rel='stylesheet' type='text/css' href='./catalog.css'>
 </head>
-<body>
+<body onScroll=adjustHeight()>
 	<?php include_once '../partials/navbar.php'; ?>
 	
 
@@ -116,17 +116,21 @@
 				value.classList.remove('selected-filter');
 			})
 				selected_li.classList.add('selected-filter');
-		} 
-		if (filter === 'none') {
 		} else {
-			const selected_li = document.querySelector(`#${filter}`);
-			const all_game_type = $('.type-filter-list-item')
+			if (filter === 'none') {
+				const all_filters = $('.list-group-item');
+				$.each(all_filters, (index, value) => {
+					value.classList.remove('selected-filter');
+				})
+			} else {
+				const selected_li = document.querySelector(`#${filter}`);
+				const all_game_type = $('.type-filter-list-item')
 
-			$.each(all_game_type, (index, value) => {
-				value.classList.remove('selected-filter');
-			})
-
-				selected_li.classList.add('selected-filter');
+				$.each(all_game_type, (index, value) => {
+					value.classList.remove('selected-filter');
+				})
+					selected_li.classList.add('selected-filter');
+			}
 		} 
 
 		$.ajax({
@@ -134,6 +138,8 @@
 			data: {filter: filter},
 			type: 'GET',
 			success: (data) => {
+				// console.log(data);
+
 				let dataParse = JSON.parse(data);
 
 				const dataFiltered = dataParse.filter;
@@ -186,6 +192,20 @@
 				cartQty.textContent = data;
 			}
 		})
+	}
+
+	const adjustHeight = () => {
+		let distancePX = $(window).scrollTop();
+		let windowHeight = $(window).height();
+		let distanceVH = 100*distancePX/windowHeight;
+
+		const filterbar = document.querySelector('#filterbarContainer');
+		console.log(distanceVH);
+		if (distanceVH >= 30) {
+			filterbar.classList.add('filter-move-up');
+		} else {
+			filterbar.classList.remove('filter-move-up');
+		}
 	}
 
 </script>

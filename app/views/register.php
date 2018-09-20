@@ -22,19 +22,19 @@
 		  <div class="form-row">
 		    <div class="form-group col-md-12">
 		      <label for="inputEmail4">Username</label>
-		      <input type="text" class="form-control" id="inputEmail4" placeholder="Username" name="registerUsername">
+		      <input type="text" class="form-control" id="inputEmail4" placeholder="Username" name="registerUsername" required>
 		    </div>
 		    <div class="form-group col-md-6">
 		      <label for="inputPassword4">Password</label>
-		      <input type="password" class="form-control" id="inputPassword4" placeholder="Password" name="registerPassword">
+		      <input type="password" class="form-control" id="inputPassword4" placeholder="Password" name="registerPassword" required>
 		    </div>
 		    <div class="form-group col-md-6">
 		      <label for="inputPassword4">Verify Password</label>
-		      <input type="password" class="form-control" id="inputPassword4" placeholder="Password" name="registerVerifyPassword">
+		      <input type="password" class="form-control" id="inputPassword4" placeholder="Password" name="registerVerifyPassword" required>
 		    </div>
 		    <div class="form-group col-md-12">
 		      <label for="inputEmail4">Email</label>
-		      <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="registerEmail">
+		      <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="registerEmail" required>
 		    </div>
 		  </div>
 		  <div class="form-row">
