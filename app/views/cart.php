@@ -70,7 +70,7 @@
 							echo '</tr>';
 
 							echo '</table>';
-							echo '<button>Checkout</button>';
+							echo '<a href="../views/checkout.php"><button>Checkout</button></a>';
 					} else {
 						echo '<p>Empty Cart</p>';
 					}

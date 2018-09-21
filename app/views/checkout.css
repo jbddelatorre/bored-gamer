@@ -1,0 +1,69 @@
+#shippingAndPayment {
+	display: flex;
+	/*background-color: red;*/
+}
+
+#checkoutLeft {
+	flex:5;
+	display: flex;
+	flex-direction: column;
+}
+
+#checkoutRight {
+	flex:2;
+	display: flex;
+	flex-direction: column;
+}
+
+#paymentRadio {
+	display: flex;
+	flex-direction: row;
+	/*justify-content: stretch;*/
+	align-items: center;
+	align-content: center;
+}
+
+p {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	margin: 5px 10px; 
+}
+
+#paymentRadio input {
+	flex: 1;
+}
+
+#checkoutLeft,
+#checkoutRight {
+	padding: 5px 10px 5px 20px;
+	margin: 10px;
+}
+
+td {
+	width: 15%;
+}
+
+table {
+	margin-bottom: 20px;
+}
+
+table *{
+	padding:15px;
+}
+
+img {
+	width: 120px;
+	height: 120px;
+}
+
+#orderItemsCheckout {
+	padding: 0 10px;
+	margin:0 auto;
+/*	display: flex;
+	justify-content: center;*/
+}
+
+.checkout-address {
+	padding: 20px;
+}

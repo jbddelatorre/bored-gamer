@@ -179,6 +179,8 @@
 		const qty_dom = document.querySelector(`input[id="qty${id}"]`)
 		qty = Math.floor(qty_dom.value);
 
+		alert(`added ${qty} item(s) to cart`);
+
 		if (qty < 1) {
 			qty = 1;
 		}
