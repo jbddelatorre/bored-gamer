@@ -36,8 +36,7 @@
     top:0;
     left: 0;
     width: 100%;
-    padding-bottom: 5px;
-    margin-bottom: 5px;
+    /*margin-bottom: 5px;*/
     z-index: 10000;
   }
 
