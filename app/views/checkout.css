@@ -83,10 +83,11 @@ input {
 	top:0;
 	left: 0;
 	z-index: 10000;
-	display: flex;
+	display: none;
 	justify-content: center;
 	align-items: center;
-	transition: opacity 0.3s ease-out;
+	transition: opacity 0.3s linear;
+	opacity: 0;
 }
 
 #updateForm {
@@ -100,6 +101,10 @@ input {
 	flex-direction: column;
 	align-content: center;
 	align-items: center;
+}
+
+#updateForm:hover {
+	cursor: default;
 }
 
 .fa-times {
@@ -150,9 +155,16 @@ select.modal-only,
 input.modal-only {
 	margin: 10px 15px;
 	padding: 5px;
-	width: 65%;
+	/*width: 65%;*/
 }
 
 input[type="button"].modal-only {
 	width: 40%;
+}
+
+.modal-input-div {
+	display: flex;
+	flex-direction: column;
+	align-content: flex-start;
+	width:90%;
 }

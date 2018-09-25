@@ -20,31 +20,50 @@ session_start();
 	}
 	?>
 
-
 	<div id="updateModal" class="close-modal">
 		<div id="updateForm">
 			<header>
 				<h2>Update Address</h2>
-				<div class="close-modal"><i class="fas fa-times"></i></div>
+				<div class="close-modal"><i class="fas fa-times close-modal"></i></div>
 			</header>
 			<main>
-				<input class="modal-only" type="text">
-				<select class="modal-only" name="" id="">
-					<option value="">12</option>
-				</select>
-				<select class="modal-only" name="" id="">
-					<option value="">12</option>
-				</select>
-				<select class="modal-only" name="" id="">
-					<option value="">12</option>
-				</select>
+				<div class="modal-input-div">
+					<label for="region">Address Number and Street</label>
+					<input class="modal-only" type="text" name="street">
+				</div>
+				<div class="modal-input-div">
+					<label for="region">Region</label>
+					<select class="modal-only" name="region" id="selectregions">
+					</select>
+				</div>
+				<div class="modal-input-div">
+					<label for="province">Province</label>
+					<select class="modal-only" name="province" id="selectprovinces">
+						<option value="null">--PLEASE SELECT--</option>
+					</select>
+				</div>
+				<div class="modal-input-div">
+					<label for="municipality">Municipality</label>
+					<select class="modal-only" name="municipality" id="selectmunicipalities">
+						<option value="null">--PLEASE SELECT--</option>
+					</select>
+				</div>
+				<div class="modal-input-div">
+					<label for="barangay">Barangay</label>
+					<select class="modal-only" name="barangay" id="selectbarangays">
+						<option value="null">--PLEASE SELECT--</option>
+					</select>
+				</div>
+				
+				
 			</main>
 			<footer>
 				<button type="button" class="btn btn-secondary close-modal">Close</button>
-        		<button type="button" class="btn btn-primary">Save changes</button>
+        		<button type="button" class="btn btn-primary" id="submitUpdateButton">Save changes</button>
 			</footer>	
 		</div>
 	</div>
+
 
 	<div class="appViewBox">
 		<h1>Board Game Store - Checkout Page</h1>
@@ -98,6 +117,7 @@ session_start();
 		ele.addEventListener("click", (e) => {
 			if(event.target == event.currentTarget) {	
 				document.querySelector('#updateModal').style.opacity = "0";
+				setTimeout(() => {document.querySelector('#updateModal').style.display = "none"}, 300)
 			}
 		})
 	})
@@ -106,8 +126,17 @@ session_start();
 
 	updateButton.forEach(ele => {
 		ele.addEventListener("click", (event) => {
-			console.log(event.target.id);
+			document.querySelector('#updateModal').style.display = "flex";
+			setTimeout(() => {document.querySelector('#updateModal').style.opacity = "1";}, 200)
 		})
+	})
+
+	const submitUpdateButton = document.querySelector('#submitUpdateButton')
+
+	submitUpdateButton.addEventListener("click", () => {
+		console.log('submitted!')
+		document.querySelector('#updateModal').style.opacity = "0";
+		setTimeout(() => {document.querySelector('#updateModal').style.display = "none"}, 300)
 	})
 
 	const get_checkout = () => {
@@ -230,9 +259,91 @@ session_start();
 		})
 	}
 
+	let category = "regions"
+	let filter = "01"
+
+	const get_ph_info = (category, filter) => {
+		const selectList = document.querySelector('#selectregions')
+
+		$.ajax({
+			url:'../controllers/get_ph_info.php',
+			data:{category: category, filter:filter},
+			type: 'GET',
+			success: (data) => {
+				const d = JSON.parse(data);
+				// console.log(data);
+				if (category == "regions") {
+					$('#selectregions').empty();	
+					// $('#selectregions').append(`<option value="null">--PLEASE SELECT YOUR REGION--</option>`)	
+					for(let key in d) {
+						$('#selectregions').append(`
+							<option class=${category} value="${d[key]['region_code']}">${d[key]['region']}</option>
+						`)
+					}
+				}
+
+				else if (category == "provinces") {
+					$('#selectprovinces').empty();
+					for(let key in d) {
+						$('#selectprovinces').append(`
+							<option class=${category} value="${d[key]['province_code']}">${d[key]['region_province']}</option>
+						`)
+					}
+				}
+
+				else if (category == "municipalities") {
+					$('#selectmunicipalities').empty();
+					for(let key in d) {
+						$('#selectmunicipalities').append(`
+							<option class=${category} value="${d[key]['city_municipality_code']}">${d[key]['province_code']}</option>
+						`)
+					}
+				}
+
+				else if (category == "barangays") {
+					$('#selectbarangays').empty();
+					for(let key in d) {
+						$('#selectbarangays').append(`
+							<option class=${category} value="${d[key]['id']}">${d[key]['barangay']}</option>
+						`)
+					}
+				}
+
+				document.querySelector(`select#select${category}`).addEventListener("change", (event) => {
+						if (category == "regions") {
+							get_ph_info("provinces", event.target.value);
+							$('#selectmunicipalities').empty();
+							$('#selectmunicipalities').append(`<option value="null">--PLEASE SELECT--</option>`);
+							$('#selectbarangays').empty();
+							$('#selectbarangays').append(`<option value="null">--PLEASE SELECT--</option>`);
+						}
+						else if (category == "provinces") {
+							get_ph_info("municipalities", event.target.value);
+							// $('#selectmunicipalities').empty();
+							$('#selectbarangays').empty();
+							$('#selectbarangays').append(`<option value="null">--PLEASE SELECT--</option>`);
+						} 
+						else if (category == "municipalities") {
+							get_ph_info("barangays", event.target.value);
+							// $('#selectbarangays').empty();
+						} 
+						else return;
+				})
+			},
+			error: (error) => {
+				console.log("error:" + error)
+			}
+		})
+	}
+
 	$(document).ready(get_checkout);
 	$(document).ready(() => load_address('currentShipping'));
 	$(document).ready(() => load_address('currentBilling'));
+	$(document).ready(() => get_ph_info("regions", "01"));
+	// $(document).ready(() => get_ph_info("provinces", "01"));
+	// $(document).ready(() => get_ph_info("municipalities", "128"));
+	// $(document).ready(() => get_ph_info("barangays", "12801"));
+
 
 	// document.addEventListener("DOMContentLoaded", get_checkout);
 	// document.addEventListener("DOMContentLoaded", );
