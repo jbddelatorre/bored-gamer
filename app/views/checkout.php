@@ -23,13 +23,13 @@ session_start();
 	<div id="updateModal" class="close-modal">
 		<div id="updateForm">
 			<header>
-				<h2>Update Address</h2>
+				<h2>Update <span id="typeAddress"></span> Address</h2>
 				<div class="close-modal"><i class="fas fa-times close-modal"></i></div>
 			</header>
 			<main>
 				<div class="modal-input-div">
 					<label for="region">Address Number and Street</label>
-					<input class="modal-only" type="text" name="street">
+					<input class="modal-only" type="text" name="street" id="inputstreet">
 				</div>
 				<div class="modal-input-div">
 					<label for="region">Region</label>
@@ -54,12 +54,10 @@ session_start();
 						<option value="null">--PLEASE SELECT--</option>
 					</select>
 				</div>
-				
-				
 			</main>
 			<footer>
 				<button type="button" class="btn btn-secondary close-modal">Close</button>
-        		<button type="button" class="btn btn-primary" id="submitUpdateButton">Save changes</button>
+        		<button type="button" class="btn btn-primary" id="submitUpdateButton">Update Address</button>
 			</footer>	
 		</div>
 	</div>
@@ -74,9 +72,9 @@ session_start();
 				<div id="shippingAndPayment">
 					<div id="checkoutLeft">
 						<div class="form-group">
-							<label for="shippingAddress">Shipping Address</label><input type="button" id="updateAddressShipping" class="btn btn-info" value="Edit Shipping Address"></input>
+							<label class="label-address" for="shippingAddress">Shipping Address</label><input type="button" id="updateAddressShipping" class="btn btn-info update-address-button" value="Edit Shipping Address"></input>
 							<p id="currentShipping">shipping</p>
-							<label for="billingAddress">Billing Address</label><input type="button" id="updateAddressBilling" class="btn btn-info" value="Edit Billing Address"></input>
+							<label class="label-address" for="billingAddress">Billing Address</label><input type="button" id="updateAddressBilling" class="btn btn-info update-address-button" value="Edit Billing Address"></input>
 							<p id="currentBilling">billing</p>
 						</div>
 					</div>
@@ -111,6 +109,8 @@ session_start();
 
 <script type="text/javascript">
 
+// ANIMATION/DESIGN //
+
 	const closeModal = document.querySelectorAll(".close-modal")
 
 	closeModal.forEach(ele => {
@@ -128,16 +128,29 @@ session_start();
 		ele.addEventListener("click", (event) => {
 			document.querySelector('#updateModal').style.display = "flex";
 			setTimeout(() => {document.querySelector('#updateModal').style.opacity = "1";}, 200)
+
+			const typespan = document.querySelector('span#typeAddress');
+			const modalform = document.querySelector('#submitUpdateButton');
+
+			if (event.target.id == "updateAddressShipping") {
+				typespan.textContent = "Shipping"
+				modalform.setAttribute("submittal", 1);
+			}
+			else {
+				typespan.textContent = "Billing";
+				modalform.setAttribute("submittal", 2);
+			}
 		})
 	})
 
-	const submitUpdateButton = document.querySelector('#submitUpdateButton')
+	// const submitUpdateButton = document.querySelector('#submitUpdateButton')
 
-	submitUpdateButton.addEventListener("click", () => {
-		console.log('submitted!')
-		document.querySelector('#updateModal').style.opacity = "0";
-		setTimeout(() => {document.querySelector('#updateModal').style.display = "none"}, 300)
-	})
+	// submitUpdateButton.addEventListener("click", () => {
+	// 	document.querySelector('#updateModal').style.opacity = "0";
+	// 	setTimeout(() => {document.querySelector('#updateModal').style.display = "none"}, 300)
+	// })
+
+// FUNCTIONALITY //
 
 	const get_checkout = () => {
 		$.ajax({
@@ -319,13 +332,11 @@ session_start();
 						}
 						else if (category == "provinces") {
 							get_ph_info("municipalities", event.target.value);
-							// $('#selectmunicipalities').empty();
 							$('#selectbarangays').empty();
 							$('#selectbarangays').append(`<option value="null">--PLEASE SELECT--</option>`);
 						} 
 						else if (category == "municipalities") {
 							get_ph_info("barangays", event.target.value);
-							// $('#selectbarangays').empty();
 						} 
 						else return;
 				})
@@ -336,18 +347,51 @@ session_start();
 		})
 	}
 
+	document.querySelector('#submitUpdateButton').addEventListener("click", (event) => {
+		const submittal = event.target.attributes.submittal.nodeValue;
+		const street = $('#inputstreet').val();
+		const region = $('#selectregions :selected').val();
+		const province = $('#selectprovinces :selected').val();
+		const municipality = $('#selectmunicipalities :selected').val();
+		const barangay = $('#selectbarangays :selected').val();
+
+		if (submittal && street && region && province && municipality && barangay) {
+			
+			document.querySelector('#updateModal').style.opacity = "0";
+			setTimeout(() => {document.querySelector('#updateModal').style.display = "none"}, 300)
+
+			$.ajax({
+				url:'../controllers/update_address.php',
+				data: {address_type_id: submittal, house_num_others: street, region_code: region, region_province_code: province, city_municipality_code: municipality, barangay_id: barangay},
+				type:'POST',
+				success: (data) => {
+					console.log(data);
+
+					load_address('currentShipping');
+					load_address('currentBilling');
+					get_ph_info("regions", "01");
+
+					alert('Updated address!')
+				}
+			})
+
+			$('#inputstreet').val('');
+			$('#inputstreet').empty();
+			$('#selectregions').empty();
+			$('#selectprovinces').empty();
+			$('#selectmunicipalities').empty();
+			$('#selectbarangays').empty();
+
+		} else {
+			alert('Please complete your address.')
+		}
+	})
+
 	$(document).ready(get_checkout);
 	$(document).ready(() => load_address('currentShipping'));
 	$(document).ready(() => load_address('currentBilling'));
 	$(document).ready(() => get_ph_info("regions", "01"));
-	// $(document).ready(() => get_ph_info("provinces", "01"));
-	// $(document).ready(() => get_ph_info("municipalities", "128"));
-	// $(document).ready(() => get_ph_info("barangays", "12801"));
 
-
-	// document.addEventListener("DOMContentLoaded", get_checkout);
-	// document.addEventListener("DOMContentLoaded", );
-	// document.addEventListener("DOMContentLoaded", );
 
 
 	
