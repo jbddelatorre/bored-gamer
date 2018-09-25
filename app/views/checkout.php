@@ -30,8 +30,10 @@ if ($_SERVER['HTTP_REFERER'] !== 'http://localhost:8000/views/cart.php') {
 					<div id="checkoutLeft">
 						<div class="form-group">
 							<label for="shippingAddress">Shipping Address</label>
+							<p id="currentShipping">shipping</p>
 							<input type="text" class="form-control checkout-address" id="shippingAddress" placeholder="Shipping Address" required>
 							<label for="billingAddress">Billing Address</label>
+							<p id="currentBilling">billing</p>
 							<input type="text" class="form-control checkout-address" id="billingAddress" placeholder="Billing Address" required>
 						</div>
 					</div>
@@ -173,7 +175,25 @@ if ($_SERVER['HTTP_REFERER'] !== 'http://localhost:8000/views/cart.php') {
 		})
 	}
 
+	const load_address = (type) => {
+		$.ajax({
+			url: '../controllers/get_address.php',
+			data: {data: type},
+			type: 'GET',
+			success: (data) => {
+				const d = JSON.parse(data);
+			
+				const ele = document.querySelector(`#${type}`);
+
+				ele.textContent = `${d.house_num_others}, ${d.barangay}, ${d.province_code}, ${d.region_province}`
+			}
+		})
+	}
+
 	document.addEventListener("DOMContentLoaded", get_checkout);
+
+	document.addEventListener("DOMContentLoaded", load_address('currentShipping'));
+	document.addEventListener("DOMContentLoaded", load_address('currentBilling'));
 
 
 
