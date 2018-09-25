@@ -5,9 +5,9 @@ session_start();
 ?>
 
 <?php 
-if ($_SERVER['HTTP_REFERER'] !== 'http://localhost:8000/views/cart.php') {
-	header('Location: ../views/cart.php');
-}
+// if ($_SERVER['HTTP_REFERER'] !== 'http://localhost:8000/views/cart.php') {
+// 	header('Location: ../views/cart.php');
+// }
 ?>
 
 <link rel='stylesheet' type='text/css' href='./checkout.css'>
@@ -20,6 +20,32 @@ if ($_SERVER['HTTP_REFERER'] !== 'http://localhost:8000/views/cart.php') {
 	}
 	?>
 
+
+	<div id="updateModal" class="close-modal">
+		<div id="updateForm">
+			<header>
+				<h2>Update Address</h2>
+				<div class="close-modal"><i class="fas fa-times"></i></div>
+			</header>
+			<main>
+				<input class="modal-only" type="text">
+				<select class="modal-only" name="" id="">
+					<option value="">12</option>
+				</select>
+				<select class="modal-only" name="" id="">
+					<option value="">12</option>
+				</select>
+				<select class="modal-only" name="" id="">
+					<option value="">12</option>
+				</select>
+			</main>
+			<footer>
+				<button type="button" class="btn btn-secondary close-modal">Close</button>
+        		<button type="button" class="btn btn-primary">Save changes</button>
+			</footer>	
+		</div>
+	</div>
+
 	<div class="appViewBox">
 		<h1>Board Game Store - Checkout Page</h1>
 		<a href="./catalog.php">go to catalog</a>
@@ -29,15 +55,13 @@ if ($_SERVER['HTTP_REFERER'] !== 'http://localhost:8000/views/cart.php') {
 				<div id="shippingAndPayment">
 					<div id="checkoutLeft">
 						<div class="form-group">
-							<label for="shippingAddress">Shipping Address</label>
+							<label for="shippingAddress">Shipping Address</label><input type="button" id="updateAddressShipping" class="btn btn-info" value="Edit Shipping Address"></input>
 							<p id="currentShipping">shipping</p>
-							<input type="text" class="form-control checkout-address" id="shippingAddress" placeholder="Shipping Address" required>
-							<label for="billingAddress">Billing Address</label>
+							<label for="billingAddress">Billing Address</label><input type="button" id="updateAddressBilling" class="btn btn-info" value="Edit Billing Address"></input>
 							<p id="currentBilling">billing</p>
-							<input type="text" class="form-control checkout-address" id="billingAddress" placeholder="Billing Address" required>
 						</div>
 					</div>
-					<div id="checkoutRight">
+					<div id="checkoutRight">add
 						<h4>Payment Method</h4>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="payment-method" id="radioCOD" value="cod" checked>
@@ -53,11 +77,10 @@ if ($_SERVER['HTTP_REFERER'] !== 'http://localhost:8000/views/cart.php') {
 						</div>
 						<h4>Order Summary</h4>
 						<div class="list-group-item">PHP <span id="totalPrice"></span></div>
-						<button style="{margin-top: 20px;}" class="btn btn-primary">ORDER</button>
+						<input type="button" style="{margin-top: 20px;}" class="btn btn-primary" value="Order"></input>
 					</div>
 				</div>
 			</form>
-
 			<div id="orderItemsCheckoutContainer">
 				<table id="orderItemsCheckout">
 				</table>
@@ -68,6 +91,24 @@ if ($_SERVER['HTTP_REFERER'] !== 'http://localhost:8000/views/cart.php') {
 </body>
 
 <script type="text/javascript">
+
+	const closeModal = document.querySelectorAll(".close-modal")
+
+	closeModal.forEach(ele => {
+		ele.addEventListener("click", (e) => {
+			if(event.target == event.currentTarget) {	
+				document.querySelector('#updateModal').style.opacity = "0";
+			}
+		})
+	})
+	
+	const updateButton = document.querySelectorAll('[id^="updateAddress"]');
+
+	updateButton.forEach(ele => {
+		ele.addEventListener("click", (event) => {
+			console.log(event.target.id);
+		})
+	})
 
 	const get_checkout = () => {
 		$.ajax({
@@ -182,7 +223,6 @@ if ($_SERVER['HTTP_REFERER'] !== 'http://localhost:8000/views/cart.php') {
 			type: 'GET',
 			success: (data) => {
 				const d = JSON.parse(data);
-			
 				const ele = document.querySelector(`#${type}`);
 
 				ele.textContent = `${d.house_num_others}, ${d.barangay}, ${d.province_code}, ${d.region_province}`
@@ -190,11 +230,13 @@ if ($_SERVER['HTTP_REFERER'] !== 'http://localhost:8000/views/cart.php') {
 		})
 	}
 
-	document.addEventListener("DOMContentLoaded", get_checkout);
+	$(document).ready(get_checkout);
+	$(document).ready(() => load_address('currentShipping'));
+	$(document).ready(() => load_address('currentBilling'));
 
-	document.addEventListener("DOMContentLoaded", load_address('currentShipping'));
-	document.addEventListener("DOMContentLoaded", load_address('currentBilling'));
-
+	// document.addEventListener("DOMContentLoaded", get_checkout);
+	// document.addEventListener("DOMContentLoaded", );
+	// document.addEventListener("DOMContentLoaded", );
 
 
 	

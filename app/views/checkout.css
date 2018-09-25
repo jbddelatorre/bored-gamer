@@ -71,3 +71,88 @@ img {
 input {
 	margin-bottom: 10px;
 }
+
+
+/* MODAL */
+
+#updateModal {
+	width:100vw;
+	height:100vh;
+	background-color:rgba(0,0,0,.5);
+	position: absolute;
+	top:0;
+	left: 0;
+	z-index: 10000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: opacity 0.3s ease-out;
+}
+
+#updateForm {
+/*	width:500px;
+	height:500px;*/
+	background-color: white;
+	box-shadow: 0 4px 7px 2px;  
+	padding: 25px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-content: center;
+	align-items: center;
+}
+
+.fa-times {
+	/*height: 100%;*/
+	padding: 10px;
+	transition: background-color 0.2s ease-out;
+}
+
+div.close-modal:hover,
+.fa-times:hover {
+	cursor: pointer;
+	border-radius: 5px;
+	background-color: rgba(10,10,10,0.1)
+}
+
+#updateForm header,
+#updateForm main,
+#updateForm footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+}
+
+#updateForm header,
+#updateForm footer {
+	width: 500px;
+}
+
+#updateForm header {
+	justify-content: space-between;
+}
+
+#updateForm footer button {
+	margin: 5px 8px;
+}
+
+#updateForm main {
+	width: 100%;
+	flex-direction: column;
+	border-top: 1px solid lightgrey;
+	border-bottom: 1px solid lightgrey;
+	margin: 10px;
+	padding: 5px;
+}
+
+select.modal-only,
+input.modal-only {
+	margin: 10px 15px;
+	padding: 5px;
+	width: 65%;
+}
+
+input[type="button"].modal-only {
+	width: 40%;
+}
