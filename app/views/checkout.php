@@ -78,23 +78,23 @@ session_start();
 							<p id="currentBilling">billing</p>
 						</div>
 					</div>
-					<div id="checkoutRight">add
+					<div id="checkoutRight">
 						<h4>Payment Method</h4>
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="payment-method" id="radioCOD" value="cod" checked>
+							<input class="form-check-input" type="radio" name="payment-method" id="pm1" value="cod" checked>
 							<label class="form-check-label" for="cod">
 								COD
 							</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="payment-method" id="radioPaypal" value="paypal">
+							<input class="form-check-input" type="radio" name="payment-method" id="pm2" value="paypal">
 							<label class="form-check-label" for="paypal">
 								Paypal
 							</label>
 						</div>
 						<h4>Order Summary</h4>
 						<div class="list-group-item">PHP <span id="totalPrice"></span></div>
-						<input type="button" style="{margin-top: 20px;}" class="btn btn-primary" value="Order"></input>
+						<input type="button" style="{margin-top: 20px;}" id="submitOrder" class="btn btn-primary" value="PLACE ORDER NOW"></input>
 					</div>
 				</div>
 			</form>
@@ -267,7 +267,7 @@ session_start();
 				const d = JSON.parse(data);
 				const ele = document.querySelector(`#${type}`);
 
-				ele.textContent = `${d.house_num_others}, ${d.barangay}, ${d.province_code}, ${d.region_province}`
+				ele.textContent = `${d.house_num_others}, ${d.barangay}, ${d.province_code}, ${d.region_province}, ${d.region}`
 			}
 		})
 	}
@@ -386,6 +386,30 @@ session_start();
 			alert('Please complete your address.')
 		}
 	})
+
+	
+	document.querySelector('#submitOrder').addEventListener("click", (event) => {
+		const radioButtons = document.querySelectorAll('[name="payment-method"]');
+		const checked = [...radioButtons].filter((button) => button.checked);
+		const totalPriceShown = document.querySelector('#totalPrice').textContent;
+
+		let paymentMethod = 1;
+
+		if (checked[0].id == "pm2") {
+			paymentMethod = 2;
+		}
+		
+		$.ajax({
+			url: '../controllers/order.php',
+			data: {paymentMethod: paymentMethod},
+			type: 'POST',
+			success: (data) => {
+				console.log(data);
+			}
+		})
+	});
+
+
 
 	$(document).ready(get_checkout);
 	$(document).ready(() => load_address('currentShipping'));

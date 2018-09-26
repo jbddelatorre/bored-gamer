@@ -9,8 +9,10 @@
 	if ($type == 'currentShipping') $add_type = 1;
 	elseif ($type == 'currentBilling') $add_type = 2;
 
-	$sql = "SELECT ad.house_num_others, rp.region_province, cm.province_code, b.barangay, ad.address_type_id, ad.default, ad.user_id 
+	$sql = "SELECT ad.house_num_others, r.region, rp.region_province, cm.province_code, b.barangay, ad.address_type_id, ad.default, ad.user_id 
 		from addresses as ad 
+			JOIN regions as r
+				ON ad.region_code = r.region_code
 			JOIN regions_provinces as rp 
 				ON ad.region_province_code = rp.province_code 
 			JOIN cities_municipalities as cm
