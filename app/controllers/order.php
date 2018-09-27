@@ -12,7 +12,6 @@
 	$referenceNumber = referenceNumberGenerator();
 	$status_id = 1;
 
-
 	$id = $_SESSION['user_data']['id'];
 
 	$sql = "INSERT INTO orders (order_timestamp, status_id, transaction_num, user_id, payment_method) VALUES ('$timestamp', $status_id, '$referenceNumber', $id, $payment_method)";

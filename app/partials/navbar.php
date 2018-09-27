@@ -90,7 +90,9 @@
         <span> 
           <?php 
           if(!isset($_SESSION['user_data'])) echo 'Guest';
-          else echo $_SESSION['user_data']['first_name'];
+          else {
+            echo '<a href="../views/account.php">'.$_SESSION['user_data']['first_name'].'</a>';
+          }
           ?>
         </span>
       </li>
