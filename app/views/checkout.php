@@ -73,9 +73,9 @@ session_start();
 					<div id="checkoutLeft">
 						<div class="form-group">
 							<label class="label-address" for="shippingAddress">Shipping Address</label><input type="button" id="updateAddressShipping" class="btn btn-info update-address-button" value="Edit Shipping Address"></input>
-							<p id="currentShipping">shipping</p>
+							<p id="currentShipping">Please enter a shipping address.</p>
 							<label class="label-address" for="billingAddress">Billing Address</label><input type="button" id="updateAddressBilling" class="btn btn-info update-address-button" value="Edit Billing Address"></input>
-							<p id="currentBilling">billing</p>
+							<p id="currentBilling">Please enter a billing address.</p>
 						</div>
 					</div>
 					<div id="checkoutRight">

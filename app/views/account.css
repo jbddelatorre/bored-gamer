@@ -9,6 +9,7 @@
 
 #rightAccount {
 	flex: 4;
+	overflow: hidden !important;
 }
 
 .accountButton {
@@ -21,6 +22,7 @@
 #rightAccount {
 	padding: 10px;
 	margin: 10px 5px;
+	
 }
 
 div[id^="formgroup"] input {
@@ -43,15 +45,19 @@ div.accountInputButton > button {
 
 #accountChangePassword {
 /*	height: 0;*/
-	position: absolute;
-	right:-999em;
+/*	position: absolute;
+	right:-999em;*/
+	display: none;
 	flex-direction: column;
+	opacity: 0;
 	width:50%;
 	margin: 20px 0 20px 5%;
-	transform: translateX(100%);
+	transform: translateX(200%);
 	transition: transform 0.5s ease-out;
+	transition: opacity 0.5s ease-in;	
 	/*transition: z-index 1 linear;*/
 	z-index: -1;
+	overflow: hidden;
 }
 
 .accountChangePasswordShow {
@@ -59,6 +65,7 @@ div.accountInputButton > button {
 	display: flex !important;
 	position: static !important;
 	z-index: 0;
+	opacity: 1 !important;
 }
 
 #changePasswordSpan {
@@ -78,3 +85,10 @@ div.accountInputButton > button {
 	padding: 5px;
 	flex: 1;
 }
+
+span[id^="error"] {
+	margin-left: 40px;
+	/*color: red;*/
+	font-weight: 600;
+}
+
