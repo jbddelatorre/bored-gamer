@@ -3,16 +3,14 @@
 	justify-content: center;
 }
 
-td {
-	width: 15%;
+#cartContainer td, 
+#cartContainer tr {
+	/*width: 15%;*/
+	padding:10px;
 }
 
 table {
 	margin-bottom: 20px;
-}
-
-table *{
-	padding:15px;
 }
 
 img {
@@ -20,6 +18,80 @@ img {
 	height: 120px;
 }
 
-input[type="number"] {
-	width: 80px;
+
+#cartContainer input[type=number]::-webkit-inner-spin-button, 
+#cartContainer input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+#cartContainer #qtyField {
+	padding: 0;
+	margin:0;
+	box-sizing: border-box;
+}
+
+#cartContainer #qtyField input {
+	width: 30px;
+	/*margin: 3px 5px;*/
+	padding: 1px 1px 1px 5px;
+}
+
+
+#cartContainer #qtyField a {
+	background-color: #2d2727c9;
+	padding: 2px 4px;
+	/*border-radius: 5px;*/
+	color:white;
+}
+
+#cartContainer #qtyField a:hover {
+	cursor: pointer;
+} 
+
+/* Input unmber */
+* {
+  box-sizing: border-box;
+}
+
+.input-number {
+  width: 80px;
+  padding: 0 12px;
+  vertical-align: top;
+  text-align: center;
+  outline: none;
+}
+
+.input-number,
+.input-number-decrement,
+.input-number-increment {
+  border: 1px solid #ccc;
+  height: 40px;
+  user-select: none;
+}
+
+.input-number-decrement,
+.input-number-increment {
+  display: inline-block;
+  width: 30px;
+  line-height: 38px;
+  background: #f1f1f1;
+  color: #444;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+.input-number-decrement:active,
+.input-number-increment:active {
+  background: #ddd;
+}
+
+.input-number-decrement {
+  border-right: none;
+  border-radius: 4px 0 0 4px;
+}
+
+.input-number-increment {
+  border-left: none;
+  border-radius: 0 4px 4px 0;
 }

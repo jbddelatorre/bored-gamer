@@ -52,7 +52,9 @@
 							echo '<tr>';
 								echo "<td><img src=".$row['item_image']."></td>";
 								echo "<td>".$row['name']."</td>";
-								echo "<td><input id='input".$row['id']."' type='number' min='1' class='cart-qty-input' value='". $cart_item['qty'] ."'></td>"; //multiple id mistake, fix this, change innerhtml to inputvalue
+								echo "<td><span class='input-number-decrement'>–</span><input id='input".$row['id']."'class='input-number' type='number' value='". $cart_item['qty'] ."'><span class='input-number-increment'>+</span></div></td>";
+								// echo "<td><input id='input".$row['id']."' type='number' min='1' class='cart-qty-input' value='". $cart_item['qty'] ."'></td>"; 
+								//multiple id mistake, fix this, change innerhtml to inputvalue
 								echo "<td id='price".$row['id']."'>".$row['price']."</td>";
 								echo "<td>".$row['item_desc']."</td>";
 								echo "<td>PHP <span class='subtotal-element' id='sub".$row['id']."'>". $subtotal."</span></td>";
@@ -77,14 +79,15 @@
 
 				 ?>
 			</div>
+			<div id="cartSummary">
+				
+			</div>
 		</div>
 		</div>
 
 
 <script type="text/javascript">
 	const deletebuttons = document.querySelectorAll('.button-delete-item');
-
-	console.log(deletebuttons);
 
 	deletebuttons.forEach(ele => {
 		ele.addEventListener("click", (event)=> {
@@ -124,29 +127,12 @@
 		ele.addEventListener("input", (event) => {
 			const inputid = event.target.id;
 			const id = inputid.replace('input', '');
-			const updatedQty = event.target.value;
 			
-			const totalPriceElement = document.querySelector('#totalPriceCart');
-			const subtotalElement = document.querySelector(`#sub${id}`);
-			const unitPrice = document.querySelector(`#price${id}`);
-
-			subtotalElement.textContent = updatedQty * unitPrice.textContent;
-
-			const allSubtotals = document.querySelectorAll('span[id^="sub"]')
-
-			let newTotalPrice = 0;
-
-			allSubtotals.forEach(ele => {
-				newTotalPrice += parseInt(ele.textContent);
-			})
-
-			totalPriceElement.textContent = newTotalPrice;
 
 			// console.log(subtotalElement.textContent);
 
 			// const subtotal = ele.parentElement.previousSibling.lastChild.innerHTML;
-			// const 
-
+			// const
 			
 			$.ajax({
 				url: '../controllers/update_cart_quantity.php',
@@ -160,6 +146,36 @@
 		})
 	})
 
+	const updateCart = (id, updatedQty) => {
+	
+		const totalPriceElement = document.querySelector('#totalPriceCart');
+		const subtotalElement = document.querySelector(`#sub${id}`);
+		const unitPrice = document.querySelector(`#price${id}`);
+
+		subtotalElement.textContent = updatedQty * unitPrice.textContent;
+
+		const allSubtotals = document.querySelectorAll('span[id^="sub"]')
+
+		let newTotalPrice = 0;
+
+		allSubtotals.forEach(ele => {
+			newTotalPrice += parseInt(ele.textContent);
+		})
+
+		totalPriceElement.textContent = newTotalPrice;
+
+
+		$.ajax({
+				url: '../controllers/update_cart_quantity.php',
+				data:{id: id, qty: updatedQty},
+				type:'POST',
+				success: (data) => {
+					const dataJSON = JSON.parse(data);
+					document.querySelector('#cartQuantity').textContent = dataJSON;
+				}
+		})
+	}
+
 
 	const deleteItem = (id) => {
 		$.ajax({
@@ -171,6 +187,80 @@
 			}
 		}) 
 	}
+
+
+	//For input number 
+
+	const quantityInput = document.querySelectorAll(`input[id^="input"]`);
+
+	quantityInput.forEach((ele) => {
+		const id = ele.id.replace('input', '');
+		ele.previousSibling.addEventListener("click", () => decrement(id))
+		ele.nextSibling.addEventListener("click", () => increment(id))
+		ele.addEventListener("blur", () => qtychange(id))
+	})
+
+	const decrement = (id) => {
+		const val = document.querySelector(`#input${id}`);
+		if (val.value >= 2) {
+			val.value--
+			updateCart(id, val.value)
+		}
+	}
+	const increment = (id) => {
+		const val = document.querySelector(`#input${id}`);
+		val.value++	
+		updateCart(id, val.value)
+	}
+	const qtychange = (id) => {
+		const val = document.querySelector(`#input${id}`)
+		updateCart(id, val.value)
+	}
+
+
+	// (function() {
+ 
+	//   window.inputNumber = function(el) {
+
+	//     var min = el.attr('min') || false;
+	//     var max = el.attr('max') || false;
+
+	//     var els = {};
+
+	//     els.dec = el.prev();
+	//     els.inc = el.next();
+
+	//     el.each(function() {
+	//       init($(this));
+	//     });
+
+	//     function init(el) {
+
+	//       els.dec.on('click', decrement);
+	//       els.inc.on('click', increment);
+
+	//       function decrement() {
+	//         var value = el[0].value;
+	//         value--;
+	//         if(!min || value >= min) {
+	//           el[0].value = value;
+	//         }
+	//       }
+
+	//       function increment() {
+	//         var value = el[0].value;
+	//         value++;
+	//         if(!max || value <= max) {
+	//           el[0].value = value++;
+	//         }
+	//       }
+	//     }
+	//   }
+	// })();
+
+	// $('.input-number').each(inputNumber())
+	
+	// inputNumber($('.input-number'));
 
 </script>
 
