@@ -15,12 +15,11 @@
 	 ?>
 
 	 <div class="appViewBox">
-		<h1>Board Game Store - CartPage</h1>
-		<a href="./catalog.php">go to catalog</a>
-		<a href="../controllers/clear_cart.php">CLEAR CART</a>
+		<h1>My Cart</h1>
 
 		<div id="cartApp">
 			<div id="cartContainer">
+				<a  href="./catalog.php"><button id="returnToShopping" class="btn btn-outline-success">Return to Shopping</button></a>
 				<?php 
 					if(count($_SESSION['cart']) > 0) {
 						$cart = $_SESSION['cart'];
@@ -58,7 +57,7 @@
 								echo "<td id='price".$row['id']."'>".$row['price']."</td>";
 								echo "<td>".$row['item_desc']."</td>";
 								echo "<td>PHP <span class='subtotal-element' id='sub".$row['id']."'>". $subtotal."</span></td>";
-								echo "<td><button id=".$row['id']." class='btn btn-danger button-delete-item'>DELETE</button></td>";
+								echo "<td><i id=".$row['id']." class='button-delete-item fas fa-trash-alt'></i></td>";
 								$totalprice = $totalprice + $subtotal;
 							echo '</tr>';
 						}
@@ -69,10 +68,10 @@
 								echo "<td></td>";
 								echo "<td><strong>Total Price</strong></td>";
 								echo "<td><strong>PHP <span id='totalPriceCart'>".$totalprice."</span></strong></td>";
+								echo "<td></td>";
 							echo '</tr>';
 
 							echo '</table>';
-							echo '<a class="btn btn-secondary"href="../views/checkout.php">GO TO CHECKOUT</a>';
 					} else {
 						echo '<p>Empty Cart</p>';
 					}
@@ -80,7 +79,12 @@
 				 ?>
 			</div>
 			<div id="cartSummary">
-				
+				<div>
+					<h4>Cart Summary</h4>
+					<p>Total Quantity</p>
+					<p>Total Price</p>
+					<a href="../views/checkout.php"><button class="btn btn-outline-dark">Checkout Order</button></a>					
+				</div>
 			</div>
 		</div>
 		</div>
