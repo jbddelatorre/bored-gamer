@@ -38,15 +38,22 @@ ul#rating-wishlist-share {
 
 #productApp #productQtyField {
 	display: flex;
+	align-items: center;
 }
 
-#productApp #productQtyField div {
+#productApp #productButtonField {
+	display:flex;
+}
+
+#productApp #productQtyField div, 
+#productApp #productButtonField div {
 	margin: 5px 20px;
 }
 
 #productApp li,
 #productApp p,
-#productApp #productQtyField {
+#productApp #productQtyField,
+#productApp #productButtonField {
 	margin: 5px 20px;
 }
 

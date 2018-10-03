@@ -92,3 +92,69 @@ span[id^="error"] {
 	font-weight: 600;
 }
 
+
+#leftAccount .account-default-info {
+	padding: 0;
+	margin: 0;
+}
+
+#leftAccount .left-default-edit {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: nowrap;
+}
+
+#leftAccount [id^="accountDefault"] {
+	margin-left: 10px;
+	font-size: 14px;
+}
+
+#changePasswordLoad {
+	width:100vw;
+	height:100%;
+	background-color:rgba(0,0,0,.5);
+	position: absolute;
+	top:0;
+	left: 0;
+	z-index: 10000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/*transition: opacity 0.3s linear;*/
+	opacity: 1;
+}
+
+
+/*ADDRESS*/
+
+#account-appViewBox .modal-input-div label {
+	width:200px;
+	text-align: center;
+}
+
+#account-appViewBox .modal-input-div input, 
+#account-appViewBox .modal-input-div select {
+	width: 400px;
+	display: inline-block !important;
+	margin:10px 5px;
+	outline: none !important;
+}
+
+#account-appViewBox #updateForm footer {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+}
+
+#account-appViewBox .modal-input-div input:focus, 
+#account-appViewBox .modal-input-div select:focus {
+	outline: none !important;
+}
+
+#account-appViewBox [id^="edit"]:hover {
+	cursor: pointer;
+}
+
+#account-appViewBox #getUserProfile:hover {
+	cursor: pointer;
+} 

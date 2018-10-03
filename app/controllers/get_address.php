@@ -6,8 +6,8 @@
 
 	$type = $_GET['data'];
 
-	if ($type == 'currentShipping') $add_type = 1;
-	elseif ($type == 'currentBilling') $add_type = 2;
+	if ($type == 'currentShipping' || $type == 'shipping') $add_type = 1;
+	elseif ($type == 'currentBilling' || $type == 'billing') $add_type = 2;
 
 	$sql = "SELECT ad.house_num_others, r.region, rp.region_province, cm.province_code, b.barangay, ad.address_type_id, ad.default, ad.user_id 
 		from addresses as ad 

@@ -48,6 +48,9 @@
 								<div>
 									<span class='input-number-decrement'>–</span><input id='input".$id."'class='input-number' type='number' value='1'><span class='input-number-increment'>+</span>
 								</div>
+								<span>Quantity</span>
+							</div>
+							<div id = 'productButtonField'>
 								<div>";
 									if(isset($_SESSION['user_data'])) {
 										echo "<button onClick=addToCart(".$id.") class='btn btn-outline-dark'>Add to Cart <i class='fas fa-shopping-cart'></i></button></div>";

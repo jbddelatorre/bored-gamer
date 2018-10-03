@@ -32,6 +32,10 @@
 	border-bottom: 0px solid lightgrey;
 }
 
+#cartContainer td {
+	text-align: center;
+}
+
 table {
 	width: 100%;
 	border-radius: 10px; 
@@ -48,9 +52,17 @@ table tbody tr:first-of-type th{
 }
 
 
-img {
+#cartContainer img {
 	width: 120px;
 	height: 120px;
+}
+
+#cartContainer img:hover {
+	cursor: pointer;
+}
+
+#thQuantity {
+	width:200px;
 }
 
 

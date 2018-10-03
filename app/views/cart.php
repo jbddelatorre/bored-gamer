@@ -13,6 +13,7 @@
 		if(!isset($_SESSION['user_data'])) {
 			header('Location: ./catalog.php');
 		}
+		$totalprice = 0;
 	 ?>
 
 	 <div class="appViewBox">
@@ -30,9 +31,9 @@
 							echo '<tr>';
 								echo '<th>Image</th>';
 								echo '<th>Name</th>';
-								echo '<th>Qty</th>';
+								echo '<th id="thQuantity">Qty</th>';
 								echo '<th>Price</th>';
-								echo '<th>Item Description</th>';
+								// echo '<th>Item Description</th>';
 								echo '<th>Subtotal</th>';
 								echo '<th class="td-short"></th>';
 							echo '</tr>';
@@ -50,13 +51,13 @@
 							$subtotal = $row['price'] * $cart_item['qty'];
 
 							echo '<tr>';
-								echo "<td><img src=".$row['item_image']."></td>";
+								echo "<td><img id='td-image".$row['id']."'src=".$row['item_image']."></td>";
 								echo "<td>".$row['name']."</td>";
 								echo "<td><span class='input-number-decrement'>–</span><input id='input".$row['id']."'class='input-number' type='number' value='". $cart_item['qty'] ."'><span class='input-number-increment'>+</span></td>";
 								// echo "<td><input id='input".$row['id']."' type='number' min='1' class='cart-qty-input' value='". $cart_item['qty'] ."'></td>"; 
 								//multiple id mistake, fix this, change innerhtml to inputvalue
 								echo "<td id='price".$row['id']."'>".$row['price']."</td>";
-								echo "<td>".$row['item_desc']."</td>";
+								// echo "<td>".$row['item_desc']."</td>";
 								echo "<td>PHP <span class='subtotal-element' id='sub".$row['id']."'>". $subtotal."</span></td>";
 								echo "<td><i id=".$row['id']." class='button-delete-item fas fa-trash-alt'></i></td>";
 								$totalprice = $totalprice + $subtotal;
@@ -65,7 +66,7 @@
 							echo '<tr>';
 								echo "<td></td>";
 								echo "<td></td>";
-								echo "<td></td>";
+								// echo "<td></td>";
 								echo "<td></td>";
 								echo "<td><strong>Total Price</strong></td>";
 								echo "<td><strong>PHP <span id='totalPriceCart'>".$totalprice."</span></strong></td>";
@@ -238,6 +239,17 @@
 		updateCart(id, val.value)
 	}
 
+
+	const itemImage = document.querySelectorAll('[id^="td-image"]');
+
+	itemImage.forEach((image) => {
+		image.addEventListener("click", (e) => {
+			const image_id = e.target.id;
+			const id = image_id.replace('td-image', '');
+
+			window.location.href = `./product.php?id=${id}`;
+		})
+	})
 
 	// (function() {
  

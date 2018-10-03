@@ -30,20 +30,19 @@
 							<label>Password</label>
 							<input class="form-control" type="password" name="inputPassword">
 						</div>
+						<div id="loginMessage">
+							<?php 
+							if(isset($_SESSION['login_message'])) {
+								echo $_SESSION['login_message'];
+								unset($_SESSION['login_message']);
+							}
+							 ?>
+						</div>
 						<div class="form-group-login">
 							<button type="submit" class="btn btn-outline-dark">Login</button>
 							<button type="submit" class="btn btn-outline-dark">Forgot Password</button>
 						</div>	
-					</form>
-						
-				</div>
-				<div id="loginMessage">
-					<?php 
-					if(isset($_SESSION['login_message'])) {
-						echo $_SESSION['login_message'];
-						unset($_SESSION['login_message']);
-					}
-					 ?>
+					</form>	
 				</div>		
 			</div>
 			

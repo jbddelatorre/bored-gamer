@@ -182,7 +182,7 @@
 									<h6> <strong>PHP</strong>${dataFiltered[key]["price"]}<span> QTY</h6>
 									${login 
 										? `<div><button onClick=addToCart(${dataFiltered[key]['id']}) class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button></div>`
-										: `<div><button onClick=event.stopPropagation();location.href='./login.php' class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i><i class="fas fa-shopping-cart"></i><</button></div>`	
+										: `<div><button onClick=event.stopPropagation();location.href='./login.php' class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i><</button></div>`	
 									}
 									<div><button class='btn btn-outline-danger'> Wishlist <i class='far fa-heart'></i></button></div>
 								</div>
