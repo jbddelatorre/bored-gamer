@@ -5,6 +5,7 @@
 ?>
 
 	<link rel='stylesheet' type='text/css' href='./cart.css'>
+	<link rel='stylesheet' type='text/css' href='./input_number.css'>
 </head>
 <body>
 	<?php include_once '../partials/navbar.php'; ?>
@@ -51,7 +52,7 @@
 							echo '<tr>';
 								echo "<td><img src=".$row['item_image']."></td>";
 								echo "<td>".$row['name']."</td>";
-								echo "<td><span class='input-number-decrement'>–</span><input id='input".$row['id']."'class='input-number' type='number' value='". $cart_item['qty'] ."'><span class='input-number-increment'>+</span></div></td>";
+								echo "<td><span class='input-number-decrement'>–</span><input id='input".$row['id']."'class='input-number' type='number' value='". $cart_item['qty'] ."'><span class='input-number-increment'>+</span></td>";
 								// echo "<td><input id='input".$row['id']."' type='number' min='1' class='cart-qty-input' value='". $cart_item['qty'] ."'></td>"; 
 								//multiple id mistake, fix this, change innerhtml to inputvalue
 								echo "<td id='price".$row['id']."'>".$row['price']."</td>";
@@ -81,14 +82,19 @@
 			<div id="cartSummary">
 				<div>
 					<h4>Cart Summary</h4>
-					<p>Total Quantity</p>
-					<p>Total Price</p>
-					<a href="../views/checkout.php"><button class="btn btn-outline-dark">Checkout Order</button></a>					
+					<div>
+						<ul>
+							<li>Qty <span id="cartSummaryQty"><?php echo $_SESSION['cartQuantity'] ?></span>Cart Quantity</li>
+							<li>Php <span id="cartSummaryTotalPrice"><?php echo $totalprice ?></span>Total Amount</li>
+						</ul>
+					</div>
+					<a href="../views/checkout.php"><button class="btn btn-outline-dark">Proceed to Checkout</button></a>					
 				</div>
 			</div>
 		</div>
 		</div>
 
+<!-- <script src="../assets/js/input_number.js"></script> -->
 
 <script type="text/javascript">
 	const deletebuttons = document.querySelectorAll('.button-delete-item');
@@ -109,6 +115,10 @@
 			const cartQuantity = document.querySelector('#cartQuantity').textContent;
 
 			totalPriceElement.innerHTML = totalPrice - subtotal;
+
+			const cartSummaryTotalPrice = document.querySelector('#cartSummaryTotalPrice')
+
+			cartSummaryTotalPrice.innerHTML = totalPriceElement.innerHTML;
 	
 			document.querySelector('#cartQuantity').textContent = cartQuantity - deletedQuantity.value;
 
@@ -145,6 +155,8 @@
 				success: (data) => {
 					const dataJSON = JSON.parse(data);
 					document.querySelector('#cartQuantity').textContent = dataJSON;
+					document.querySelector('#cartSummaryQty').textContent = dataJSON;
+
 				}
 			})
 		})
@@ -168,6 +180,9 @@
 
 		totalPriceElement.textContent = newTotalPrice;
 
+		const cartSummaryTotalPrice = document.querySelector('#cartSummaryTotalPrice')
+
+			cartSummaryTotalPrice.innerHTML = newTotalPrice;
 
 		$.ajax({
 				url: '../controllers/update_cart_quantity.php',
@@ -193,7 +208,9 @@
 	}
 
 
-	//For input number 
+	//For input number
+
+
 
 	const quantityInput = document.querySelectorAll(`input[id^="input"]`);
 

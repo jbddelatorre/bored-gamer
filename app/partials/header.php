@@ -12,7 +12,12 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 
 	<style type="text/css">
+		html {
+			background-color: #00000008;
+		}
+
 		.appViewBox {
+			background-color: #00000008;
 			min-height: 90vh;
 			padding-bottom: 30px;
 			/*width:80%;*/

@@ -75,7 +75,7 @@ session_start();
 					Orders History
 				</div>
 				<div class="card-body">
-					asdfgsd
+					Previous Transactions
 				</div>
 			</div>
 		</div>

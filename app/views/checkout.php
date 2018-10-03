@@ -20,6 +20,24 @@ session_start();
 	}
 	?>
 
+	<?php 
+		$id = $_SESSION['user_data']['id'];
+		$sql_address = "SELECT * from addresses where user_id = $id";
+		$result_address = mysqli_query($conn, $sql_address);
+		if (mysqli_num_rows($result_address) < 1) {
+			
+			include './new_address_modal.php';
+			echo "
+				<script>
+					function noscroll() {
+					  window.scrollTo( 0, 0 );
+					}
+					window.addEventListener('scroll', noscroll);
+				</script>
+			";
+		}
+	?>
+
 	<div id="updateModal" class="close-modal">
 		<div id="updateForm">
 			<header>
@@ -65,21 +83,21 @@ session_start();
 
 	<div class="appViewBox">
 		<h1>Board Game Store - Checkout Page</h1>
-		<a href="./catalog.php">go to catalog</a>
+		<!-- <a href="./catalog.php">go to catalog</a> -->
 
 		<div id="checkoutApp">
 			<form>
 				<div id="shippingAndPayment">
 					<div id="checkoutLeft">
 						<div class="form-group">
-							<label class="label-address" for="shippingAddress">Shipping Address</label><input type="button" id="updateAddressShipping" class="btn btn-info update-address-button" value="Edit Shipping Address"></input>
+							<label class="label-address" for="shippingAddress">Shipping Address</label><input type="button" id="updateAddressShipping" class="btn btn-outline-info update-address-button" value="Update Shipping Address"></input>
 							<p id="currentShipping">Please enter a shipping address.</p>
-							<label class="label-address" for="billingAddress">Billing Address</label><input type="button" id="updateAddressBilling" class="btn btn-info update-address-button" value="Edit Billing Address"></input>
+							<label class="label-address" for="billingAddress">Billing Address</label><input type="button" id="updateAddressBilling" class="btn btn-outline-info update-address-button" value="Update Billing Address"></input>
 							<p id="currentBilling">Please enter a billing address.</p>
 						</div>
 					</div>
 					<div id="checkoutRight">
-						<h4>Payment Method</h4>
+						<h6>Payment Method</h6>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="payment-method" id="pm1" value="cod" checked>
 							<label class="form-check-label" for="cod">
@@ -92,9 +110,9 @@ session_start();
 								Paypal
 							</label>
 						</div>
-						<h4>Order Summary</h4>
+						<h6>Order Summary</h6>
 						<div class="list-group-item">PHP <span id="totalPrice"></span></div>
-						<input type="button" style="{margin-top: 20px;}" id="submitOrder" class="btn btn-primary" value="PLACE ORDER NOW"></input>
+						<input type="button" style="margin-top: 20px;" id="submitOrder" class="btn btn-outline-primary" value="Place your order"></input>
 					</div>
 				</div>
 			</form>
@@ -201,9 +219,12 @@ session_start();
 										<td>${itemData[key2]['price']}</td>
 										<td id='input${shoppingCart[key]['id']}'>${shoppingCart[key]['qty']}</td>
 										<td id='sub${shoppingCart[key]['id']}'>${subTotal}</td>
-										<td><button id='${shoppingCart[key]['id']}' class='btn btn-danger button-delete-item'>DELETE</button></td>
+										<td><i id='${shoppingCart[key]['id']}' class='button-delete-item fas fa-trash-alt'></i></td>
 										</tr>
 										`)
+
+									// <button id='${shoppingCart[key]['id']}' class='btn btn-danger button-delete-item'>DELETE</button>
+
 									totalPrice += subTotal;
 								}
 							}		
@@ -416,6 +437,12 @@ session_start();
 			}
 		})
 	});
+
+
+	/*SCROLL LOCK ON NEW ADDRESS*/
+	
+	// Remove listener to disable scroll
+	// window.removeEventListener('scroll', noscroll);
 
 
 

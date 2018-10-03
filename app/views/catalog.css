@@ -162,6 +162,9 @@ img {
 	margin: 2px 5px;
 	width:100%;
 }
+/*.cardContainer a {
+	width: 100%;
+}*/
 
 .cardContainer button:focus {
 	/*outline: none;*/

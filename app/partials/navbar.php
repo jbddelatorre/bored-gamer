@@ -154,7 +154,7 @@
 <header id="headerNavigation">
 <nav class="mainnavbar navbar-expand-lg">
   <div id="navleft">
-    <a class="navbar-brand" href="#"><h1>The Bored Gamer</h1></a>
+    <a class="navbar-brand" href="./catalog.php"><h1>The Bored Gamer</h1></a>
     <h3 class="navbar-brand">Curing boredom, one boardgame at a time.</h3>
   </div>
   <div id="navcenter">

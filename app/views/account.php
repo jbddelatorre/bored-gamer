@@ -5,6 +5,7 @@ session_start();
 ?>
 
 <link rel='stylesheet' type='text/css' href='./account.css'>
+<link rel='stylesheet' type='text/css' href='../assets/css/spinner.css'>
 </head>
 <body>
 	<?php include_once '../partials/navbar.php'; ?>
@@ -44,6 +45,7 @@ session_start();
 			{'id':'contact','name':'Mobile No.', type: 'tel'}];
 
 		const get_user_profile = (info, dom) => {
+
 			const val = $.ajax({
 				url:'../controllers/get_user_info.php',
 				data:{data: info},
@@ -53,7 +55,7 @@ session_start();
 					const domEle = document.querySelector(`#${dom}`);
 
 					if(info == 'password') {
-						domEle.value = '*******'
+						domEle.value = '**********'
 					} else {
 						domEle.value = d[info];
 					}
@@ -64,11 +66,17 @@ session_start();
 		}
 
 		const edit_user_profile = (id, newvalue) => {
-			$.ajax({
+			$('#rightAccount').empty();
+			$('#rightAccount').append(`<div style="display:flex;justify-content:center;"><div class="loader"></div></div>`);
+			
+			setTimeout(() => $.ajax({
 				url: '../controllers/update_user_info.php',
 				data: {id: id, value: newvalue},
 				type: 'POST',
 				success: (data) => {
+					console.log(data);
+					generate_user_info();
+
 					const d  = JSON.parse(data);
 					if (d == 0) {
 						const errorSpan = document.querySelector(`#error${id}`)
@@ -84,13 +92,12 @@ session_start();
 						
 					}
 				}
-			})
+			}),200)
 		}
 
 		const generate_user_info = () => {
 
 			$('#rightAccount').empty();
-
 			$('#rightAccount').append(`<h2>User Information</h2>`);
 
 			info.forEach(ele => {
@@ -151,6 +158,8 @@ session_start();
 
 			$(`<div id="accountChangePassword">
 				<h6>Change Password</h6>
+				<label>Enter Old Password</label>
+				<input class="form-control" type="password">
 				<label>Set new password</label>
 				<input class="form-control" type="password">
 				<div>

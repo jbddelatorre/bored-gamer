@@ -9,7 +9,7 @@
 	<link rel='stylesheet' type='text/css' href='./catalog.css'>
 	<link rel="stylesheet" href="../assets/css/spinner.css">
 </head>
-<body onScroll=adjustHeight()>
+<body onscroll="adjustHeight()">
 	<?php include_once '../partials/navbar.php'; ?>
 	
 
@@ -88,17 +88,17 @@
 
 							while($row = mysqli_fetch_assoc($result)) {
 								echo "<div class='cardContainer'>
-									<div class='card'>
-									  <img class='card-img-top' src='". $row['item_image'] ."' alt='Card image cap'>
-									  <div class='card-body'>
-									    <h5 class='card-title'>". $row['name'] ."</h5>
+									<div class='card' id='".$row['id']."'>
+									  <img class='card-img-top' src='". $row['item_image'] ."' alt='Card image cap' id='".$row['id']."'>
+									  <div class='card-body' id='".$row['id']."'>
+									    <h5 class='card-title' id='".$row['id']."'>". $row['name'] ."</h5>
 									    
 									    <h6> <strong>PHP</strong> ". $row['price'] ."<span></span> QTY</h6><div>
 									    ";
 									    	if(isset($_SESSION['user_data'])) {
-												echo "<button onClick=addToCart(".$row['id'].") class='btn btn-outline-dark'>Add to Cart <i class='fas fa-shopping-cart'></i></button></div>";
+												echo "<button onClick=event.stopPropagation();addToCart(".$row['id'].") class='btn btn-outline-dark'>Add to Cart <i class='fas fa-shopping-cart'></i></button></div>";
 											} else {
-												echo "<a href='./login.php'><button class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button></a></div>";
+												echo "<button onClick=event.stopPropagation();location.href='./login.php' class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button></div>";
 											};
 
 											echo "<div><button class='btn btn-outline-danger'> Wishlist <i class='far fa-heart'></i></button></div>";
@@ -175,14 +175,14 @@
 				for (let key in dataFiltered) {
 					$('#itemsForSale').append(`
 						<div class='cardContainer'>
-							<div class='card'>
-								<img class='card-img-top' src="${dataFiltered[key]['item_image']}" alt='Card image cap'>
-								<div class='card-body'>
-									<h5 class='card-title'>${dataFiltered[key]["name"]}</h5>
+							<div class='card' id='${dataFiltered[key]['id']}'>
+								<img class='card-img-top' src="${dataFiltered[key]['item_image']}" alt='Card image cap' id='${dataFiltered[key]['id']}'>
+								<div class='card-body' id='${dataFiltered[key]['id']}'>
+									<h5 class='card-title' id='${dataFiltered[key]['id']}'>${dataFiltered[key]["name"]}</h5>
 									<h6> <strong>PHP</strong>${dataFiltered[key]["price"]}<span> QTY</h6>
 									${login 
 										? `<div><button onClick=addToCart(${dataFiltered[key]['id']}) class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button></div>`
-										: `<div><a href="./login.php"><button class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i><i class="fas fa-shopping-cart"></i><</button>/a></div>`	
+										: `<div><button onClick=event.stopPropagation();location.href='./login.php' class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i><i class="fas fa-shopping-cart"></i><</button></div>`	
 									}
 									<div><button class='btn btn-outline-danger'> Wishlist <i class='far fa-heart'></i></button></div>
 								</div>
@@ -190,7 +190,7 @@
 					</div>`)
 				}
 			}
-		}), 100)
+		}), 200)
 	}
 
 
@@ -215,13 +215,34 @@
 		})
 	}
 
+	const addListenerToCards = () => {
+		const cards = document.querySelectorAll('.cardContainer .card');
+		// console.log(cards);
+
+		cards.forEach(card => {
+			card.addEventListener("click", (event) => {
+				const card_id = event.target.id;
+				console.log(card_id);
+				window.location.href = `./product.php?id=${card_id}`
+				// $.ajax({
+				// 	url:'../controllers/get_product.php',
+				// 	data:{id:cart_id},
+				// 	type:'GET',
+				// 	success: () => {
+
+				// 	}
+				// })
+			})
+		})
+	}
+
 	const adjustHeight = () => {
 		let distancePX = $(window).scrollTop();
 		let windowHeight = $(window).height();
 		let distanceVH = 100*distancePX/windowHeight;
 
 		const filterbar = document.querySelector('#filterdiv');
-		console.log(distanceVH);
+		// console.log(distanceVH);
 		if (distanceVH >= 20) {
 			filterbar.classList.add('filter-move-up');
 		} else {
@@ -229,6 +250,8 @@
 		}
 	}
 
+	// adjustHeight();
+	addListenerToCards();
 </script>
 
 	
