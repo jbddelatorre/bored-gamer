@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="./checkout.css">
 
 <style>
-	#addAddressModal {
+	#redirectToAddAddressModal {
 		display: flex;
 		width:100vw;
 		height:100vh;
@@ -17,112 +17,26 @@
 		opacity: 1;
 	}
 
-	#addAddressModal #addShippingBilling {
+	#redirectToAddAddress {
 		display: flex;
 		background-color: white;
 		box-shadow: 0 4px 7px 2px;  
-		width:80vw;
+		width:50vw;
 		padding: 25px;
 		justify-content: center;
-		flex-direction: row;
+		flex-direction: column;
 		align-content: center;
 		align-items: center;
+		margin-bottom: 300px;
 	}
 	
-	#addAddressModal #addShippingForm,
-	#addAddressModal #addBillingForm {
-		flex:1;
-		display: flex;
-		flex-direction: column;
-		align-content: center;
-	}
-
-	.modal-input-div-addshipping,
-	.modal-input-div-addbilling {
-		display: flex;
-		flex-direction: column;
-	}
 
 </style>
 
 
-<div id="addAddressModal" class="close-modal">
-	<div id="addShippingBilling">
-		<div id="addShippingForm">
-			<header>
-				<h2>Add Shipping Address</h2>
-			</header>
-			<main>
-				<div class="modal-input-div-addshipping">
-					<label for="region">Address Number and Street</label>
-					<input class="modal-only" type="text" name="street" id="inputstreet">
-				</div>
-				<div class="modal-input-div-addshipping">
-					<label for="region">Region</label>
-					<select class="modal-only" name="region" id="selectregions">
-					</select>
-				</div>
-				<div class="modal-input-div-addshipping">
-					<label for="province">Province</label>
-					<select class="modal-only" name="province" id="selectprovinces">
-						<option value="null">--PLEASE SELECT--</option>
-					</select>
-				</div>
-				<div class="modal-input-div-addshipping">
-					<label for="municipality">Municipality</label>
-					<select class="modal-only" name="municipality" id="selectmunicipalities">
-						<option value="null">--PLEASE SELECT--</option>
-					</select>
-				</div>
-				<div class="modal-input-div-addshipping">
-					<label for="barangay">Barangay</label>
-					<select class="modal-only" name="barangay" id="selectbarangays">
-						<option value="null">--PLEASE SELECT--</option>
-					</select>
-				</div>
-			</main>
-			<footer>
-				<button type="button" class="btn btn-secondary close-modal">Close</button>
-        		<button type="button" class="btn btn-primary" id="submitUpdateButton">Update Address</button>
-			</footer>	
-		</div>
-		<div id="addBillingForm">
-			<header>
-				<h2>Add Billing Address</h2>
-			</header>
-			<main>
-				<div class="modal-input-div-addbilling">
-					<label for="region">Address Number and Street</label>
-					<input class="modal-only" type="text" name="street" id="inputstreet">
-				</div>
-				<div class="modal-input-div-addbilling">
-					<label for="region">Region</label>
-					<select class="modal-only" name="region" id="selectregions">
-					</select>
-				</div>
-				<div class="modal-input-div-addbilling">
-					<label for="province">Province</label>
-					<select class="modal-only" name="province" id="selectprovinces">
-						<option value="null">--PLEASE SELECT--</option>
-					</select>
-				</div>
-				<div class="modal-input-div-addbilling">
-					<label for="municipality">Municipality</label>
-					<select class="modal-only" name="municipality" id="selectmunicipalities">
-						<option value="null">--PLEASE SELECT--</option>
-					</select>
-				</div>
-				<div class="modal-input-div-addbilling">
-					<label for="barangay">Barangay</label>
-					<select class="modal-only" name="barangay" id="selectbarangays">
-						<option value="null">--PLEASE SELECT--</option>
-					</select>
-				</div>
-			</main>
-			<footer>
-				<button type="button" class="btn btn-secondary close-modal">Close</button>
-        		<button type="button" class="btn btn-primary" id="submitUpdateButton">Update Address</button>
-			</footer>	
-		</div>
+<div id="redirectToAddAddressModal">
+	<div id="redirectToAddAddress">
+		<p>You have not provided a shipping and a billing address. Please update your account profile to proceed with checkout.</p>
+		<a href="./account.php"><button class="btn btn-outline-dark">Go to my Account</button></a>
 	</div>
 </div>

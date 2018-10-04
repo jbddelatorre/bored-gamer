@@ -39,17 +39,20 @@
 						get_all_address(address_type);
 					}
 
-					get_ph_info("regions", "01");
 					alert('Updated address!')
+
+					$('#inputstreet').val('');
+					$('#inputstreet').empty();
+					$('#selectregions').empty();
+					$('#selectprovinces').empty();
+					$('#selectmunicipalities').empty();
+					$('#selectbarangays').empty();
+
+					get_ph_info();
 				}
 			})
 
-			$('#inputstreet').val('');
-			$('#inputstreet').empty();
-			$('#selectregions').empty();
-			$('#selectprovinces').empty();
-			$('#selectmunicipalities').empty();
-			$('#selectbarangays').empty();
+			
 
 		} else {
 			alert('Please complete your address.')

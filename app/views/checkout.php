@@ -24,7 +24,7 @@ session_start();
 		$id = $_SESSION['user_data']['id'];
 		$sql_address = "SELECT * from addresses where user_id = $id";
 		$result_address = mysqli_query($conn, $sql_address);
-		if (mysqli_num_rows($result_address) < 1) {
+		if (mysqli_num_rows($result_address) < 2) {
 			
 			include './new_address_modal.php';
 			echo "
@@ -301,8 +301,8 @@ session_start();
 			success: (data) => {
 				const d = JSON.parse(data);
 				const ele = document.querySelector(`#${type}`);
-
-				ele.textContent = `${d.house_num_others}, ${d.barangay}, ${d.province_code}, ${d.region_province}, ${d.region}`
+				d ? ele.textContent = `${d.house_num_others}, ${d.barangay}, ${d.province_code}, ${d.region_province}, ${d.region}` : ele.textContent = "No information Provided."
+				
 			}
 		})
 	}

@@ -37,4 +37,6 @@
 		}
 
 		echo json_encode($address_data);
+	} else {
+		echo json_encode(0);
 	}

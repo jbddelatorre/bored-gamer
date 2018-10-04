@@ -274,8 +274,8 @@ session_start();
 				data:{data:type},
 				success: (data) => {
 					const d = JSON.parse(data);
-					document.querySelector(`#accountDefault${type}`).textContent = `${d.house_num_others}, ${d.barangay}, ${d.province_code}, ${d.region_province}, ${d.region}`
-				}
+					d ? document.querySelector(`#accountDefault${type}`).textContent = `${d.house_num_others}, ${d.barangay}, ${d.province_code}, ${d.region_province}, ${d.region}` : document.querySelector(`#accountDefault${type}`).textContent = 'No Information Provided';
+				}, 
 			})
 		}
 
@@ -286,18 +286,23 @@ session_start();
 				data: {data:type},
 				success:(data) => {
 					const d = JSON.parse(data);
-					// console.log(d)
-						$(`#listCurrent${type}`).empty();
-					for(let ad of d) {
-						$(`#listCurrent${type}`).append(`
-							<div class="listCurrentTypeSub">
-								<div class="listCurrentTypeData">${ad.house_num_others}, ${ad.barangay}, ${ad.province_code}, ${ad.region_province}, ${ad.region}</div>
-								<div class="listCurrentTypeDefault">${parseInt(ad.default_add) ? `<span style="padding:3px 3px;">  Current  Default  </span>` : `<button class="btn btn-outline-dark" id="listCurrentTypeDefaultButton${ad.id}">Set Default<button>`}</div>
-								<div class="listCurrentTypeUpdate"><button class="btn btn-outline-info" id="listCurrentTypeUpdateButton${ad.id}">Update</button></div>
-								<div class="listCurrentTypeDelete">
-								<button class="btn btn-outline-danger" id="listCurrentTypeDeleteButton${ad.id}">Delete</button></div>
-							</div>
-						`)
+
+					if (d) {
+						$(`#listCurrent${type}`).empty()
+						for(let ad of d) {
+							$(`#listCurrent${type}`).append(`
+								<div class="listCurrentTypeSub">
+									<div class="listCurrentTypeData">${ad.house_num_others}, ${ad.barangay}, ${ad.province_code}, ${ad.region_province}, ${ad.region}</div>
+									<div class="listCurrentTypeDefault">${parseInt(ad.default_add) ? `<span style="padding:3px 3px;">  Current  Default  </span>` : `<button class="btn btn-outline-dark" id="listCurrentTypeDefaultButton${ad.id}">Set Default<button>`}</div>
+									<div class="listCurrentTypeUpdate"><button class="btn btn-outline-info" id="listCurrentTypeUpdateButton${ad.id}">Update</button></div>
+									<div class="listCurrentTypeDelete">
+									<button class="btn btn-outline-danger" id="listCurrentTypeDeleteButton${ad.id}">Delete</button></div>
+								</div>
+							`)
+						}
+					} else {
+						$(`#listCurrent${type}`).empty(); 
+						$(`#listCurrent${type}`).append(`<p style="text-align:center;">No Address Provided. Please add an address below.</p>`);
 					}
 
 					/*SET DEFAULT BUTTONS*/	
@@ -322,7 +327,6 @@ session_start();
 						})
 
 					}))
-
 
 
 					/*UPDATE BUTTONS*/
@@ -389,7 +393,7 @@ session_start();
 				</div>
 				<div class="add-address-input-div">
 					<label for="municipality">Municipality</label>
-					<select class="add-modal-only form-control" name="municipality" id="selectmunicipalities">
+					<select class="add-modal-only form-control" name="municipality" id="addselectmunicipalities">
 						<option value="null">--PLEASE SELECT--</option>
 					</select>
 				</div>
@@ -401,16 +405,61 @@ session_start();
 				</div>
 			</main>
 			<footer id="addAddressFooter">
-        		<button type="button" class="btn btn-outline-primary" id="submitUpdateButton" style="text-transform:capitalize;">Add New ${type} Address</button>
+        		<button type="button" class="btn btn-outline-primary" id="submitAddAddressButton${type}" style="text-transform:capitalize;">Add New ${type} Address</button>
 			</footer>	
 		</div></div>`)
-		}
+			get_ph_info_add();
 
-		const set_default = () => {
-			
-		}
-	
 
+			document.querySelector('[id^="submitAddAddressButton"]').addEventListener("click", (event) => {
+				
+				const address_type = event.target.id.replace('submitAddAddressButton', '');
+				let address_type_id = 1;
+				if (address_type == 'billing') address_type_id = 2;
+
+				const street = $('#addinputstreet').val();
+				const region = $('#addselectregions :selected').val();
+				const province = $('#addselectprovinces :selected').val();
+				const municipality = $('#addselectmunicipalities :selected').val();
+				const barangay = $('#addselectbarangays :selected').val();
+
+				if (street && region && province && municipality && barangay){
+					
+					$.ajax({
+						url:'../controllers/add_new_address.php',
+						data: {address_type_id:address_type_id, house_num_others: street, region_code: region, region_province_code: province, city_municipality_code: municipality, barangay_id: barangay},
+						type:'POST',
+						success: (data) => {
+							// console.log(data);
+
+							// if (typeof(load_address) == "function") {
+							// 	load_address('currentShipping');
+							// 	load_address('currentBilling');
+							// }
+
+							if (typeof(get_all_address) == "function") {
+								console.log(address_type);
+								get_all_address(address_type);
+							}
+
+							alert('Updated address!')
+
+							$('#addinputstreet').val('');
+							$('#addinputstreet').empty();
+							$('#addselectregions').empty();
+							$('#addselectprovinces').empty();
+							$('#addselectmunicipalities').empty();
+							$('#addselectbarangays').empty();
+
+							get_ph_info();
+						}
+					})
+				} else {
+					alert('Please complete your address.')
+				}
+
+			})
+		}
 
 		document.querySelector('#getUserProfile').addEventListener("click", generate_user_info)
 		document.querySelector('#edit-email').addEventListener("click", generate_user_info)

@@ -33,6 +33,8 @@
 				echo json_encode($row);
 			}
 		}
+	} else {
+		echo json_encode(0);
 	}
 
 
