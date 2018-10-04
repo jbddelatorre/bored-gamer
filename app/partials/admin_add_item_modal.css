@@ -1,4 +1,4 @@
-#adminAddModal {
+#adminUpdateModal {
 	width:100vw;
 	height:100vh;
 	background-color:rgba(0,0,0,.5);
@@ -14,7 +14,7 @@
 	opacity: 0;
 }
 
-#adminAddModalForm {
+#adminUpdateModalForm {
 /*	width:500px;
 	height:500px;*/
 	background-color: white;
@@ -26,38 +26,38 @@
 	align-content: center;
 	align-items: center;
 }
-#adminAddModalForm main {
+#adminUpdateModalForm main {
 	width:90%;
 }
 
-#adminAddModalForm .admin-item-input-div {
+#adminUpdateModalForm .admin-item-input-div {
 	display: flex;
 	flex-wrap: nowrap;
 	margin: 10px 0;
 	/*flex-direction: column;*/
 }
 
-#adminAddModalForm .admin-item-input-div-long {
+#adminUpdateModalForm .admin-item-input-div-long {
 	flex-direction: column !important;
 }
 
-#adminAddModalForm .admin-item-input-div input {
+#adminUpdateModalForm .admin-item-input-div input {
 	/*width:100px;*/
 	flex:5;
 }
-#adminAddModalForm .admin-item-input-div label {
+#adminUpdateModalForm .admin-item-input-div label {
 	/*width:180px;*/
 	text-align: center;
 	flex:1;
 	margin: 0 10px 0 5px;
 }
 
-#adminAddModalForm:hover {
+#adminUpdateModalForm:hover {
 	cursor: default;
 }
 
-#adminAddModalForm input[type=number]::-webkit-inner-spin-button, 
-#adminAddModalForm input[type=number]::-webkit-outer-spin-button { 
+#adminUpdateModalForm input[type=number]::-webkit-inner-spin-button, 
+#adminUpdateModalForm input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
   margin: 0; 
 }

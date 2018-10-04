@@ -12,6 +12,7 @@ session_start();
 	<?php include_once '../partials/navbar.php'; ?>
 
 	<?php include_once '../partials/admin_update_item_modal.php'; ?>
+	<?php include_once '../partials/admin_add_item_modal.php'; ?>
 
 
 	<div class="appViewBox">
@@ -20,6 +21,9 @@ session_start();
 		<!-- <div class="loader"></div> -->
 
 		<div id='adminItemsApp'>
+			<div style="display: flex; justify-content: center; padding:20px 0;">
+				<button style="text-align:center; min-width: 400px;"id="adminAddNewItem" class="btn btn-outline-success">Add New Item</button>
+			</div>
 			<div id="adminCompleteItems">
 				
 			</div>
@@ -27,29 +31,60 @@ session_start();
 	</div>
 
 	<script type="text/javascript">
+
+		//UPDATE ITEMS DOM
+
 		const nameModal = document.querySelector('.admin-item-input-div [name="name"]');
-				const priceModal = document.querySelector('.admin-item-input-div [name="price"]');
-				const urlModal = document.querySelector('.admin-item-input-div [name="url"]');
-				const itemdescModal = document.querySelector('.admin-item-input-div [name="desc"]');
-				const minplayerModal = document.querySelector('.admin-item-input-div [name="minplayer"]');
-				const maxplayerModal = document.querySelector('.admin-item-input-div [name="maxplayer"]');
-				const timeModal = document.querySelector('.admin-item-input-div [name="time"]');
-				const catModal = document.querySelector('.admin-item-input-div [name="category"]');
-				const gtModal = document.querySelector('.admin-item-input-div [name="gametype"]');
-				const trendModal = document.querySelector('.admin-item-input-div [name="trend"]');
-				const designerModal = document.querySelector('.admin-item-input-div [name="designer"]');
-				const ratingModal = document.querySelector('.admin-item-input-div [name="rating"]');
-	const modalDom = [nameModal,priceModal,urlModal,itemdescModal,minplayerModal,maxplayerModal,timeModal,catModal,gtModal,trendModal,designerModal,ratingModal]
+		const priceModal = document.querySelector('.admin-item-input-div [name="price"]');
+		const urlModal = document.querySelector('.admin-item-input-div [name="url"]');
+		const itemdescModal = document.querySelector('.admin-item-input-div [name="desc"]');
+		const minplayerModal = document.querySelector('.admin-item-input-div [name="minplayer"]');
+		const maxplayerModal = document.querySelector('.admin-item-input-div [name="maxplayer"]');
+		const timeModal = document.querySelector('.admin-item-input-div [name="time"]');
+		const catModal = document.querySelector('.admin-item-input-div [name="category"]');
+		const gtModal = document.querySelector('.admin-item-input-div [name="gametype"]');
+		const trendModal = document.querySelector('.admin-item-input-div [name="trend"]');
+		const yearModal = document.querySelector('.admin-item-input-div [name="year"]');
+		const ratingModal = document.querySelector('.admin-item-input-div [name="rating"]');
+		const inputidModal = document.querySelector('#adminUpdateModalItemId');
 
+		const modalDom = [inputidModal, nameModal,priceModal,urlModal,itemdescModal,minplayerModal,maxplayerModal,timeModal,catModal,gtModal,trendModal,yearModal,ratingModal]
 
+		const modalname = ['id','name', 'price', 'item_image', 'item_desc', 'min_players','max_players', 'average_length_id', 'categories_id', 'game_types_id', 'trends_id', 'year', 'rating']
 
+		//ADD ITEMS DOM
+
+		const addnameModal = document.querySelector('.admin-item-input-div [name="nameadd"]');
+		const addpriceModal = document.querySelector('.admin-item-input-div [name="priceadd"]');
+		const addurlModal = document.querySelector('.admin-item-input-div [name="urladd"]');
+		const additemdescModal = document.querySelector('.admin-item-input-div [name="descadd"]');
+		const addminplayerModal = document.querySelector('.admin-item-input-div [name="minplayeradd"]');
+		const addmaxplayerModal = document.querySelector('.admin-item-input-div [name="maxplayeradd"]');
+		const addtimeModal = document.querySelector('.admin-item-input-div [name="timeadd"]');
+		const addcatModal = document.querySelector('.admin-item-input-div [name="categoryadd"]');
+		const addgtModal = document.querySelector('.admin-item-input-div [name="gametypeadd"]');
+		const addtrendModal = document.querySelector('.admin-item-input-div [name="trendadd"]');
+		const addyearModal = document.querySelector('.admin-item-input-div [name="yearadd"]');
+		const addratingModal = document.querySelector('.admin-item-input-div [name="ratingadd"]');
+		const addinputidModal = document.querySelector('#adminUpdateModalItemIdadd');
+
+		const modalnameadd = ['name', 'price', 'item_image', 'item_desc', 'min_players','max_players', 'average_length_id', 'categories_id', 'game_types_id', 'trends_id', 'year', 'rating']
+
+		const addmodalDom = [addnameModal,addpriceModal,addurlModal,additemdescModal,addminplayerModal,addmaxplayerModal,addtimeModal,addcatModal,addgtModal,addtrendModal,addyearModal,addratingModal]
+
+		//Get All Items
 		const admin_complete_items = () => {
+			console.log('dsfsds')
+			$('#itemsForSale').empty();
+			$('#itemsForSale').append(`<div class="loader"></div>`);
+
 			$.ajax({
 				url: '../controllers/admin_view_edit_items.php',
-				data:{},
-				type:'GET',
+				type:'POST',
 				success: (data) => {
-					const d = JSON.parse(data);
+					console.log(data);
+					let d = JSON.parse(data);
+					$('#adminCompleteItems').empty();
 
 					for(let item of d) {
 						$('#adminCompleteItems').append(`
@@ -83,7 +118,7 @@ session_start();
 							<p><strong>Trend</strong>: ${item.trend_names}</p>
 							</div>
 							<div class="admin-pub-rating">
-							<p><strong>Designer</strong>: ${item.publisher}</p>
+							<p><strong>year</strong>: ${item.year}</p>
 							<p><strong>Rating</strong>: ${item.rating}</p>
 							</div>
 							<div class="admin-update-button">
@@ -107,15 +142,81 @@ session_start();
 						admin_single_item(item_id);
 						})
 					})
-
 				}
 			})
 		}
 
+		/*Add Item Button Functionality*/
+
+		document.querySelector('#adminAddNewItem').addEventListener("click", () => {
+			document.querySelector('#adminAddModal').style.display = 'flex';
+			setTimeout(() => document.querySelector('#adminAddModal').style.opacity = 1, 200)
+		})
+
+		document.querySelector('#adminAddCloseModalButton').addEventListener('click', () => {
+			setTimeout(() => document.querySelector('#adminAddModal').style.display = 'none', 300)
+
+			document.querySelector('#adminAddModal').style.opacity = 0;
+		})
+
+		document.querySelector('#adminSubmitAddItemButton').addEventListener('click', () => {
+			adminSubmitAddItem();
+		})
+
+		/*Add Item Function*/
+
+		const adminSubmitAddItem = () => {
+			const newItemData = {};
+
+			modalnameadd.forEach((form,index) => {
+				// console.log(addmodalDom);
+				newItemData[form] = addmodalDom[index].value;
+			})
+
+			$.ajax({
+				url:'../controllers/admin_add_item.php',
+				data:{...newItemData},
+				type:'POST',
+				success: (data) => {
+					// console.log(data);
+					admin_complete_items();
+					document.querySelector('#adminAddCloseModalButton').click();
+				}
+			})
+		}
+
+		/*Update Functions*/
+
 		const adminSubmitUpdateItem = () => {
-			modalDom.forEach(form => {
-				const modalname = ['name', 'price', 'item_image', 'item_desc', 'minplayers','max_players', 'average_length_id', 'category_names', 'game_type_names', 'trend_names', 'publisher', 'rating']
-				console.log(form.value)
+			const dataObject = {};
+			modalDom.forEach((form, index) => {		
+				const column = modalname[index];
+				dataObject[column] = form.value
+			})
+			// console.log(dataObject);
+			$.ajax({
+				url:'../controllers/admin_update_item.php',
+				data: {...dataObject},
+				type:'POST',
+				success: (data) => {
+					admin_complete_items();
+					document.querySelector('#adminCloseModalButton').click();
+				}
+			})
+		}
+
+		const adminDeleteItemButton = () => {
+			const item_id = inputidModal.value;
+
+			$.ajax({
+				url:'../controllers/admin_delete_item.php',
+				data:{id: item_id},
+				type:'POST',
+				success: (data) => {
+					console.log(data);
+					admin_complete_items();
+					document.querySelector('#adminCloseModalButton').click();
+				}
 			})
 		}
 
@@ -126,7 +227,9 @@ session_start();
 				type:'GET',
 				success: (data) => {
 					const d = JSON.parse(data);
+				
 				// console.log(d)
+				inputidModal.value = d.id;
 				nameModal.value = d.name;
 				priceModal.value = d.price;
 				urlModal.value = d.item_image;
@@ -134,13 +237,13 @@ session_start();
 				minplayerModal.value = d.min_players;
 				maxplayerModal.value = d.max_players;
 				timeModal.value = d.average_length_id;
-				set_select_default(d.category_names,'category');
-				set_select_default(d.game_type_names,'gametype');
-				set_select_default(d.trend_names,'trend');
-				designerModal.value = d.publisher;
+				set_select_default(d.categories_id,'category');
+				set_select_default(d.game_types_id,'gametype');
+				set_select_default(d.trends_id,'trend');
+				yearModal.value = d.year;
 				ratingModal.value = d.rating;
-			}
-		})
+				}
+			})
 		}
 
 		const set_select_default = (data, select) => {
@@ -158,6 +261,9 @@ session_start();
 			}
 		}
 
+
+		/*Update Modal Button Functionality*/
+
 		document.querySelector('#adminCloseModalButton').addEventListener('click', () => {
 
 			setTimeout(() => document.querySelector('#adminUpdateModal').style.display = 'none', 300)
@@ -166,10 +272,16 @@ session_start();
 		})
 
 		document.querySelector('#adminSubmitUpdateItemButton').addEventListener('click', () => {
-
 			adminSubmitUpdateItem();
 		})
 
+		document.querySelector('#adminSubmitDeleteItemButton').addEventListener('click', () => {
+			adminDeleteItemButton();
+		})
+
+
+
+		/*Adjusting Modal Height*/
 
 		const adjustHeightModal = () => {
 			let distancePX = $(window).scrollTop();

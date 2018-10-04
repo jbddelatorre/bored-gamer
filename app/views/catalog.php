@@ -8,6 +8,21 @@
 
 	<link rel='stylesheet' type='text/css' href='./catalog.css'>
 	<link rel="stylesheet" href="../assets/css/spinner.css">
+	<script type="text/javascript">	
+		const adjustHeight = () => {
+		let distancePX = $(window).scrollTop();
+		let windowHeight = $(window).height();
+		let distanceVH = 100*distancePX/windowHeight;
+
+		const filterbar = document.querySelector('#filterdiv');
+		// console.log(distanceVH);
+		if (distanceVH >= 20) {
+			filterbar.classList.add('filter-move-up');
+		} else {
+			filterbar.classList.remove('filter-move-up');
+		}
+	}
+	</script>
 </head>
 <body onscroll="adjustHeight()">
 	<?php include_once '../partials/navbar.php'; ?>
@@ -23,21 +38,21 @@
 				<div id="filterdiv">
 				<p>Filter by Game</p>
 				<ul class='list-group'>
-				  <li id='board_games'class='list-group-item game-filter-list-item' onClick = set_filter('board_games')>Board Games</li>
-				  <li id='card_games'class='list-group-item game-filter-list-item' onClick = set_filter('card_games')>Card Games</li>
-				  <li id='special_games'class='list-group-item game-filter-list-item' onClick = set_filter('special_games')>Special Games</li>
+				  <li id='categories1'class='list-group-item game-filter-list-item'>Board Games</li>
+				  <li id='categories2'class='list-group-item game-filter-list-item'>Card Games</li>
+				  <li id='categories3'class='list-group-item game-filter-list-item'>Special Games</li>
 				</ul>
 				<p>Filter by Type</p>
 				<ul class='list-group'>
-				  <li id='strategy' class='list-group-item type-filter-list-item' onClick = set_filter('strategy')>Strategy</li>
-				  <li id='party' class='list-group-item type-filter-list-item' onClick = set_filter('party')>Party / Socialize</li>
-				  <li id='for_fun' class='list-group-item type-filter-list-item' onClick = set_filter('for_fun')>For Fun</li>
-				  <li id='kids' class='list-group-item type-filter-list-item' onClick = set_filter('kids')>Kids</li>
-				  <li id='cooperative' class='list-group-item type-filter-list-item' onClick = set_filter('cooperative')>Cooperative</li>
-				  <li id='puzzle' class='list-group-item type-filter-list-item' onClick = set_filter('puzzle')>Puzzle</li>
+				  <li id='gametypes1' class='list-group-item type-filter-list-item'>Strategy</li>
+				  <li id='gametypes2' class='list-group-item type-filter-list-item'>Party / Socialize</li>
+				  <li id='gametypes3' class='list-group-item type-filter-list-item'>For Fun</li>
+				  <li id='gametypes4' class='list-group-item type-filter-list-item'>Kids</li>
+				  <li id='gametypes5' class='list-group-item type-filter-list-item'>Cooperative</li>
+				  <li id='gametypes6' class='list-group-item type-filter-list-item'>Puzzle</li>
 				</ul>	
 	
-				  <p id="clearFilter" onClick = set_filter('none')>Remove Filters</p>
+				  <p id="clearFilter">Remove Filters</p>
 		
 				</div>	
 			</div>
@@ -64,27 +79,10 @@
 				<div id='itemsForSale'>
 					
 					<?php
-						$sql = "SELECT * FROM items";
-						// if (isset($_SESSION['game_id_filter']) && isset($_SESSION['type_id_filter'])) {
-						// 	
-						// } else {
-						// 	if (!isset($_SESSION['game_id_filter']) && !isset($_SESSION['type_id_filter']))
-						// 	if (isset($_SESSION['game_id_filter'])) {
-						// 		$sql = $sql . " where categories_id = $gamefilter";
-						// 	} 
-						// 	if (isset($_SESSION['type_id_filter'])) {
-						// 		$sql = $sql . " where game_types_id = $typefilter";
-						// 	}
-						// }
-
-						// echo $sql;
-
+						$sql = "SELECT * FROM items LIMIT 15";
 						$result = mysqli_query($conn, $sql);
 
 						if (mysqli_num_rows($result) > 0) {
-							//<p class='card-text'>". $row['item_desc'] ."</p>
-							//<input type='number' id=qty".$row['id']." class='item-qty' name='inputQuantity' min='1' value='1'>
-
 							while($row = mysqli_fetch_assoc($result)) {
 								echo "<div class='cardContainer'>
 									<div class='card' id='".$row['id']."'>
@@ -92,7 +90,7 @@
 									  <div class='card-body' id='".$row['id']."'>
 									    <h5 class='card-title' id='".$row['id']."'>". $row['name'] ."</h5>
 									    
-									    <h6> <strong>PHP</strong> ". $row['price'] ."<span></span> QTY</h6><div>
+									    <h6> <strong>PHP</strong> ". $row['price'] ."</h6><div>
 									    ";
 									    	if(isset($_SESSION['user_data'])) {
 												echo "<button onClick=event.stopPropagation();addToCart(".$row['id'].") class='btn btn-outline-dark'>Add to Cart <i class='fas fa-shopping-cart'></i></button></div>";
@@ -148,6 +146,8 @@
 		$('#itemsForSale').empty();
 		$('#itemsForSale').append(`<div class="loader"></div>`);
 		
+		// console.log(filter);
+
 		setTimeout(() => $.ajax({
 			url: '../controllers/filter_items.php',
 			data: {filter: filter},
@@ -178,7 +178,7 @@
 								<img class='card-img-top' src="${dataFiltered[key]['item_image']}" alt='Card image cap' id='${dataFiltered[key]['id']}'>
 								<div class='card-body' id='${dataFiltered[key]['id']}'>
 									<h5 class='card-title' id='${dataFiltered[key]['id']}'>${dataFiltered[key]["name"]}</h5>
-									<h6> <strong>PHP</strong>${dataFiltered[key]["price"]}<span> QTY</h6>
+									<h6> <strong>PHP</strong>${dataFiltered[key]["price"]}</h6>
 									${login 
 										? `<div><button onClick=addToCart(${dataFiltered[key]['id']}) class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button></div>`
 										: `<div><button onClick=event.stopPropagation();location.href='./login.php' class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i><</button></div>`	
@@ -188,10 +188,92 @@
 							</div>
 					</div>`)
 				}
+				addListenerToCards();
+			},
+			error: (error) => {
+				console.log(error)
 			}
 		}), 200)
 	}
 
+	/*LI CLICK LISTENER*/
+
+	document.querySelectorAll('.game-filter-list-item').forEach(li => {
+		li.addEventListener("click", (event) => {
+			const id = event.target.id;
+			const cat_id = id.replace(/[^0-9]*/, '')
+			filter("categories_id", cat_id);
+		})
+	})
+	document.querySelectorAll('.type-filter-list-item').forEach(li => {
+		li.addEventListener("click", (event) => {
+			const id = event.target.id;
+			const cat_id = id.replace(/[^0-9]*/, '')
+			filter("game_types_id", cat_id);
+		})
+	})
+
+	document.querySelector('#clearFilter').addEventListener("click", () => filter('none'));
+
+	/*FILTER FUNCTION AJAX AND ANIMATION*/
+
+	const filter = (filter, id=1) => {
+		const f = filter == "categories_id" ? 'categories' : 'gametypes';
+
+		const liDom = document.querySelectorAll(`[id^=${f}]`)
+
+		liDom.forEach(li => {
+			li.classList.remove('selected-filter');
+			if (id == li.id.replace(/[^0-9]*/, '')) {
+				li.classList.add('selected-filter');
+			}
+		})
+
+		$('#itemsForSale').empty();
+		$('#itemsForSale').append(`<div class="loader"></div>`);
+
+		setTimeout(() => $.ajax({
+			url: '../controllers/filter_items.php',
+			data: {filter: filter, id: id},
+			type:'GET',
+			success: (data) => {
+				let dataParse = JSON.parse(data);
+
+				const dataFiltered = dataParse.filter;
+				const login = dataParse.login;
+
+				$('#itemsForSale').empty();
+
+				if (dataParse.filter.length === 0) {
+					$('#itemsForSale').append(
+						`<p>Item not found</p>`
+						);
+				}
+
+				//<input type='number' id=qty${dataFiltered[key]['id']} class='item-qty' name='inputQuantity' min='1' value='1'></span>
+				//<p class='card-text'>${dataFiltered[key]["item_desc"]}</p>
+
+				for (let key in dataFiltered) {
+					$('#itemsForSale').append(`
+						<div class='cardContainer'>
+							<div class='card' id='${dataFiltered[key]['id']}'>
+								<img class='card-img-top' src="${dataFiltered[key]['item_image']}" alt='Card image cap' id='${dataFiltered[key]['id']}'>
+								<div class='card-body' id='${dataFiltered[key]['id']}'>
+									<h5 class='card-title' id='${dataFiltered[key]['id']}'>${dataFiltered[key]["name"]}</h5>
+									<h6> <strong>PHP</strong>${dataFiltered[key]["price"]}</h6>
+									${login 
+										? `<div><button onClick=addToCart(${dataFiltered[key]['id']}) class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button></div>`
+										: `<div><button onClick=event.stopPropagation();location.href='./login.php' class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i><</button></div>`	
+									}
+									<div><button class='btn btn-outline-danger'> Wishlist <i class='far fa-heart'></i></button></div>
+								</div>
+							</div>
+					</div>`)
+				}
+				addListenerToCards();
+			}
+		}), 200)
+	}
 
 	const addToCart = (id) => {
 		// const qty_dom = document.querySelector(`input[id="qty${id}"]`)
@@ -235,25 +317,11 @@
 		})
 	}
 
-	const adjustHeight = () => {
-		let distancePX = $(window).scrollTop();
-		let windowHeight = $(window).height();
-		let distanceVH = 100*distancePX/windowHeight;
-
-		const filterbar = document.querySelector('#filterdiv');
-		// console.log(distanceVH);
-		if (distanceVH >= 20) {
-			filterbar.classList.add('filter-move-up');
-		} else {
-			filterbar.classList.remove('filter-move-up');
-		}
-	}
+	
 
 	// adjustHeight();
 	addListenerToCards();
 </script>
-
-	
 
 <?php 
 	include_once '../partials/footer.php';

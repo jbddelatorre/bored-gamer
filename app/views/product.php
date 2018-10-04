@@ -31,15 +31,15 @@
 					 				<li><i class='fas fa-archive'></i>In Stock</li>
 					 			</ul>
 					 			<ul id='age-players-averagetime'>
-					 				<li><i class='far fa-calendar-alt'></i>Ages ".$row['publisher']." and above</li>
+					 				<li><i class='far fa-calendar-alt'></i>Ages ".$row['age']." and above</li>
 					 				<li><i class='fas fa-user'></i></i>Players ".$row['min_players']." - ".$row['max_players']."</li>
-					 				<li><i class='fas fa-stopwatch'></i>".$row['price']." </li>
+					 				<li><i class='fas fa-stopwatch'></i>".$row['average_length_id']." </li>
 					 			</ul>
 					 			<div id='itemDescDiv'>
 					 				<p>".$row['item_desc']."</p>
 								</div>
 					 			<ul id='rating-wishlist-share'>
-					 				<li><i class='far fa-star'></i>Rating: ".$row['rating']." /5</li>
+					 				<li><i class='far fa-star'></i>Rating: ".round($row['rating'], 2)." /10</li>
 					 				<li><i class='far fa-heart'></i>Wishlist</li>
 					 				<li><i class='fas fa-share'></i>Share</li>
 					 			</ul>

@@ -57,7 +57,6 @@
 	}
 
 </style>
-	
 	<footer id="mainFooter">
 		<div id="footerWidth">
 		<div id="upperFooter">
