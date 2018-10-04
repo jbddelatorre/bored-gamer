@@ -75,7 +75,7 @@
 
 							echo '</table>';
 					} else {
-						echo '<p>Empty Cart</p>';
+						echo '<p style="text-align:center; margin-top:16px;">Your cart is empty.</p>';
 					}
 
 				 ?>

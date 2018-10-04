@@ -74,8 +74,8 @@ session_start();
 				<div class="card-header">
 					Orders History
 				</div>
-				<div class="card-body">
-					Previous Transactions
+				<div class="card-body" style="display:flex; justify-content: center;">
+					You have no previous transactions.
 				</div>
 			</div>
 		</div>

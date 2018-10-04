@@ -2,7 +2,9 @@
 <style type="text/css">
   #subNavBarContainer,
   .subNavBarUl,
-  .subNavBarLi {
+  .subNavBarLi,
+  .adminNavLi,
+  .adminNavUl {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -25,14 +27,33 @@
     /*background-color: #000000c9;*/
   }
 
-  .subNavBarLi {
+  .adminNavUl {
+    list-style: none;
     display: flex;
-/*    justify-content: flex-end;
-    align-items: center;*/
+    justify-content: flex-start;
+    margin-right: 2rem;
+    padding: 4px;
+    /*background-color: #000000c9;*/
+  }
+
+  .subNavBarLi, 
+  .adminNavLi {
+    display: flex;
     padding: 0px 15px;
     margin: 3px 0px;
-    border-left: 2px solid white;
     text-align: center;
+  }
+
+  .subNavBarLi {
+    border-left: 2px solid white;
+  }
+
+  .adminNavLi {
+    border-right: 2px solid white;
+  }
+
+  .adminNavLi:first-of-type {
+    border-left: 2px solid white;
   }
 
   .subNavBarUl li:last-child {
@@ -42,7 +63,11 @@
   .subNavBarLi a:active,
   .subNavBarLi a:hover,
   .subNavBarLi a:visited,
-  .subNavBarLi a:link {
+  .subNavBarLi a:link,
+  .adminNavLi a:active,
+  .adminNavLi a:hover,
+  .adminNavLi a:visited,
+  .adminNavLi a:link {
     color:white;
   }
 
@@ -146,8 +171,19 @@
   #navright i {
     margin-right: 10px; 
   }
+  #subNavLeft {
+    display: flex;
+    list-style: none;
+    flex:1;
+  }
+ 
+  #subNavLeft .adminNavUl {
+    display: flex;
+  }
 
-
+  #subNavLeft .adminNavLi {
+    color:white;
+  } 
 
 </style>
 
@@ -171,6 +207,11 @@
 </nav>
 <nav id='subNavBarContainer'>
   <div id="subNavLeft">
+    <ul class="adminNavUl">
+        <?php 
+          if(isset($_SESSION['admin'])) echo '<li class="adminNavLi"><a href="./admin_view_edit_items.php">View and Edit All Items</a></li>';
+        ?> 
+    </ul>
   </div>
   <div id="subNavRight">
     <ul class='subNavBarUl'>

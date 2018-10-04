@@ -16,16 +16,14 @@ $password = $_POST['inputPassword'];
 
 	if ( mysqli_num_rows($result) > 0) {
 		$row = mysqli_fetch_assoc($result);
-
-		// echo $row['password'];
-		// echo '00000000';
-		// echo $row['password'];		
-
-		// if ($row['password'] == $password_input) {
 		if (password_verify($password, $row['password'])) {
 			$_SESSION['user_data'] = $row;
 			$_SESSION['cartQuantity'] = 0;
 			$_SESSION['cart'] = array();
+
+			if ($row['roles_id'] == 2) {
+				$_SESSION['admin'] = 1;
+			}
 
 			header('Location: ../views/catalog.php' );
 		} else {

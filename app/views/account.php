@@ -323,6 +323,7 @@ session_start();
 							success: (data) => {
 								console.log(data);
 								get_all_address(type_address);
+								get_account_address(type_address);
 							}
 						})
 

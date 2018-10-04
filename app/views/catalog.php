@@ -12,7 +12,6 @@
 <body onscroll="adjustHeight()">
 	<?php include_once '../partials/navbar.php'; ?>
 	
-
 	<div class="appViewBox">
 	
 		<h1>Our Board Game Library</h1>
