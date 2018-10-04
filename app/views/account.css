@@ -127,40 +127,40 @@ span[id^="error"] {
 
 /*ADDRESS*/
 
-#account-appViewBox .modal-input-div label {
+#account-appViewBox .add-address-input-div label {
 	text-align: center;
 	width:15vw;
 }
 
-#account-appViewBox .modal-input-div input, 
-#account-appViewBox .modal-input-div select {
+#account-appViewBox .add-address-input-div input, 
+#account-appViewBox .add-address-input-div select {
 	display: inline-block !important;
 	margin:10px 5px;
 	outline: none !important;
 }
 
-#account-appViewBox .modal-input-div {
+#account-appViewBox .add-address-input-div {
 	display: flex;
 }
 
-#account-appViewBox #updateForm {
+#account-appViewBox #addAddress {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
 }
 
-#account-appViewBox #updateForm footer {
+#account-appViewBox #addAddress footer {
 	display: flex;
 	justify-content: center;
 	margin-top: 10px;
 }
 
-#account-appViewBox .modal-input-div input:focus, 
-#account-appViewBox .modal-input-div select:focus {
+#account-appViewBox .add-address-input-div input:focus, 
+#account-appViewBox .add-address-input-div select:focus {
 	outline: none !important;
 }
 
-#account-appViewBox [id^="edit"]:hover {
+#account-appViewBox p[id^="edit"]:hover {
 	cursor: pointer;
 	text-decoration: underline;
 }
@@ -171,8 +171,8 @@ span[id^="error"] {
 } 
 
 #account-appViewBox #rightAccount [id^="listCurrent"] {
-	margin: 10px 20px;
-	border-bottom: 2px solid lightgrey;
+	margin: 5px;
+	/*border-bottom: 2px solid lightgrey;*/
 }
 
 #account-appViewBox #rightAccount .listCurrentTypeSub {
@@ -193,6 +193,11 @@ span[id^="error"] {
 	flex:1;
 	margin: 2px 5px;
 	/*padding: 5px;*/
+}
+
+#account-appViewBox #rightAccount #addAddressFooter {
+	display: flex;
+	justify-content: center;
 }
 
 @media only screen and (max-width: 1100px) {

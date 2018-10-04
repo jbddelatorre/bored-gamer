@@ -14,7 +14,9 @@ session_start();
 		header('Location: ./register.php');
 	} 
 	?>
-
+	<?php 
+		include_once("../partials/update_address_modal.php");
+	?>
 	<div class="appViewBox" id="account-appViewBox">
 		<div id="leftAccount">
 			<div class="card" style="width: 18rem;">
@@ -60,6 +62,9 @@ session_start();
 
 		</div>
 	</div>
+
+	<script type="text/javascript" src="../assets/js/get_ph_info.js"></script>
+	<script type="text/javascript" src="../assets/js/get_update_address.js"></script>
 
 	<script type="text/javascript">
 		const info = [
@@ -282,18 +287,74 @@ session_start();
 				success:(data) => {
 					const d = JSON.parse(data);
 					// console.log(d)
-					
+						$(`#listCurrent${type}`).empty();
 					for(let ad of d) {
 						$(`#listCurrent${type}`).append(`
 							<div class="listCurrentTypeSub">
 								<div class="listCurrentTypeData">${ad.house_num_others}, ${ad.barangay}, ${ad.province_code}, ${ad.region_province}, ${ad.region}</div>
-								<div class="listCurrentTypeDefault">${parseInt(ad.default) ? 'Current Default' : `<button class="btn btn-outline-dark" id="listCurrentTypeDefaultButton${ad.id}">Set Default<button>`}</div>
+								<div class="listCurrentTypeDefault">${parseInt(ad.default_add) ? `<span style="padding:3px 3px;">  Current  Default  </span>` : `<button class="btn btn-outline-dark" id="listCurrentTypeDefaultButton${ad.id}">Set Default<button>`}</div>
 								<div class="listCurrentTypeUpdate"><button class="btn btn-outline-info" id="listCurrentTypeUpdateButton${ad.id}">Update</button></div>
 								<div class="listCurrentTypeDelete">
 								<button class="btn btn-outline-danger" id="listCurrentTypeDeleteButton${ad.id}">Delete</button></div>
 							</div>
 						`)
 					}
+
+					/*SET DEFAULT BUTTONS*/	
+					const setDefaultButtons = document.querySelectorAll('[id^="listCurrentTypeDefaultButton"]');
+
+					setDefaultButtons.forEach(button => button.addEventListener("click", (event) => {
+						const address_id = event.target.id.replace('listCurrentTypeDefaultButton', ''); 
+						const parentnode_id = button.parentNode.parentNode.parentNode.id
+						const type_address = parentnode_id.replace('listCurrent', '');
+						
+						let address_type_id = 1;
+						if (type_address == "billing") address_type_id = 2;
+
+						$.ajax({
+							url:'../controllers/set_default_address.php',
+							data: {address_id: address_id, address_type_id: address_type_id},
+							type:'POST',
+							success: (data) => {
+								console.log(data);
+								get_all_address(type_address);
+							}
+						})
+
+					}))
+
+
+
+					/*UPDATE BUTTONS*/
+					const updateButtons = document.querySelectorAll('[id^="listCurrentTypeUpdateButton"]');
+
+					updateButtons.forEach(button => 
+						button.addEventListener("click", (event) => {
+							const address_id = event.target.id.replace('listCurrentTypeUpdateButton', '');
+							const parentnode_id = button.parentNode.parentNode.parentNode.id
+							const type_address = parentnode_id.replace('listCurrent', '');
+
+							document.querySelector('#updateModal').style.display = "flex";
+							setTimeout(() => {document.querySelector('#updateModal').style.opacity = "1";}, 200)
+
+							get_ph_info();
+
+							const submitUpdate = document.querySelector('#submitUpdateButton');
+							const footerUpdate = submitUpdate.parentNode;	
+							footerUpdate.id = `${type_address}${address_id}`;
+
+							// const typespan = document.querySelector('span#typeAddress');
+							// const modalform = document.querySelector('#submitUpdateButton');
+
+							// if (event.target.id == "updateAddressShipping") {
+							// 	typespan.textContent = "Shipping"
+							// 	modalform.setAttribute("submittal", 1);
+							// }
+							// else {
+							// 	typespan.textContent = "Billing";
+							// 	modalform.setAttribute("submittal", 2);
+							// }
+						}))
 				}
 			})
 		}
@@ -308,42 +369,48 @@ session_start();
 			get_all_address(`${type}`);
 
 			$('#rightAccount').append(`
-		<div id="updateForm">
+		<div id="addAddressForm">
 			<h3 style="margin:20px 0 20px 0;font-size:25px;">Add New Address</h3>
 			<main>
-				<div class="modal-input-div">
+				<div class="add-address-input-div">
 					<label for="region">Address Number and Street</label>
-					<input class="modal-only form-control" type="text" name="street" id="inputstreet">
+					<input class="add-modal-only form-control" type="text" name="street" id="addinputstreet">
 				</div>
-				<div class="modal-input-div">
+				<div class="add-address-input-div">
 					<label for="region">Region</label>
-					<select class="modal-only form-control" name="region" id="selectregions">
+					<select class="add-modal-only form-control" name="region" id="addselectregions">
 					</select>
 				</div>
-				<div class="modal-input-div">
+				<div class="add-address-input-div">
 					<label for="province">Province</label>
-					<select class="modal-only form-control" name="province" id="selectprovinces">
+					<select class="add-modal-only form-control" name="province" id="addselectprovinces">
 						<option value="null">--PLEASE SELECT--</option>
 					</select>
 				</div>
-				<div class="modal-input-div">
+				<div class="add-address-input-div">
 					<label for="municipality">Municipality</label>
-					<select class="modal-only form-control" name="municipality" id="selectmunicipalities">
+					<select class="add-modal-only form-control" name="municipality" id="selectmunicipalities">
 						<option value="null">--PLEASE SELECT--</option>
 					</select>
 				</div>
-				<div class="modal-input-div">
+				<div class="add-address-input-div">
 					<label for="barangay">Barangay</label>
-					<select class="modal-only form-control" name="barangay" id="selectbarangays">
+					<select class="add-modal-only form-control" name="barangay" id="addselectbarangays">
 						<option value="null">--PLEASE SELECT--</option>
 					</select>
 				</div>
 			</main>
-			<footer>
-        		<button type="button" class="btn btn-outline-primary" id="submitUpdateButton">Add New ${type} Address</button>
+			<footer id="addAddressFooter">
+        		<button type="button" class="btn btn-outline-primary" id="submitUpdateButton" style="text-transform:capitalize;">Add New ${type} Address</button>
 			</footer>	
 		</div></div>`)
 		}
+
+		const set_default = () => {
+			
+		}
+	
+
 
 		document.querySelector('#getUserProfile').addEventListener("click", generate_user_info)
 		document.querySelector('#edit-email').addEventListener("click", generate_user_info)
@@ -351,7 +418,13 @@ session_start();
 
 		document.querySelector('#edit-billing').addEventListener("click", () => generate_address_profile('billing'))
 		document.querySelector('#edit-shipping').addEventListener("click", () => generate_address_profile('shipping'))
-		
+
+		/**/
+
+		/**/
+
+
+
 
 		$(document).ready(generate_user_info());
 

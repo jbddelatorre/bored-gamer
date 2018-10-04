@@ -9,7 +9,7 @@
 	if ($type == 'currentShipping' || $type == 'shipping') $add_type = 1;
 	elseif ($type == 'currentBilling' || $type == 'billing') $add_type = 2;
 
-	$sql = "SELECT ad.house_num_others, r.region, rp.region_province, cm.province_code, b.barangay, ad.address_type_id, ad.default, ad.user_id 
+	$sql = "SELECT ad.house_num_others, r.region, rp.region_province, cm.province_code, b.barangay, ad.address_type_id, ad.default_add, ad.user_id 
 		from addresses as ad 
 			JOIN regions as r
 				ON ad.region_code = r.region_code
@@ -29,7 +29,7 @@
 
 		while($row = mysqli_fetch_assoc($result)) {
 
-			if ($row['address_type_id'] == $add_type and $row['default'] == 1) {
+			if ($row['address_type_id'] == $add_type and $row['default_add'] == 1) {
 				echo json_encode($row);
 			}
 		}
