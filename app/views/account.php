@@ -274,12 +274,42 @@ session_start();
 			})
 		}
 
+		const get_all_address = (type) => {
+			$.ajax({
+				url: '../controllers/get_all_address.php',
+				type:'GET',
+				data: {data:type},
+				success:(data) => {
+					const d = JSON.parse(data);
+					// console.log(d)
+					
+					for(let ad of d) {
+						$(`#listCurrent${type}`).append(`
+							<div class="listCurrentTypeSub">
+								<div class="listCurrentTypeData">${ad.house_num_others}, ${ad.barangay}, ${ad.province_code}, ${ad.region_province}, ${ad.region}</div>
+								<div class="listCurrentTypeDefault">${parseInt(ad.default) ? 'Current Default' : `<button class="btn btn-outline-dark" id="listCurrentTypeDefaultButton${ad.id}">Set Default<button>`}</div>
+								<div class="listCurrentTypeUpdate"><button class="btn btn-outline-info" id="listCurrentTypeUpdateButton${ad.id}">Update</button></div>
+								<div class="listCurrentTypeDelete">
+								<button class="btn btn-outline-danger" id="listCurrentTypeDeleteButton${ad.id}">Delete</button></div>
+							</div>
+						`)
+					}
+				}
+			})
+		}
+
 		const generate_address_profile = (type) => {
 			$('#rightAccount').empty();
 			$('#rightAccount').append(`<h2>My <span style="text-transform:capitalize;">${type}</span> Address </h2>`);
 
 			$('#rightAccount').append(`
+				<div id="listCurrent${type}"><h3 style="margin-top:40px;font-size:25px;">Saved Addresses<h3></div>
+				`)
+			get_all_address(`${type}`);
+
+			$('#rightAccount').append(`
 		<div id="updateForm">
+			<h3 style="margin:20px 0 20px 0;font-size:25px;">Add New Address</h3>
 			<main>
 				<div class="modal-input-div">
 					<label for="region">Address Number and Street</label>
@@ -312,7 +342,7 @@ session_start();
 			<footer>
         		<button type="button" class="btn btn-outline-primary" id="submitUpdateButton">Add New ${type} Address</button>
 			</footer>	
-		</div>`)
+		</div></div>`)
 		}
 
 		document.querySelector('#getUserProfile').addEventListener("click", generate_user_info)

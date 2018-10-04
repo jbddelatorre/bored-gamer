@@ -128,16 +128,25 @@ span[id^="error"] {
 /*ADDRESS*/
 
 #account-appViewBox .modal-input-div label {
-	width:200px;
 	text-align: center;
+	width:15vw;
 }
 
 #account-appViewBox .modal-input-div input, 
 #account-appViewBox .modal-input-div select {
-	width: 400px;
 	display: inline-block !important;
 	margin:10px 5px;
 	outline: none !important;
+}
+
+#account-appViewBox .modal-input-div {
+	display: flex;
+}
+
+#account-appViewBox #updateForm {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
 }
 
 #account-appViewBox #updateForm footer {
@@ -153,8 +162,41 @@ span[id^="error"] {
 
 #account-appViewBox [id^="edit"]:hover {
 	cursor: pointer;
+	text-decoration: underline;
 }
 
 #account-appViewBox #getUserProfile:hover {
 	cursor: pointer;
+	text-decoration: underline;
 } 
+
+#account-appViewBox #rightAccount [id^="listCurrent"] {
+	margin: 10px 20px;
+	border-bottom: 2px solid lightgrey;
+}
+
+#account-appViewBox #rightAccount .listCurrentTypeSub {
+	display: flex;
+}
+
+#account-appViewBox #rightAccount .listCurrentTypeSub .listCurrentTypeData {
+	width:60%;
+	max-width: 60%;
+}
+
+#account-appViewBox #rightAccount .listCurrentTypeSub div {
+	margin: 2px 5px;
+	/*padding: 5px;*/
+}
+
+#account-appViewBox #rightAccount .listCurrentTypeSub .listCurrentTypeDefault {
+	flex:1;
+	margin: 2px 5px;
+	/*padding: 5px;*/
+}
+
+@media only screen and (max-width: 1100px) {
+		#account-appViewBox .listCurrentTypeSub {
+			flex-wrap: wrap;
+		}
+	}
