@@ -360,6 +360,32 @@ session_start();
 							// 	modalform.setAttribute("submittal", 2);
 							// }
 						}))
+
+					document.querySelectorAll('[id^="listCurrentTypeDeleteButton"]').forEach(button => {
+						button.addEventListener("click", (event) => {
+							const idToBeDeleted = event.target.id.replace(/\D/g,'');
+							const parentnode_id = button.parentNode.parentNode.parentNode.id
+							const type_address = parentnode_id.replace('listCurrent', '');
+							
+							// let address_type_id = 1;
+							// if (type_address == "billing") address_type_id = 2;
+							
+							$.ajax({
+								url:'../controllers/delete_address.php',
+								data:{id: idToBeDeleted},
+								type:'POST',
+								success: (data) => {
+									if(data == 0) {
+										alert('You cannot delete your default address.')
+									} else {
+										alert('Successfully deleted address.')
+										get_all_address(type_address);
+									}
+								}
+							})
+
+						})
+					})
 				}
 			})
 		}

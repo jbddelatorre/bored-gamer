@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 04, 2018 at 10:28 PM
+-- Generation Time: Oct 05, 2018 at 10:35 AM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -45,14 +45,11 @@ CREATE TABLE `addresses` (
 --
 
 INSERT INTO `addresses` (`id`, `house_num_others`, `region_code`, `region_province_code`, `city_municipality_code`, `barangay_id`, `address_type_id`, `default_add`, `user_id`) VALUES
-(1, 'fghfghfghbn', '03', '0349', '034902', 6427, 1, 0, 106),
 (2, '321 Nasa Street', '13', '1374', '137405', 36459, 2, 1, 106),
 (4, 'lk;;kl;k;yuiyuikl;', '04', '0421', '042102', 9806, 1, 1, 106),
-(5, 'nmbnmbnmbnm', '03', '0349', '034903', 6453, 1, 0, 106),
 (6, '235235546456', '5', '520', '52004', 16295, 1, 0, 106),
 (7, '43665756858', '12', '1280', '128002', 35199, 1, 0, 106),
 (8, '65567567yutu', '05', '0517', '051716', 15554, 1, 0, 106),
-(9, 'n345n345n3534n5', '05', '0520', '052005', 16320, 2, 0, 106),
 (10, 'gfh34 cs f 34 3', '12', '1298', '129804', 35327, 1, 0, 106),
 (11, 'bvnmbghj 4 34', '03', '0349', '034915', 6821, 2, 0, 106);
 
@@ -43937,7 +43934,7 @@ INSERT INTO `items` (`id`, `name`, `price`, `item_desc`, `min_players`, `max_pla
 (23, 'Blood Rage', '1470.91', 'The title of this boardgames is Blood Rage . Its main mechanics are the follow: Action Point Allowance System, Area Control / Area Influence, Area Movement, Card Drafting, Hand Management, Memory, Simultaneous Action Selection . This boardgame also falls ', 2, 4, 3, 6, 4, 90, 2015, '8.07481', 'https://cf.geekdo-images.com/original/img/p4IovYzLVXqxY40lbGUu92VxaIQ=/0x0/pic2439223.jpg', 14, 'Action Point Allowance System, Area Control / Area Influence, Area Movement, Card Drafting, Hand Management, Memory, Simultaneous Action Selection', 26099, 'Fantasy, Fighting, Miniatures, Mythology', 'Eric M. Lang'),
 (24, 'Mechs vs. Minions', '1980.23', 'The title of this boardgames is Mechs vs. Minions . Its main mechanics are the follow: Action / Movement Programming, Card Drafting, Co-operative Play, Dice Rolling, Modular Board, Variable Player Powers . This boardgame also falls under these sub categor', 2, 4, 3, 4, 2, 90, 2016, '8.21731', 'https://cf.geekdo-images.com/original/img/WhHdMb8GiMY-RhHddEByDyPkrWo=/0x0/pic3184103.jpg', 14, 'Action / Movement Programming, Card Drafting, Co-operative Play, Dice Rolling, Modular Board, Variable Player Powers', 14532, 'Fantasy, Fighting, Miniatures, Video Game Theme', 'Chris Cantrell, Rick Ernst, Stone Librande, Prashant Saraswat, Nathan Tiras'),
 (25, 'Star Wars: Imperial Assault', '5088.41', 'The title of this boardgames is Star Wars: Imperial Assault . Its main mechanics are the follow: Dice Rolling, Grid Movement, Modular Board, Partnerships, Role Playing, Variable Player Powers . This boardgame also falls under these sub categories: Adventu', 2, 5, 1, 2, 2, 120, 2014, '8.13522', 'https://cf.geekdo-images.com/original/img/wWTlEaPbVoUybefxFpFVTv1OU74=/0x0/pic2247647.jpg', 14, 'Dice Rolling, Grid Movement, Modular Board, Partnerships, Role Playing, Variable Player Powers', 25367, 'Adventure, Fighting, Miniatures, Movies / TV / Radio theme, Science Fiction, Wargame', 'Justin Kemppainen, Corey Konieczka, Jonathan Ying'),
-(26, 'Orléans', '4101.36', 'The title of this boardgames is Orléans . Its main mechanics are the follow: Deck / Pool Building, Point to Point Movement, Worker Placement . This boardgame also falls under these sub categories: Medieval, Religious, Travel', 2, 4, 1, 1, 2, 90, 2014, '8.07954', 'https://cf.geekdo-images.com/original/img/RLjWKyzXimMFiQOa8uwo9ZWWOGM=/0x0/pic2578828.png', 12, 'Deck / Pool Building, Point to Point Movement, Worker Placement', 14851, 'Medieval, Religious, Travel', 'Reiner Stockhausen'),
+(26, 'Orleans', '4101.36', 'The title of this boardgames is Orleans . Its main mechanics are the follow: Deck / Pool Building, Point to Point Movement, Worker Placement . This boardgame also falls under these sub categories: Medieval, Religious, Travel', 2, 4, 1, 1, 2, 90, 2014, '8.07954', 'https://cf.geekdo-images.com/original/img/RLjWKyzXimMFiQOa8uwo9ZWWOGM=/0x0/pic2578828.png', 12, 'Deck / Pool Building, Point to Point Movement, Worker Placement', 14851, 'Medieval, Religious, Travel', 'Reiner Stockhausen'),
 (27, 'Through the Ages: A Story of Civilization', '4841.57', 'The title of this boardgames is Through the Ages: A Story of Civilization . Its main mechanics are the follow: Action Point Allowance System, Auction/Bidding, Card Drafting, Hand Management . This boardgame also falls under these sub categories: Civilizat', 2, 4, 1, 6, 3, 240, 2006, '8.02876', 'https://cf.geekdo-images.com/original/img/xeBBIO9BN7HGMxQdTw5zk5Hxou8=/0x0/pic236169.jpg', 12, 'Action Point Allowance System, Auction/Bidding, Card Drafting, Hand Management', 16397, 'Civilization, Economic', 'Vlaada Chvátil'),
 (28, 'Food Chain Magnate', '1503.75', 'The title of this boardgames is Food Chain Magnate . Its main mechanics are the follow: Card Drafting, Deck / Pool Building, Modular Board, Route/Network Building, Simultaneous Action Selection . This boardgame also falls under these sub categories: Econo', 2, 5, 1, 1, 2, 240, 2015, '8.22008', 'https://cf.geekdo-images.com/original/img/wYRsC32bPDRShIYzWs2hUglfcTc=/0x0/pic2649434.png', 14, 'Card Drafting, Deck / Pool Building, Modular Board, Route/Network Building, Simultaneous Action Selection', 9193, 'Economic, Industry / Manufacturing', 'Jeroen Doumen, Joris Wiersinga'),
 (29, 'Power Grid', '2594.07', 'The title of this boardgames is Power Grid . Its main mechanics are the follow: Auction/Bidding, Route/Network Building . This boardgame also falls under these sub categories: Economic, Industry / Manufacturing', 2, 6, 3, 6, 3, 120, 2004, '7.91299', 'https://cf.geekdo-images.com/original/img/_3ewTndfCEMACKeTMPnREyvyX60=/0x0/pic173153.jpg', 12, 'Auction/Bidding, Route/Network Building', 53847, 'Economic, Industry / Manufacturing', 'Friedemann Friese'),
@@ -44524,138 +44521,16 @@ CREATE TABLE `orders` (
   `status_id` int(11) NOT NULL,
   `transaction_num` varchar(50) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `payment_method` int(5) NOT NULL
+  `payment_method` int(5) NOT NULL,
+  `total_price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `order_timestamp`, `status_id`, `transaction_num`, `user_id`, `payment_method`) VALUES
-(1, '0000-00-00 00:00:00', 4, 'S85411D', 54, 0),
-(2, '0000-00-00 00:00:00', 1, 'S99299', 87, 0),
-(3, '0000-00-00 00:00:00', 2, 'Q8502', 70, 0),
-(4, '0000-00-00 00:00:00', 2, 'N25', 73, 0),
-(5, '0000-00-00 00:00:00', 1, 'S61109A', 31, 0),
-(6, '0000-00-00 00:00:00', 2, 'Y35031S', 76, 0),
-(7, '0000-00-00 00:00:00', 5, 'B2702', 72, 0),
-(8, '0000-00-00 00:00:00', 5, 'D72824', 59, 0),
-(9, '0000-00-00 00:00:00', 2, 'Y36530S', 72, 0),
-(10, '0000-00-00 00:00:00', 3, 'M7095', 95, 0),
-(11, '0000-00-00 00:00:00', 2, 'W34118S', 84, 0),
-(12, '0000-00-00 00:00:00', 1, 'E25', 11, 0),
-(13, '0000-00-00 00:00:00', 5, 'S82445D', 26, 0),
-(14, '0000-00-00 00:00:00', 5, 'P72', 24, 0),
-(15, '0000-00-00 00:00:00', 4, 'C719', 22, 0),
-(16, '0000-00-00 00:00:00', 4, 'T59813', 88, 0),
-(17, '0000-00-00 00:00:00', 1, 'S31103D', 80, 0),
-(18, '0000-00-00 00:00:00', 1, 'S52136M', 2, 0),
-(19, '0000-00-00 00:00:00', 1, 'Y37500', 70, 0),
-(20, '0000-00-00 00:00:00', 3, 'S52334H', 52, 0),
-(21, '0000-00-00 00:00:00', 3, 'M84676P', 41, 0),
-(22, '0000-00-00 00:00:00', 3, 'S32011B', 20, 0),
-(23, '0000-00-00 00:00:00', 1, 'S62614A', 91, 0),
-(24, '0000-00-00 00:00:00', 2, 'S25812', 89, 0),
-(25, '0000-00-00 00:00:00', 4, 'K0261', 43, 0),
-(26, '0000-00-00 00:00:00', 2, 'S0012XA', 100, 0),
-(27, '0000-00-00 00:00:00', 4, 'S93691D', 64, 0),
-(28, '0000-00-00 00:00:00', 4, 'S51032S', 95, 0),
-(29, '0000-00-00 00:00:00', 2, 'S53014D', 100, 0),
-(30, '0000-00-00 00:00:00', 2, 'V8641', 94, 0),
-(31, '0000-00-00 00:00:00', 1, 'T604X3S', 81, 0),
-(32, '0000-00-00 00:00:00', 4, 'S52513B', 38, 0),
-(33, '0000-00-00 00:00:00', 1, 'M4103', 61, 0),
-(34, '0000-00-00 00:00:00', 5, 'S31502A', 79, 0),
-(35, '0000-00-00 00:00:00', 5, 'S32050A', 56, 0),
-(36, '0000-00-00 00:00:00', 3, 'S72351C', 40, 0),
-(37, '0000-00-00 00:00:00', 5, 'I029', 35, 0),
-(38, '0000-00-00 00:00:00', 2, 'S72036B', 91, 0),
-(39, '0000-00-00 00:00:00', 4, 'S3145XD', 23, 0),
-(40, '0000-00-00 00:00:00', 1, 'S62035P', 69, 0),
-(41, '0000-00-00 00:00:00', 4, 'T427', 32, 0),
-(42, '0000-00-00 00:00:00', 5, 'V00822S', 80, 0),
-(43, '0000-00-00 00:00:00', 1, 'C8301', 85, 0),
-(44, '0000-00-00 00:00:00', 1, 'S82399G', 50, 0),
-(45, '0000-00-00 00:00:00', 2, 'V667', 8, 0),
-(46, '0000-00-00 00:00:00', 3, 'E1322', 75, 0),
-(47, '0000-00-00 00:00:00', 1, 'T503X1A', 22, 0),
-(48, '0000-00-00 00:00:00', 1, 'S8513', 49, 0),
-(49, '0000-00-00 00:00:00', 5, 'S52399A', 52, 0),
-(50, '2010-03-22 16:00:00', 4, 'T63812', 67, 0),
-(51, '0000-00-00 00:00:00', 3, 'H930', 55, 0),
-(52, '0000-00-00 00:00:00', 5, 'M4154', 33, 0),
-(53, '0000-00-00 00:00:00', 2, 'S81032S', 79, 0),
-(54, '0000-00-00 00:00:00', 5, 'S12110A', 57, 0),
-(55, '0000-00-00 00:00:00', 3, 'Y280XXS', 39, 0),
-(56, '0000-00-00 00:00:00', 4, 'V8619XA', 85, 0),
-(57, '0000-00-00 00:00:00', 5, 'S53002S', 95, 0),
-(58, '0000-00-00 00:00:00', 3, 'S92521', 76, 0),
-(59, '0000-00-00 00:00:00', 2, 'M87811', 28, 0),
-(60, '0000-00-00 00:00:00', 4, 'C8111', 2, 0),
-(61, '0000-00-00 00:00:00', 2, 'H35129', 47, 0),
-(62, '0000-00-00 00:00:00', 4, 'S52134M', 27, 0),
-(63, '0000-00-00 00:00:00', 2, 'T1590XD', 70, 0),
-(64, '0000-00-00 00:00:00', 5, 'T413X6A', 68, 0),
-(65, '0000-00-00 00:00:00', 1, 'S61245S', 71, 0),
-(66, '0000-00-00 00:00:00', 2, 'G733', 49, 0),
-(67, '0000-00-00 00:00:00', 1, 'M93221', 3, 0),
-(68, '0000-00-00 00:00:00', 2, 'T63313A', 42, 0),
-(69, '0000-00-00 00:00:00', 2, 'S70352', 67, 0),
-(70, '0000-00-00 00:00:00', 1, 'S99102A', 42, 0),
-(71, '0000-00-00 00:00:00', 4, 'W9432XA', 72, 0),
-(72, '0000-00-00 00:00:00', 2, 'S63611S', 37, 0),
-(73, '0000-00-00 00:00:00', 2, 'S298XXA', 50, 0),
-(74, '0000-00-00 00:00:00', 1, 'S75812A', 53, 0),
-(75, '0000-00-00 00:00:00', 5, 'S59012G', 67, 0),
-(76, '0000-00-00 00:00:00', 1, 'S15009', 98, 0),
-(77, '0000-00-00 00:00:00', 4, 'S21429A', 85, 0),
-(78, '0000-00-00 00:00:00', 1, 'T1502XA', 63, 0),
-(79, '0000-00-00 00:00:00', 5, 'S5410XS', 97, 0),
-(80, '0000-00-00 00:00:00', 3, 'V9331', 1, 0),
-(81, '0000-00-00 00:00:00', 4, 'T443X5', 1, 0),
-(82, '0000-00-00 00:00:00', 1, 'B2781', 69, 0),
-(83, '0000-00-00 00:00:00', 4, 'M06362', 75, 0),
-(84, '0000-00-00 00:00:00', 4, 'Y35293D', 45, 0),
-(85, '0000-00-00 00:00:00', 3, 'S1234XG', 71, 0),
-(86, '0000-00-00 00:00:00', 2, 'T22642', 82, 0),
-(87, '0000-00-00 00:00:00', 4, 'S61300A', 63, 0),
-(88, '0000-00-00 00:00:00', 3, 'L569', 41, 0),
-(89, '0000-00-00 00:00:00', 4, 'S4990XS', 94, 0),
-(90, '0000-00-00 00:00:00', 2, 'S82116S', 50, 0),
-(91, '0000-00-00 00:00:00', 2, 'S31623S', 43, 0),
-(92, '0000-00-00 00:00:00', 3, 'S42102G', 99, 0),
-(93, '0000-00-00 00:00:00', 2, 'S42271', 15, 0),
-(94, '0000-00-00 00:00:00', 4, 'S59212S', 13, 0),
-(95, '0000-00-00 00:00:00', 4, 'T40693D', 11, 0),
-(96, '0000-00-00 00:00:00', 1, 'V5910', 75, 0),
-(97, '0000-00-00 00:00:00', 4, 'S52692A', 54, 0),
-(98, '0000-00-00 00:00:00', 5, 'C140', 8, 0),
-(99, '0000-00-00 00:00:00', 5, 'T347', 36, 0),
-(100, '0000-00-00 00:00:00', 4, 'S83104D', 5, 0),
-(104, '0000-00-00 00:00:00', 1, '4A8F69F36F017675-1537950175', 101, 1),
-(105, '0000-00-00 00:00:00', 1, '65C1E87DA33DAAEE-1537950303', 101, 1),
-(106, '0000-00-00 00:00:00', 1, 'D0511D91995F4868-1537950352', 101, 1),
-(107, '0000-00-00 00:00:00', 1, 'D4C3FE6D3F4B3F9E-1537950367', 101, 1),
-(108, '0000-00-00 00:00:00', 1, '293336D8CD45AA3B-1537950466', 101, 1),
-(109, '0000-00-00 00:00:00', 1, 'B4EC46455A8EB5DA-1537950483', 101, 1),
-(110, '0000-00-00 00:00:00', 1, '7C7E88217975C7E7-1537950500', 101, 1),
-(111, '0000-00-00 00:00:00', 1, '0F690DF16643C413-1537950929', 101, 1),
-(112, '0000-00-00 00:00:00', 1, '1CE18C25475BC339-1537950979', 101, 1),
-(113, '0000-00-00 00:00:00', 1, 'ABE07C125E2528B1-1537951045', 101, 1),
-(114, '0000-00-00 00:00:00', 1, 'E664FA9C7A7DF966-1537951086', 101, 1),
-(115, '0000-00-00 00:00:00', 1, 'C0DE0E5588A2DCF5-1537951123', 101, 1),
-(116, '0000-00-00 00:00:00', 1, 'DEACF652D9177862-1537951573', 101, 1),
-(117, '0000-00-00 00:00:00', 1, 'D4178051D90CD22B-1537951576', 101, 1),
-(118, '0000-00-00 00:00:00', 1, 'F3EB7652F86F7928-1537951841', 101, 1),
-(119, '0000-00-00 00:00:00', 1, '2661894B702D5081-1537951849', 101, 1),
-(120, '0000-00-00 00:00:00', 1, '7DB9069FC424E485-1537951852', 101, 1),
-(121, '2018-09-26 02:51:16', 1, '88823A9E723B1CF1-1537951876', 101, 1),
-(122, '2018-09-26 02:51:17', 1, '679E66956FFB442E-1537951877', 101, 1),
-(123, '2018-09-26 02:51:26', 1, '89E4BB969BEB5244-1537951886', 101, 1),
-(124, '2018-09-26 02:51:54', 1, '434F4151C83BF680-1537951914', 101, 1),
-(125, '2018-09-26 02:52:28', 1, '2B8207CDC0E2E49B-1537951948', 101, 1),
-(126, '2018-09-26 02:52:46', 1, '61375A25715E0974-1537951966', 101, 1),
-(127, '2018-10-04 14:27:26', 1, '798577DBAA4F40B3-1538684846', 106, 2);
+INSERT INTO `orders` (`id`, `order_timestamp`, `status_id`, `transaction_num`, `user_id`, `payment_method`, `total_price`) VALUES
+(134, '2018-10-05 06:53:37', 1, '93F5E751A3660178-1538722417', 106, 1, '6454.59');
 
 -- --------------------------------------------------------
 
@@ -44668,79 +44543,16 @@ CREATE TABLE `orders_items` (
   `item_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `price` float NOT NULL,
-  `quantity` int(11) NOT NULL
+  `quantity` int(11) NOT NULL,
+  `subtotal` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `orders_items`
 --
 
-INSERT INTO `orders_items` (`id`, `item_id`, `order_id`, `price`, `quantity`) VALUES
-(1, 15, 23, 5860.4, 0),
-(2, 2, 1, 5072.59, 0),
-(4, 56, 19, 719.61, 0),
-(6, 87, 70, 5331.03, 0),
-(8, 68, 70, 9261.1, 0),
-(9, 68, 27, 4575.04, 0),
-(10, 46, 42, 7608.17, 0),
-(11, 65, 10, 4471.51, 0),
-(12, 71, 53, 8448.74, 0),
-(15, 55, 88, 5188.04, 0),
-(16, 75, 69, 8349.05, 0),
-(18, 50, 41, 3738.72, 0),
-(19, 14, 28, 2836.06, 0),
-(20, 6, 3, 891.71, 0),
-(21, 49, 52, 8132.3, 0),
-(22, 74, 1, 7208.06, 0),
-(23, 12, 33, 6944.7, 0),
-(25, 41, 46, 9885.13, 0),
-(26, 64, 4, 2283.08, 0),
-(27, 64, 24, 9131.89, 0),
-(28, 74, 4, 1208.2, 0),
-(29, 87, 96, 1905.69, 0),
-(32, 3, 22, 8683.06, 0),
-(35, 86, 63, 4025.87, 0),
-(36, 42, 6, 9116.98, 0),
-(37, 95, 49, 1220.26, 0),
-(42, 11, 74, 9577.02, 0),
-(43, 90, 86, 8957.86, 0),
-(46, 52, 84, 4621.26, 0),
-(47, 87, 99, 2822.57, 0),
-(49, 51, 20, 9883.82, 0),
-(50, 41, 17, 7838.19, 0),
-(51, 27, 57, 5944.95, 0),
-(52, 19, 97, 1594.82, 0),
-(53, 19, 95, 296.86, 0),
-(55, 54, 28, 8871.7, 0),
-(57, 27, 44, 817.88, 0),
-(58, 18, 55, 1451.44, 0),
-(60, 21, 100, 5268.27, 0),
-(61, 23, 38, 7793.67, 0),
-(62, 71, 88, 2891.09, 0),
-(63, 22, 22, 8042.45, 0),
-(64, 3, 31, 2266.51, 0),
-(65, 64, 51, 753.76, 0),
-(66, 42, 63, 4279.49, 0),
-(67, 12, 60, 7890.66, 0),
-(68, 91, 97, 9790.91, 0),
-(69, 65, 41, 8745.52, 0),
-(71, 64, 67, 7630.56, 0),
-(72, 74, 61, 1301.87, 0),
-(74, 93, 89, 1370.5, 0),
-(75, 89, 6, 9824.29, 0),
-(80, 77, 40, 6153.95, 0),
-(82, 14, 34, 2218.08, 0),
-(83, 21, 61, 2798.07, 0),
-(88, 30, 48, 8419.48, 0),
-(90, 68, 92, 9214.47, 0),
-(91, 86, 34, 9117.75, 0),
-(92, 30, 54, 3738.3, 0),
-(93, 77, 42, 9143.55, 0),
-(94, 20, 85, 5757.42, 0),
-(96, 62, 27, 982.17, 0),
-(97, 72, 35, 6810.09, 0),
-(98, 99, 25, 3818.75, 0),
-(100, 50, 58, 8179.99, 0);
+INSERT INTO `orders_items` (`id`, `item_id`, `order_id`, `price`, `quantity`, `subtotal`) VALUES
+(103, 7, 134, 2949.27, 1, '2949.27');
 
 -- --------------------------------------------------------
 
@@ -44758,8 +44570,8 @@ CREATE TABLE `payment_method` (
 --
 
 INSERT INTO `payment_method` (`id`, `payment_method`) VALUES
-(1, 'cash_on_delivery'),
-(2, 'paypal');
+(1, 'COD'),
+(2, 'Paypal');
 
 -- --------------------------------------------------------
 
@@ -44939,11 +44751,11 @@ CREATE TABLE `statuses` (
 --
 
 INSERT INTO `statuses` (`id`, `status_name`) VALUES
-(1, 'GN'),
-(2, 'FA'),
-(3, 'PO'),
-(4, 'CN'),
-(5, 'EG');
+(1, 'Ordered'),
+(2, 'Verifying'),
+(3, 'Verified'),
+(4, 'On-delivery'),
+(5, 'Returned');
 
 -- --------------------------------------------------------
 
@@ -45385,13 +45197,13 @@ ALTER TABLE `itemsold`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- AUTO_INCREMENT for table `orders_items`
 --
 ALTER TABLE `orders_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT for table `payment_method`

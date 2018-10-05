@@ -44,6 +44,11 @@ p {
 	margin: 10px;
 }
 
+#orderItemsCheckoutContainer {
+	display: flex;
+	justify-content: center;
+}
+
 #orderItemsCheckoutContainer td, 
 #orderItemsCheckoutContainer tr {
 	/*width: 15%;*/

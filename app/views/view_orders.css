@@ -2,25 +2,25 @@ div.card-orders {
 	margin: 30px 50px;
 }
 
-table {
+#pendingOrders table {
 	width: 90%;
 	
 	margin: 15px auto;
 	border:1px solid rgba(0,0,0,0.1);
 }
 
-tr {
-	padding: 10px;
+#pendingOrders tr {
+	padding: 5px;
 }
 
-tr th {
-	padding: 15px;
+#pendingOrders tr th {
+	padding: 3px 5px;
 	text-align: center;
 	background-color: rgba(247,247,246);
 }
 
-tr td {
-	padding: 10px;
+#pendingOrders tr td {
+	padding: 3px 5px;
 	text-align: center;
 	border-bottom: 1px solid rgba(0,0,0,0.1);
 	border-top: 1px solid rgba(0,0,0,0.1);
@@ -29,12 +29,12 @@ tr td {
 }
 
 
-table img {
+#pendingOrders table img {
 	width: 50px;
 	margin: 5px;
 	border-style: outset;
 }
 
-h5 {
+#pendingOrders h5 {
 	margin-bottom: 30px;
 }

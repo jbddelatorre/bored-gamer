@@ -16,7 +16,7 @@
 		 		$id = $_GET['id'];
 		 		// echo $id;
 
-		 		$sql = "SELECT * from items where id=$id";
+		 		$sql = "SELECT * from items where id= $id";
 		 		$result = mysqli_query($conn, $sql);
 
 		 		if(mysqli_num_rows($result) > 0) {

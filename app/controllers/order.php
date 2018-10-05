@@ -28,12 +28,12 @@
 		$cart_qty = $cart_item['qty'];
 
 		$sql_getprice = "SELECT price from items where id = $cart_id";
+
 		$result_getprice = mysqli_query($conn, $sql_getprice);
 		$row = mysqli_fetch_assoc($result_getprice);
 
 		$itemprice = $row['price'];
 		$subtotal = $row['price'] * $cart_qty;
-
 		$totalprice = $totalprice + $subtotal;
 
 		$sql_addToOrder = "INSERT INTO orders_items (item_id, order_id, price, quantity, subtotal) VALUES ($cart_id, $orderId, $itemprice, $cart_qty, $subtotal)";

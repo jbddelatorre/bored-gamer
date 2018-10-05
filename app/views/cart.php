@@ -18,7 +18,7 @@
 
 	 <div class="appViewBox">
 		<h1>My Cart</h1>
-
+		<p id="vcvc">asd<span>123</span></p>		
 		<div id="cartApp">
 			<div id="cartContainer">
 				<a  href="./catalog.php"><button id="returnToShopping" class="btn btn-outline-success">Return to Shopping</button></a>
@@ -56,11 +56,11 @@
 								echo "<td><span class='input-number-decrement'>–</span><input id='input".$row['id']."'class='input-number' type='number' value='". $cart_item['qty'] ."'><span class='input-number-increment'>+</span></td>";
 								// echo "<td><input id='input".$row['id']."' type='number' min='1' class='cart-qty-input' value='". $cart_item['qty'] ."'></td>"; 
 								//multiple id mistake, fix this, change innerhtml to inputvalue
-								echo "<td id='price".$row['id']."'>".$row['price']."</td>";
+								echo "<td>Php <span id='price".$row['id']."'>".number_format($row['price'], 2, '.',',')."</span></td>";
 								// echo "<td>".$row['item_desc']."</td>";
-								echo "<td>PHP <span class='subtotal-element' id='sub".$row['id']."'>". $subtotal."</span></td>";
+								echo "<td>PHP <span class='subtotal-element' id='sub".$row['id']."'>". number_format($subtotal, 2, '.', ',')."</span></td>";
 								echo "<td><i id=".$row['id']." class='button-delete-item fas fa-trash-alt'></i></td>";
-								$totalprice = $totalprice + $subtotal;
+								$totalprice = $totalprice + round($subtotal, 2);
 							echo '</tr>';
 						}
 							echo '<tr>';
@@ -69,7 +69,7 @@
 								// echo "<td></td>";
 								echo "<td></td>";
 								echo "<td><strong>Total Price</strong></td>";
-								echo "<td><strong>PHP <span id='totalPriceCart'>".$totalprice."</span></strong></td>";
+								echo "<td><strong>PHP <span id='totalPriceCart'>".number_format((float)$totalprice, 2, '.', ',')."</span></strong></td>";
 								echo "<td></td>";
 							echo '</tr>';
 
@@ -86,10 +86,17 @@
 					<div>
 						<ul>
 							<li>Qty <span id="cartSummaryQty"><?php echo $_SESSION['cartQuantity'] ?></span>Cart Quantity</li>
-							<li>Php <span id="cartSummaryTotalPrice"><?php echo $totalprice ?></span>Total Amount</li>
+							<li>Php <span id="cartSummaryTotalPrice"><?php echo number_format((float)$totalprice, 2, '.', ',') ?></span>Total Amount</li>
+							<li>Delivery <span>FREE</span>Shipping</li>
 						</ul>
 					</div>
-					<a href="../views/checkout.php"><button class="btn btn-outline-dark">Proceed to Checkout</button></a>					
+					<?php  
+						if ($_SESSION['cartQuantity'] == 0 || !isset($_SESSION['cartQuantity'])) {
+							echo "<a href='../views/checkout.php'><button class='btn btn-outline-dark'>Proceed to Checkout</button></a>";
+						} else {
+							echo "<a href='../views/checkout.php'><button class='btn btn-outline-dark'>Proceed to Checkout</button></a>";
+						}
+					?>					
 				</div>
 			</div>
 		</div>
@@ -111,15 +118,16 @@
 			const deletedQuantity = document.querySelector(`#input${id}`);
 			
 			const totalPriceElement = document.querySelector('#totalPriceCart');
-			const totalPrice = parseInt(totalPriceElement.innerHTML);
-			const subtotal = ele.parentElement.previousSibling.lastChild.innerHTML;
+			const totalPrice = parseFloat(totalPriceElement.innerHTML.replace(',', ''));
+			const subtotal = parseFloat(ele.parentElement.previousSibling.lastChild.innerHTML.replace(',', ''));
 			const cartQuantity = document.querySelector('#cartQuantity').textContent;
 
-			totalPriceElement.innerHTML = totalPrice - subtotal;
+			totalPriceElement.innerHTML = Number(parseFloat(totalPrice - subtotal).toFixed(2)).toLocaleString('en');
+			// totalPriceElement.innerHTML = totalPrice - subtotal;
 
 			const cartSummaryTotalPrice = document.querySelector('#cartSummaryTotalPrice')
 
-			cartSummaryTotalPrice.innerHTML = totalPriceElement.innerHTML;
+			cartSummaryTotalPrice.innerHTML =  Number(parseFloat(totalPrice - subtotal).toFixed(2)).toLocaleString('en');
 	
 			document.querySelector('#cartQuantity').textContent = cartQuantity - deletedQuantity.value;
 
@@ -135,55 +143,49 @@
 	});
 
 
-	const numberInputQuantity = document.querySelectorAll('.cart-qty-input');
+	// const numberInputQuantity = document.querySelectorAll('.cart-qty-input');
+	// numberInputQuantity.forEach(ele => {
+	// 	ele.addEventListener("input", (event) => {
+	// 		const inputid = event.target.id;
+	// 		const id = inputid.replace('input', '');
+	// 		$.ajax({
+	// 			url: '../controllers/update_cart_quantity.php',
+	// 			data:{id: id, qty: updatedQty},
+	// 			type:'POST',
+	// 			success: (data) => {
+	// 				const dataJSON = JSON.parse(data);
+	// 				document.querySelector('#cartQuantity').textContent = dataJSON;
+	// 				document.querySelector('#cartSummaryQty').textContent = dataJSON;
 
-
-	numberInputQuantity.forEach(ele => {
-		ele.addEventListener("input", (event) => {
-			const inputid = event.target.id;
-			const id = inputid.replace('input', '');
-			
-
-			// console.log(subtotalElement.textContent);
-
-			// const subtotal = ele.parentElement.previousSibling.lastChild.innerHTML;
-			// const
-			
-			$.ajax({
-				url: '../controllers/update_cart_quantity.php',
-				data:{id: id, qty: updatedQty},
-				type:'POST',
-				success: (data) => {
-					const dataJSON = JSON.parse(data);
-					document.querySelector('#cartQuantity').textContent = dataJSON;
-					document.querySelector('#cartSummaryQty').textContent = dataJSON;
-
-				}
-			})
-		})
-	})
+	// 			}
+	// 		})
+	// 	})
+	// })
 
 	const updateCart = (id, updatedQty) => {
 	
 		const totalPriceElement = document.querySelector('#totalPriceCart');
 		const subtotalElement = document.querySelector(`#sub${id}`);
-		const unitPrice = document.querySelector(`#price${id}`);
+		const unitPrice = parseFloat(document.querySelector(`#price${id}`).innerHTML.replace(',', ''));
+		
+		// console.log(parseFloat(unitPrice.replace(',', '')))
+		// console.log(unitPrice);
 
-		subtotalElement.textContent = updatedQty * unitPrice.textContent;
+		subtotalElement.textContent = Number(parseFloat(updatedQty * unitPrice).toFixed(2)).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
 		const allSubtotals = document.querySelectorAll('span[id^="sub"]')
 
 		let newTotalPrice = 0;
 
 		allSubtotals.forEach(ele => {
-			newTotalPrice += parseInt(ele.textContent);
+			newTotalPrice += parseFloat(ele.textContent.replace(',', ''));
 		})
 
-		totalPriceElement.textContent = newTotalPrice;
+		totalPriceElement.textContent = Number(parseFloat(newTotalPrice).toFixed(2)).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
 		const cartSummaryTotalPrice = document.querySelector('#cartSummaryTotalPrice')
 
-			cartSummaryTotalPrice.innerHTML = newTotalPrice;
+			cartSummaryTotalPrice.innerHTML = Number(parseFloat(newTotalPrice).toFixed(2)).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
 		$.ajax({
 				url: '../controllers/update_cart_quantity.php',

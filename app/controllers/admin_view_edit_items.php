@@ -2,6 +2,11 @@
 	require_once('./connect.php');
 	session_start();
 
+	$ADD = 50*0;
+
+	$LOWER_ID = 1 + $ADD;
+	$UPPER_ID = 50 + $ADD;
+
 	$sql = "SELECT  i.id, i.item_desc, i.item_image, i.name, i.price, i.min_players, i.max_players, i.average_length_id, tr.trend_names, cat.category_names, gt.game_type_names, i.year, i.rating 
 		from items as i
 			JOIN trends as tr
@@ -9,7 +14,7 @@
 			JOIN categories as cat 
 				ON i.categories_id = cat.id
 			JOIN game_types as gt 
-				ON i.game_types_id = gt.id where i.id < 25";
+				ON i.game_types_id = gt.id where i.id > $LOWER_ID and i.id < $UPPER_ID";
 
 	$result = mysqli_query($conn, $sql);
 

@@ -11,6 +11,7 @@ session_start();
 ?>
 
 <link rel='stylesheet' type='text/css' href='./checkout.css'>
+<link rel='stylesheet' type='text/css' href='../assets/css/spinner.css'>
 </head>
 <body>
 	<?php include_once '../partials/navbar.php'; ?>
@@ -83,7 +84,7 @@ session_start();
 			</footer>	
 		</div>
 	</div> -->
-
+	<div id="checkoutModalLoad">a</div>
 
 	<div class="appViewBox">
 		<h1>Board Game Store - Checkout Page</h1>
@@ -217,15 +218,17 @@ session_start();
 						for(let key in shoppingCart) {
 							for(let key2 in itemData) {
 								if (shoppingCart[key]['id'] == itemData[key2]['id']) {
-									const subTotal = parseInt(shoppingCart[key]['qty'])*parseInt(itemData[key2]['price']);
+									const subTotal = parseInt(shoppingCart[key]['qty'])*parseFloat(itemData[key2]['price']);
+
+									const displaySubtotal = Number(parseFloat(subTotal).toFixed(2)).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
 
 									$('#orderItemsCheckout').append(`
 										<tr>
 										<td><image src="${itemData[key2]['item_image']}"></td>
 										<td>${itemData[key2]['name']}</td>
-										<td>${itemData[key2]['price']}</td>
+										<td><span>Php </span>${Number(parseFloat(itemData[key2]['price']).toFixed(2)).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
 										<td id='input${shoppingCart[key]['id']}'>${shoppingCart[key]['qty']}</td>
-										<td id='sub${shoppingCart[key]['id']}'>${subTotal}</td>
+										<td>Php <span id='sub${shoppingCart[key]['id']}'>${displaySubtotal}</span></td>
 										<td><i id='${shoppingCart[key]['id']}' class='button-delete-item fas fa-trash-alt'></i></td>
 										</tr>
 										`)
@@ -237,7 +240,7 @@ session_start();
 							}		
 						} 
 
-						document.querySelector("#totalPrice").textContent = totalPrice;
+						document.querySelector("#totalPrice").textContent = Number(parseFloat(totalPrice).toFixed(2)).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
 						const deleteItem = (id) => {
 							$.ajax({
@@ -245,7 +248,7 @@ session_start();
 								data: {id:id},
 								type:'POST',
 								success: (data) => {
-									// console.log(data);
+									get_checkout();
 								}
 							}) 
 						}
@@ -263,10 +266,10 @@ session_start();
 								const cartQuantity = document.querySelector('#cartQuantity').textContent;
 
 								const totalPriceElement = document.querySelector('#totalPrice');
-								const totalPrice = parseInt(totalPriceElement.innerHTML);
+								const totalPrice = parseInt(totalPriceElement.textContent);
 								const subtotal = document.querySelector(`#sub${id}`);
 
-								document.querySelector('#cartQuantity').textContent = cartQuantity - deletedQuantity.innerHTML;
+								document.querySelector('#cartQuantity').textContent = cartQuantity - deletedQuantity.textContent;
 
 								document.querySelector("#totalPrice").textContent = totalPrice - subtotal.textContent;
 
@@ -285,7 +288,9 @@ session_start();
 						if (table_rows.length <= 1) {
 							$('#orderItemsCheckoutContainer').empty();
 							$('#orderItemsCheckoutContainer').append(`
-								<p style="{text-align:center;}">Empty Cart</p>`)
+								<p style="{text-align:center;}">Your Cart is Empty.</p>`)
+							$('#orderItemsCheckoutContainer').append(`
+								<a href="./catalog.php"><button class="btn btn-outline-success">Return to Shopping</button></a>`)
 						}
 					}
 				})
@@ -424,6 +429,10 @@ session_start();
 
 	
 	document.querySelector('#submitOrder').addEventListener("click", (event) => {
+		
+
+		$('checkoutModalLoad').append('<div class="loadermodal"><div class=".loader"></div></div>')
+
 		const radioButtons = document.querySelectorAll('[name="payment-method"]');
 		const checked = [...radioButtons].filter((button) => button.checked);
 		const totalPriceShown = document.querySelector('#totalPrice').textContent;
@@ -439,7 +448,7 @@ session_start();
 			data: {paymentMethod: paymentMethod},
 			type: 'POST',
 			success: (data) => {
-				console.log(data);
+				$('checkoutModalLoad').empty();
 				window.location = './view_orders.php';
 			}
 		})
