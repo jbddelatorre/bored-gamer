@@ -74,7 +74,6 @@ session_start();
 
 		//Get All Items
 		const admin_complete_items = () => {
-			console.log('dsfsds')
 			$('#itemsForSale').empty();
 			$('#itemsForSale').append(`<div class="loader"></div>`);
 
@@ -82,7 +81,6 @@ session_start();
 				url: '../controllers/admin_view_edit_items.php',
 				type:'POST',
 				success: (data) => {
-					console.log(data);
 					let d = JSON.parse(data);
 					$('#adminCompleteItems').empty();
 
@@ -92,7 +90,7 @@ session_start();
 							<div class="adminItemContainerLeft">
 							<div class="admin-admin-image">
 							<img style="width:200px; height:200px;" src="${item.item_image}">
-							<p><strong>Image URL</strong>: ${item.item_image}</p>
+							<p><strong>Image Provided</strong></p>
 							</div>
 							</div>
 							<div class="adminItemContainerRight">
@@ -194,11 +192,17 @@ session_start();
 				dataObject[column] = form.value
 			})
 			// console.log(dataObject);
+			var file_data = document.querySelector("#uploadImage").value;
+			// var form_data = new FormData();
+		 //    form_data.append("file", file_data);
+		 	console.log(file_data);
+		 	
 			$.ajax({
 				url:'../controllers/admin_update_item.php',
-				data: {...dataObject},
+				data: {...dataObject, upload: file_data},
 				type:'POST',
 				success: (data) => {
+					console.log(data);
 					admin_complete_items();
 					document.querySelector('#adminCloseModalButton').click();
 				}

@@ -13,10 +13,25 @@
 	$categories_id = $_POST['categories_id'];
 	$game_types_id = $_POST['game_types_id'];
 	$trends_id = $_POST['trends_id'];
-	$publisher = $_POST['publisher'];
+
+	$year = $_POST['year'];
 	$rating = $_POST['rating'];
 
-	$sql = "UPDATE items SET item_desc='$item_desc', item_image='$item_image', name='$name', price=$price, min_players=$min_players, max_players=$max_players, average_length_id=$average_length_id, game_types_id=$game_types_id, trends_id=$trends_id, categories_id=$categories_id, publisher='$publisher', rating=$rating where id=$item_id";
+	$target_dir = "../assets/img/";
+
+	var_dump($_FILES);
+
+	$target_file = $target_dir . basename($_FILES["upload"]["name"]);
+	move_uploaded_file($_FILES["upload"]["tmp_name"], $target_file);
+
+	// echo $target_file;
+
+	if(isset($target_file)) {
+		$item_image = $target_file;
+	}
+
+	$sql = "UPDATE items SET item_desc='$item_desc', item_image='$item_image', name='$name', price=$price, min_players=$min_players, max_players=$max_players, average_length_id=$average_length_id, game_types_id=$game_types_id, trends_id=$trends_id, categories_id=$categories_id, year='$year', rating=$rating where id=$item_id";
+
 
 	$result = mysqli_query($conn, $sql);
 

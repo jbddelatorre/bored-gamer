@@ -90,15 +90,15 @@
 									  <div class='card-body' id='".$row['id']."'>
 									    <h5 class='card-title' id='".$row['id']."'>". $row['name'] ."</h5>
 									    
-									    <h6 id='".$row['id']."'> <strong>PHP</strong> ". number_format($row['price'], 2, '.', ',') ."</h6><div>
+									    <h6 id='".$row['id']."'> <strong>PHP</strong> ". number_format($row['price'], 2, '.', ',') ."</h6><div class='catalog-buttons-container'>
 									    ";
 									    	if(isset($_SESSION['user_data'])) {
-												echo "<button onClick=event.stopPropagation();addToCart(".$row['id'].") class='btn btn-outline-dark'>Add to Cart <i class='fas fa-shopping-cart'></i></button></div>";
+												echo "<button onClick=event.stopPropagation();addToCart(".$row['id'].") class='btn btn-outline-dark'>Add to Cart <i class='fas fa-shopping-cart'></i></button>";
 											} else {
-												echo "<button onClick=event.stopPropagation();location.href='./login.php' class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button></div>";
+												echo "<button onClick=event.stopPropagation();location.href='./login.php' class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button>";
 											};
 
-											echo "<div><button class='btn btn-outline-danger'> Wishlist <i class='far fa-heart'></i></button></div>";
+											echo "<button class='btn btn-outline-danger'> Wishlist <i class='far fa-heart'></i></button></div>";
 									     echo "</div>
 									</div>
 								</div>";  
@@ -188,10 +188,10 @@
 									<h5 class='card-title' id='${dataFiltered[key]['id']}'>${dataFiltered[key]["name"]}</h5>
 									<h6 id='${dataFiltered[key]['id']}'><strong>PHP </strong>${Number(parseFloat(dataFiltered[key]["price"]).toFixed(2)).toLocaleString('en')}</h6>
 									${login 
-										? `<div><button onClick=addToCart(${dataFiltered[key]['id']}) class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button></div>`
-										: `<div><button onClick=event.stopPropagation();location.href='./login.php' class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i><</button></div>`	
+										? `<div class='catalog-buttons-container'><button onClick=event.stopPropagation();addToCart(${dataFiltered[key]['id']}) class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button>`
+										: `<div class='catalog-buttons-container'><button onClick=event.stopPropagation();location.href='./login.php' class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button>`	
 									}
-									<div><button class='btn btn-outline-danger'> Wishlist <i class='far fa-heart'></i></button></div>
+									<button class='btn btn-outline-danger'> Wishlist <i class='far fa-heart'></i></button></div>
 								</div>
 							</div>
 					</div>`)

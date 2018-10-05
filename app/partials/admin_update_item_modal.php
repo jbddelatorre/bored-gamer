@@ -20,6 +20,11 @@
 				<div class="admin-item-input-div admin-item-input-div-long">
 					<label for="url">Image URL</label>
 					<input class="form-control" type="text" name="url" required>
+					<label for="upload">Upload Image</label>
+					<div class="upload-image-container">
+						<input type="file" id="uploadImage" name="upload">
+						<img id="showUploadImage" style="width:250px;height:250px;" src="../assets/image/default.png">
+					</div>
 				</div>
 				<div class="admin-item-input-div admin-item-input-div-long">
 					<label for="desc">Item Description</label>
@@ -89,3 +94,16 @@
 			</footer>	
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		document.querySelector('#uploadImage').onchange = function () {
+			var reader = new FileReader();
+
+			reader.onload = function (e) {
+				document.querySelector('#showUploadImage').style.height = '250px';
+				document.querySelector('#showUploadImage').style.width = '250px';
+				document.querySelector('#showUploadImage').src = e.target.result;
+			}
+			reader.readAsDataURL(this.files[0])
+		}
+	</script>

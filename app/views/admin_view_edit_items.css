@@ -33,3 +33,31 @@
 #adminCompleteItems .adminItemContainer .adminItemContainerRight {
 	padding: 10px;
 }
+
+#adminItemsApp .adminItemContainer {
+	border-bottom: 1px solid lightgrey;
+}
+
+
+/*UPLOAD IMAGE*/
+
+#adminUpdateModalForm .upload-image-container input {
+	flex:1 !important;
+}
+#adminUpdateModalForm .upload-image-container img {
+	flex:2;
+}
+
+#adminUpdateModalForm .upload-image-container {
+	display: flex;
+	justify-content: center;
+	flex-wrap: nowrap;
+	width:80%;
+	margin: 0 auto;
+	padding: 6px 12px;
+	/*align-content: center;*/
+}
+
+/*#adminItemsApp div.adminItemContainer:first-of-type {
+	border-bottom: 1px solid lightgrey;
+}*/

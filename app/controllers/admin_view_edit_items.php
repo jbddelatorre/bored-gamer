@@ -4,7 +4,7 @@
 
 	$ADD = 50*0;
 
-	$LOWER_ID = 1 + $ADD;
+	$LOWER_ID = 0 + $ADD;
 	$UPPER_ID = 50 + $ADD;
 
 	$sql = "SELECT  i.id, i.item_desc, i.item_image, i.name, i.price, i.min_players, i.max_players, i.average_length_id, tr.trend_names, cat.category_names, gt.game_type_names, i.year, i.rating 
