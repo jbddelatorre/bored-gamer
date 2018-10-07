@@ -13,6 +13,8 @@
 
 	if ($row_info[$type] == $value) {
 		echo json_encode(2);
+	} elseif ($type == 'email' && strpos($value, '@') != True){
+			echo json_encode(3);
 	} else {
 		if ($type == 'username' or $type == 'email'){
 			$sql_find = "SELECT $type from users where $type = '$value'";
@@ -20,7 +22,8 @@
 
 			if (mysqli_num_rows($result_find) > 0) {
 				echo json_encode(0);
-			} else {
+			} 
+			else {
 				$sql = "UPDATE users SET $type = '$value' where id = $id";
 				$result = mysqli_query($conn, $sql);
 

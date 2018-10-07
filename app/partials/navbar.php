@@ -121,6 +121,10 @@
     margin:0;
   }
 
+  #navcenter2 {
+    flex:1;
+  }
+
   #navcenter{
     /*flex:2;*/
     display: flex;
@@ -129,7 +133,8 @@
     width: 80%;
   }
 
-  #navcenter input#searchBoardGame {
+  #navcenter input#searchBoardGame,
+  #navcenter2 input#searchBoardGame {
     width:50%;
     margin-right: 10px;
     padding: 5px 9px;
@@ -177,6 +182,7 @@
     display: flex;
     list-style: none;
     flex:1;
+    padding-left: 30px;
   }
  
   #subNavLeft .adminNavUl {
@@ -195,10 +201,12 @@
     <a class="navbar-brand" href="./catalog.php"><h1>The Bored Gamer</h1></a>
     <h3 class="navbar-brand">Curing boredom, one boardgame at a time.</h3>
   </div>
-<!--   <div id="navcenter">
-    <input type="text" id="searchBoardGame" placeholder="Search for a game!">
-    <span id="searchBoardGameIcon"><i class="fas fa-search"></i></a></span>
-  </div> -->
+      <!-- <img src="../assets/image/stick.jpg" alt=""> -->
+  <!-- <div id="navcenter2"> -->
+    
+<!--     <input type="text" id="searchBoardGame" placeholder="Search for a game!">
+    <span id="searchBoardGameIcon"><i class="fas fa-search"></i></a></span> -->
+  <!-- </div> -->
   <div id="navright">
     <ul>
       <li><i class="fab fa-facebook"></i><span>Facebook</span></li>

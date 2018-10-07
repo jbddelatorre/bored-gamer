@@ -205,6 +205,7 @@
 					</div>`)
 				}
 		addListenerToCards();
+		addGridListToCards();
 	}
 
 	const addToCart = (id) => {
@@ -281,9 +282,40 @@
 	}
 
 	addListenerToCards();
+	
 
-	document.querySelector('#listButton')
-	document.querySelector('#gridButton')
+	const addGridListToCards = () => {
+		const cardContainerDom = document.querySelectorAll('.cardContainer');
+		const forSaleDom = document.querySelectorAll('#itemsForSale');
+
+		document.querySelector('#gridButton').addEventListener("click", () => {
+			forSaleDom.classList.remove('itemsForSale-list');
+			cardContainerDom.classList.toggle('cardContainer-list')
+			cardContainerDom.classList.toggle('catalog-item-desc')
+		})
+
+		document.querySelector('#listButton').addEventListener("click", () => {
+			forSaleDom.classList.add('itemsForSale-list');
+			cardContainerDom.classList.toggle('cardContainer-list')
+			cardContainerDom.classList.toggle('catalog-item-desc')
+		})
+
+
+		const remove_class = (dom, c) => {
+			dom.forEach(d => {
+				d.classList.remove(c);
+			})
+		}
+		const add_class = (dom, c) => {
+			dom.forEach(d => {
+				d.classList.add(c);
+			})
+		}
+	}
+
+	
+
+
 </script>
 
 <?php 

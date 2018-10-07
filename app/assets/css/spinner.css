@@ -6,6 +6,7 @@
     height: 10vw;
     animation: spin 1.5s linear infinite;
     margin-top: 100px;
+    z-index: 100000000;
 }
 
 .loadermodal {
@@ -16,7 +17,7 @@
 	/*top:0;*/
 	left: 0;
 	top:0;
-	z-index: 10000;
+	z-index: 1000000000;
 	display: flex;
 	justify-content: center;
 	align-items: center;

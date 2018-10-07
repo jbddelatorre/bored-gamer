@@ -8,6 +8,8 @@
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
+	<link href="https://fonts.googleapis.com/css?family=Cabin|Josefin+Sans|Raleway|Source+Sans+Pro|Titillium+Web" rel="stylesheet">
+
 	<!-- JQEUERY -->
 	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 
@@ -54,7 +56,26 @@
 		  box-shadow: 0 -1px ;/* ou 0 1px si border-style:ridge */
 		}
 
+		body,h3 {
+			font-family: 'Raleway', sans-serif;
+		}
+
+		h1,h2,h4 {
+			font-family: 'Cabin', sans-serif;
+			/*font-family: 'Titillium Web', sans-serif;*/
+		}
+
+		h5,h6 {
+			font-family: 'Titillium Web', sans-serif;
+		}
+
+		li, p, span {
+			font-family: 'Source Sans Pro', sans-serif;
+			/*font-family: 'Josefin Sans', sans-serif;*/
+		}
 		
+		
+
 		@media only screen and (min-width: 600px) {
 			div[id$="App"] {
 				width:100vw;

@@ -1,5 +1,7 @@
 	document.querySelector('#submitUpdateButton').addEventListener("click", (event) => {
 		// const submittal = event.target.attributes.submittal.nodeValue;
+		$('body').prepend(`<div id="modalLoad"><div class="loader"></div></div>`)
+
 		const footer_id = document.querySelector('#submitUpdateButton').parentNode.id;
 		const address_type = footer_id.replace(/[0-9]/g, '');
 		
@@ -38,7 +40,7 @@
 					if (typeof(get_all_address) == "function") {
 						get_all_address(address_type);
 					}
-
+					$('body').find('div').first().remove();
 					alert('Updated address!')
 
 					$('#inputstreet').val('');
@@ -55,6 +57,7 @@
 			
 
 		} else {
+			$('body').find('div').first().remove();
 			alert('Please complete your address.')
 		}
 	})

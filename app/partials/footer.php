@@ -30,6 +30,10 @@
 		margin-bottom: 6px;
 	}
 
+	footer#mainFooter ul {
+		padding-left: 0;
+	}
+
 	#footerWidth {
 		width:60%;
 		margin:0 auto;
@@ -79,9 +83,9 @@
 			<div id="upperFooterC">
 				<h4>Contact Us</h4>
 				<ul>
-					<li>landline</li>
-					<li>mobile</li>
-					<li>address</li>
+					<li>+63 (02) 987-6543</li>
+					<li>+917 123 4567</li>
+					<li>3F Casswyn Building, Timog Avenue, Quezon City</li>
 				</ul>
 			</div>
 		</div>

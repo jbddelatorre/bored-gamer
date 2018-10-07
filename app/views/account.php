@@ -15,8 +15,9 @@ session_start();
 	} 
 	?>
 	<?php 
-		include_once("../partials/update_address_modal.php");
+	include_once("../partials/update_address_modal.php");
 	?>
+	<div id="accountLoadModal" class="loadermodal"><div class="loader"></div></div>
 	<div class="appViewBox" id="account-appViewBox">
 		<div id="leftAccount">
 			<div class="card" style="width: 18rem;">
@@ -67,16 +68,17 @@ session_start();
 	<script type="text/javascript" src="../assets/js/get_update_address.js"></script>
 
 	<script type="text/javascript">
+		const lm = document.querySelector('#accountLoadModal');
+
 		const info = [
-			{'id':'username','name':'Username', type:'text'},
-			{'id':'password','name':'Password', type: 'password'}, 
-			{'id':'first_name','name':'First Name', type: 'text'},
-			{'id':'last_name','name':'Last Name', type: 'text'},
-			{'id':'email','name':'Email', type: 'email'},
-			{'id':'contact','name':'Mobile No.', type: 'tel'}];
+		{'id':'username','name':'Username', type:'text'},
+		{'id':'password','name':'Password', type: 'password'}, 
+		{'id':'first_name','name':'First Name', type: 'text'},
+		{'id':'last_name','name':'Last Name', type: 'text'},
+		{'id':'email','name':'Email', type: 'email'},
+		{'id':'contact','name':'Mobile No.', type: 'tel'}];
 
 		const get_user_profile = (info, dom) => {
-
 			const val = $.ajax({
 				url:'../controllers/get_user_info.php',
 				data:{data: info},
@@ -92,7 +94,7 @@ session_start();
 					}
 
 					if(info == 'email' || info == 'contact') {
-					document.querySelector(`#accountDefault${info}`).textContent = d[info];
+						document.querySelector(`#accountDefault${info}`).textContent = d[info];
 					}
 				}
 			})
@@ -121,8 +123,11 @@ session_start();
 
 						errorSpan.style.color = '#009933';
 						errorSpan.textContent = `${info.filter(e => e.id == id)[0]['name']} successfully updated!`
-					} else {
-						
+					} else if (d == 3) {
+						const errorSpan = document.querySelector(`#error${id}`)
+
+						errorSpan.style.color = 'red';
+						errorSpan.textContent = `${info.filter(e => e.id == id)[0]['name']} is not valid.`	
 					}
 				}
 			}),200)
@@ -239,7 +244,7 @@ session_start();
 				if (newpassword.value !== confirmnewpassword.value) {
 					changePasswordErrorSpan.textContent = "Passwords Do Not Match"
 				} else {
-					$('body').prepend(`<div id="changePasswordLoad"><div class="loader"></div></div>`)
+					$('body').prepend(`<div id="modalLoad"><div class="loader"></div></div>`)
 
 					setTimeout(() => $.ajax({
 						url:'../controllers/change_password.php',
@@ -260,9 +265,9 @@ session_start();
 							}
 							document.querySelector('#cancelChangepassword').click();
 
-						$('body').find('div').first().remove();
+							$('body').find('div').first().remove();
 						}
-					}), 1000)
+					}), 200)
 				}
 			})
 		}
@@ -280,6 +285,7 @@ session_start();
 		}
 
 		const get_all_address = (type) => {
+			$('body').prepend(`<div id="modalLoad"><div class="loader"></div></div>`)
 			$.ajax({
 				url: '../controllers/get_all_address.php',
 				type:'GET',
@@ -292,13 +298,13 @@ session_start();
 						for(let ad of d) {
 							$(`#listCurrent${type}`).append(`
 								<div class="listCurrentTypeSub">
-									<div class="listCurrentTypeData">${ad.house_num_others}, ${ad.barangay}, ${ad.province_code}, ${ad.region_province}, ${ad.region}</div>
-									<div class="listCurrentTypeDefault">${parseInt(ad.default_add) ? `<span style="padding:3px 3px;">  Current  Default  </span>` : `<button class="btn btn-outline-dark" id="listCurrentTypeDefaultButton${ad.id}">Set Default<button>`}</div>
-									<div class="listCurrentTypeUpdate"><button class="btn btn-outline-info" id="listCurrentTypeUpdateButton${ad.id}">Update</button></div>
-									<div class="listCurrentTypeDelete">
-									<button class="btn btn-outline-danger" id="listCurrentTypeDeleteButton${ad.id}">Delete</button></div>
+								<div class="listCurrentTypeData">${ad.house_num_others}, ${ad.barangay}, ${ad.province_code}, ${ad.region_province}, ${ad.region}</div>
+								<div class="listCurrentTypeDefault">${parseInt(ad.default_add) ? `<span style="padding:0 0 0 7px;">  Current  Default</span>` : `<button class="btn btn-outline-dark" id="listCurrentTypeDefaultButton${ad.id}">Set Default<button>`}</div>
+								<div class="listCurrentTypeUpdate"><button class="btn btn-outline-info" id="listCurrentTypeUpdateButton${ad.id}">Update</button></div>
+								<div class="listCurrentTypeDelete">
+								<button class="btn btn-outline-danger" id="listCurrentTypeDeleteButton${ad.id}">Delete</button></div>
 								</div>
-							`)
+								`)
 						}
 					} else {
 						$(`#listCurrent${type}`).empty(); 
@@ -309,6 +315,7 @@ session_start();
 					const setDefaultButtons = document.querySelectorAll('[id^="listCurrentTypeDefaultButton"]');
 
 					setDefaultButtons.forEach(button => button.addEventListener("click", (event) => {
+						$('body').prepend(`<div id="modalLoad"><div class="loader"></div></div>`)
 						const address_id = event.target.id.replace('listCurrentTypeDefaultButton', ''); 
 						const parentnode_id = button.parentNode.parentNode.parentNode.id
 						const type_address = parentnode_id.replace('listCurrent', '');
@@ -324,6 +331,7 @@ session_start();
 								console.log(data);
 								get_all_address(type_address);
 								get_account_address(type_address);
+								$('body').find('div').first().remove();
 							}
 						})
 
@@ -366,7 +374,7 @@ session_start();
 							const idToBeDeleted = event.target.id.replace(/\D/g,'');
 							const parentnode_id = button.parentNode.parentNode.parentNode.id
 							const type_address = parentnode_id.replace('listCurrent', '');
-							
+							$('body').prepend(`<div id="modalLoad"><div class="loader"></div></div>`)
 							// let address_type_id = 1;
 							// if (type_address == "billing") address_type_id = 2;
 							
@@ -381,82 +389,85 @@ session_start();
 										alert('Successfully deleted address.')
 										get_all_address(type_address);
 									}
+									$('body').find('div').first().remove();
 								}
 							})
 
 						})
 					})
+					$('body').find('div').first().remove();
 				}
 			})
 		}
 
-		const generate_address_profile = (type) => {
-			$('#rightAccount').empty();
-			$('#rightAccount').append(`<h2>My <span style="text-transform:capitalize;">${type}</span> Address </h2>`);
+const generate_address_profile = (type) => {
+	$('#rightAccount').empty();
+	$('#rightAccount').append(`<h2>My <span style="text-transform:capitalize;">${type}</span> Address </h2>`);
 
-			$('#rightAccount').append(`
-				<div id="listCurrent${type}"><h3 style="margin-top:40px;font-size:25px;">Saved Addresses<h3></div>
-				`)
-			get_all_address(`${type}`);
+	$('#rightAccount').append(`
+		<div id="listCurrent${type}"><h3 style="margin-top:40px;font-size:25px;">Saved Addresses<h3></div>
+		`)
+	get_all_address(`${type}`);
 
-			$('#rightAccount').append(`
+	$('#rightAccount').append(`
 		<div id="addAddressForm">
-			<h3 style="margin:20px 0 20px 0;font-size:25px;">Add New Address</h3>
-			<main>
-				<div class="add-address-input-div">
-					<label for="region">Address Number and Street</label>
-					<input class="add-modal-only form-control" type="text" name="street" id="addinputstreet">
-				</div>
-				<div class="add-address-input-div">
-					<label for="region">Region</label>
-					<select class="add-modal-only form-control" name="region" id="addselectregions">
-					</select>
-				</div>
-				<div class="add-address-input-div">
-					<label for="province">Province</label>
-					<select class="add-modal-only form-control" name="province" id="addselectprovinces">
-						<option value="null">--PLEASE SELECT--</option>
-					</select>
-				</div>
-				<div class="add-address-input-div">
-					<label for="municipality">Municipality</label>
-					<select class="add-modal-only form-control" name="municipality" id="addselectmunicipalities">
-						<option value="null">--PLEASE SELECT--</option>
-					</select>
-				</div>
-				<div class="add-address-input-div">
-					<label for="barangay">Barangay</label>
-					<select class="add-modal-only form-control" name="barangay" id="addselectbarangays">
-						<option value="null">--PLEASE SELECT--</option>
-					</select>
-				</div>
-			</main>
-			<footer id="addAddressFooter">
-        		<button type="button" class="btn btn-outline-primary" id="submitAddAddressButton${type}" style="text-transform:capitalize;">Add New ${type} Address</button>
-			</footer>	
+		<h3 style="margin:20px 0 20px 0;font-size:25px;">Add New Address</h3>
+		<main>
+		<div class="add-address-input-div">
+		<label for="region">Address Number and Street</label>
+		<input class="add-modal-only form-control" type="text" name="street" id="addinputstreet">
+		</div>
+		<div class="add-address-input-div">
+		<label for="region">Region</label>
+		<select class="add-modal-only form-control" name="region" id="addselectregions">
+		</select>
+		</div>
+		<div class="add-address-input-div">
+		<label for="province">Province</label>
+		<select class="add-modal-only form-control" name="province" id="addselectprovinces">
+		<option value="null">--PLEASE SELECT--</option>
+		</select>
+		</div>
+		<div class="add-address-input-div">
+		<label for="municipality">Municipality</label>
+		<select class="add-modal-only form-control" name="municipality" id="addselectmunicipalities">
+		<option value="null">--PLEASE SELECT--</option>
+		</select>
+		</div>
+		<div class="add-address-input-div">
+		<label for="barangay">Barangay</label>
+		<select class="add-modal-only form-control" name="barangay" id="addselectbarangays">
+		<option value="null">--PLEASE SELECT--</option>
+		</select>
+		</div>
+		</main>
+		<footer id="addAddressFooter">
+		<button type="button" class="btn btn-outline-primary" id="submitAddAddressButton${type}" style="text-transform:capitalize;">Add New ${type} Address</button>
+		</footer>	
 		</div></div>`)
-			get_ph_info_add();
+	get_ph_info_add();
 
 
-			document.querySelector('[id^="submitAddAddressButton"]').addEventListener("click", (event) => {
-				
-				const address_type = event.target.id.replace('submitAddAddressButton', '');
-				let address_type_id = 1;
-				if (address_type == 'billing') address_type_id = 2;
+	document.querySelector('[id^="submitAddAddressButton"]').addEventListener("click", (event) => {
+		$('body').prepend(`<div id="modalLoad"><div class="loader"></div></div>`)
 
-				const street = $('#addinputstreet').val();
-				const region = $('#addselectregions :selected').val();
-				const province = $('#addselectprovinces :selected').val();
-				const municipality = $('#addselectmunicipalities :selected').val();
-				const barangay = $('#addselectbarangays :selected').val();
+		const address_type = event.target.id.replace('submitAddAddressButton', '');
+		let address_type_id = 1;
+		if (address_type == 'billing') address_type_id = 2;
 
-				if (street && region && province && municipality && barangay){
-					
-					$.ajax({
-						url:'../controllers/add_new_address.php',
-						data: {address_type_id:address_type_id, house_num_others: street, region_code: region, region_province_code: province, city_municipality_code: municipality, barangay_id: barangay},
-						type:'POST',
-						success: (data) => {
+		const street = $('#addinputstreet').val();
+		const region = $('#addselectregions :selected').val();
+		const province = $('#addselectprovinces :selected').val();
+		const municipality = $('#addselectmunicipalities :selected').val();
+		const barangay = $('#addselectbarangays :selected').val();
+
+		if (street && region && province && municipality && barangay){
+
+			$.ajax({
+				url:'../controllers/add_new_address.php',
+				data: {address_type_id:address_type_id, house_num_others: street, region_code: region, region_province_code: province, city_municipality_code: municipality, barangay_id: barangay},
+				type:'POST',
+				success: (data) => {
 							// console.log(data);
 
 							// if (typeof(load_address) == "function") {
@@ -479,33 +490,35 @@ session_start();
 							$('#addselectbarangays').empty();
 
 							get_ph_info();
+							$('body').find('div').first().remove();
 						}
 					})
-				} else {
-					alert('Please complete your address.')
-				}
-
-			})
+		} else {
+			$('body').find('div').first().remove();
+			alert('Please complete your address.')
 		}
 
-		document.querySelector('#getUserProfile').addEventListener("click", generate_user_info)
-		document.querySelector('#edit-email').addEventListener("click", generate_user_info)
-		document.querySelector('#edit-contact').addEventListener("click", generate_user_info)
+	})
+}
 
-		document.querySelector('#edit-billing').addEventListener("click", () => generate_address_profile('billing'))
-		document.querySelector('#edit-shipping').addEventListener("click", () => generate_address_profile('shipping'))
+document.querySelector('#getUserProfile').addEventListener("click", generate_user_info)
+document.querySelector('#edit-email').addEventListener("click", generate_user_info)
+document.querySelector('#edit-contact').addEventListener("click", generate_user_info)
 
-		/**/
+document.querySelector('#edit-billing').addEventListener("click", () => generate_address_profile('billing'))
+document.querySelector('#edit-shipping').addEventListener("click", () => generate_address_profile('shipping'))
 
-		/**/
+/**/
+
+/**/
 
 
 
 
-		$(document).ready(generate_user_info());
+$(document).ready(generate_user_info());
 
-	</script>
+</script>
 
-	<?php 
-	include_once '../partials/footer.php';
-	?>
+<?php 
+include_once '../partials/footer.php';
+?>

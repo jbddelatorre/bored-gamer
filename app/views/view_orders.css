@@ -4,7 +4,6 @@ div.card-orders {
 
 #pendingOrders table {
 	width: 90%;
-	
 	margin: 15px auto;
 	border:1px solid rgba(0,0,0,0.1);
 }
@@ -19,8 +18,13 @@ div.card-orders {
 	background-color: rgba(247,247,246);
 }
 
+#pendingOrders,
+#ordersHistory {
+	border-radius: 10px;
+}
+
 #pendingOrders tr td {
-	padding: 3px 5px;
+	padding: 5px 3px;
 	text-align: center;
 	border-bottom: 1px solid rgba(0,0,0,0.1);
 	border-top: 1px solid rgba(0,0,0,0.1);
