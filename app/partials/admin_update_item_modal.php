@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../partials/admin_update_item_modal.css">
+<link rel="stylesheet" href="../partials/admin_modal.css">
 <?php require_once('../controllers/connect.php'); ?>
 
 <div id="adminUpdateModal">

@@ -2,7 +2,7 @@
 	require_once('./connect.php');
 	session_start();
 
-	$LIMIT = 11;
+	$LIMIT = 25;
 
 	$filter = $_GET['filter'];
 	$id = $_GET['id'];
@@ -15,13 +15,13 @@
 	}
 
 	if (isset($_SESSION['categories_id']) && isset($_SESSION['game_types_id'])) {
-		$sql = "SELECT id, name, price, item_image FROM items where game_types_id = $_SESSION[game_types_id] AND categories_id = $_SESSION[categories_id] LIMIT $LIMIT";
+		$sql = "SELECT id, name, price, item_image, item_desc FROM items where game_types_id = $_SESSION[game_types_id] AND categories_id = $_SESSION[categories_id] LIMIT $LIMIT";
 
 	} elseif (isset($_SESSION['game_types_id'])) {
-		$sql = "SELECT id, name, price, item_image FROM items where game_types_id = $_SESSION[game_types_id] LIMIT $LIMIT";
+		$sql = "SELECT id, name, price, item_image, item_desc FROM items where game_types_id = $_SESSION[game_types_id] LIMIT $LIMIT";
 
 	} else {
-		$sql = "SELECT id, name, price, item_image FROM items LIMIT $LIMIT";
+		$sql = "SELECT id, name, price, item_image, item_desc FROM items LIMIT $LIMIT";
 	}
 
 	$result = mysqli_query($conn, $sql);

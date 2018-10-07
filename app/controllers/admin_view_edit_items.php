@@ -14,7 +14,7 @@
 			JOIN categories as cat 
 				ON i.categories_id = cat.id
 			JOIN game_types as gt 
-				ON i.game_types_id = gt.id where i.id > $LOWER_ID and i.id < $UPPER_ID";
+				ON i.game_types_id = gt.id ORDER by i.id DESC LIMIT 30";
 
 	$result = mysqli_query($conn, $sql);
 

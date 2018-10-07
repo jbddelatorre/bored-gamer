@@ -74,8 +74,8 @@ session_start();
 
 		//Get All Items
 		const admin_complete_items = () => {
-			$('#itemsForSale').empty();
-			$('#itemsForSale').append(`<div class="loader"></div>`);
+			// $('#adminCompleteItems').empty();
+			// $('#adminCompleteItems').append(`<div class="loadermodal"><div class="loader"></div></div>`);
 
 			$.ajax({
 				url: '../controllers/admin_view_edit_items.php',
@@ -89,7 +89,7 @@ session_start();
 							<div class="adminItemContainer" id="adminItem${item.id}">
 							<div class="adminItemContainerLeft">
 							<div class="admin-admin-image">
-							<img style="width:200px; height:200px;" src="${item.item_image}">
+							<img src="${item.item_image}">
 							<p><strong>Image Provided</strong></p>
 							</div>
 							</div>
@@ -97,7 +97,7 @@ session_start();
 							<div class="admin-id-name-price">
 							<p><strong>ID</strong>: ${item.id}</p>
 							<p><strong>Name</strong>: ${item.name}</p>
-							<p><strong>Price</strong>: ${item.price}</p>
+							<p><strong>Price</strong>: Php ${item.price}</p>
 							</div>
 							<div class="admin-min-max-time">
 							<p><strong>Min Players</strong>: ${item.min_players}</p>
@@ -155,6 +155,15 @@ session_start();
 			setTimeout(() => document.querySelector('#adminAddModal').style.display = 'none', 300)
 
 			document.querySelector('#adminAddModal').style.opacity = 0;
+
+			addmodalDom.forEach(dom => {
+				dom.value = '';
+
+				if (!dom.getAttribute('type')) {
+					dom.value = 1;
+				} 
+			})
+
 		})
 
 		document.querySelector('#adminSubmitAddItemButton').addEventListener('click', () => {
@@ -167,17 +176,40 @@ session_start();
 			const newItemData = {};
 
 			modalnameadd.forEach((form,index) => {
-				// console.log(addmodalDom);
-				newItemData[form] = addmodalDom[index].value;
+				if (addmodalDom[index].value) {
+					newItemData[form] = addmodalDom[index].value;
+				} else {
+					alert('Please fill in all details.')
+					continue;
+				}
+				
 			})
+
+			// console.log(document.querySelector('uploadImage').files);
+
+			let file_data = $("#uploadImageAdd").prop('files')[0];
+			let formData = new FormData();
+		    formData.append("uploadimageadd", file_data);
+		 	
+			$('#adminCompleteItems').empty();
+			$('#adminCompleteItems').append(`<div class="loadermodal"><div class="loader"></div></div>`);
 
 			$.ajax({
 				url:'../controllers/admin_add_item.php',
 				data:{...newItemData},
 				type:'POST',
 				success: (data) => {
-					// console.log(data);
-					admin_complete_items();
+					$.ajax({
+						url:'../controllers/admin_add_image.php',
+						data:formData,
+						type:'POST',
+						contentType: false,
+						processData: false, 
+						success: (data) => {
+							console.log(data);
+							admin_complete_items();
+						}
+					})
 					document.querySelector('#adminAddCloseModalButton').click();
 				}
 			})
@@ -192,18 +224,28 @@ session_start();
 				dataObject[column] = form.value
 			})
 			// console.log(dataObject);
-			var file_data = document.querySelector("#uploadImage").value;
-			// var form_data = new FormData();
-		 //    form_data.append("file", file_data);
-		 	console.log(file_data);
+			let file_data = $("#uploadImage").prop('files')[0];
+			let formData = new FormData();
+		    formData.append("uploadimage", file_data);
+
+		    $('#adminCompleteItems').empty();
+			$('#adminCompleteItems').append(`<div class="loadermodal"><div class="loader"></div></div>`);
 		 	
 			$.ajax({
 				url:'../controllers/admin_update_item.php',
-				data: {...dataObject, upload: file_data},
+				data: {...dataObject},
 				type:'POST',
 				success: (data) => {
-					console.log(data);
-					admin_complete_items();
+					$.ajax({
+						url:'../controllers/admin_update_image.php',
+						data:formData,
+						type:'POST',
+						contentType: false,
+						processData: false, 
+						success: (data) => {
+							admin_complete_items();
+						}
+					})
 					document.querySelector('#adminCloseModalButton').click();
 				}
 			})

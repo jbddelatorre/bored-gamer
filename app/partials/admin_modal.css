@@ -1,3 +1,4 @@
+#adminUpdateModal,
 #adminAddModal {
 	width:100vw;
 	height:100vh;
@@ -14,6 +15,7 @@
 	opacity: 0;
 }
 
+#adminUpdateModalForm,
 #adminAddModalForm {
 /*	width:500px;
 	height:500px;*/
@@ -26,51 +28,60 @@
 	align-content: center;
 	align-items: center;
 }
-#adminAddModalForm main {
+#adminUpdateModalForm main,
+#adminAddModalForm main  {
 	width:90%;
 }
 
-#adminAddModalForm .admin-item-input-div {
+#adminUpdateModalForm .admin-item-input-div,
+#adminAddModalForm .admin-item-input-div  {
 	display: flex;
 	flex-wrap: nowrap;
 	margin: 10px 0;
 	/*flex-direction: column;*/
 }
 
-#adminAddModalForm .admin-item-input-div-long {
+#adminUpdateModalForm .admin-item-input-div-long,
+#adminAddModalForm .admin-item-input-div-long  {
 	flex-direction: column !important;
 }
 
+#adminUpdateModalForm .admin-item-input-div input,
 #adminAddModalForm .admin-item-input-div input {
 	/*width:100px;*/
 	flex:5;
 }
-#adminAddModalForm .admin-item-input-div label {
+#adminUpdateModalForm .admin-item-input-div label,
+#adminAddModalForm .admin-item-input-div label  {
 	/*width:180px;*/
 	text-align: center;
 	flex:1;
 	margin: 0 10px 0 5px;
 }
 
-#adminAddModalForm:hover {
+#adminUpdateModalForm:hover,
+#adminAddModalForm:hover  {
 	cursor: default;
 }
 
+#adminUpdateModalForm input[type=number]::-webkit-inner-spin-button, 
+#adminUpdateModalForm input[type=number]::-webkit-outer-spin-button,
 #adminAddModalForm input[type=number]::-webkit-inner-spin-button, 
-#adminAddModalForm input[type=number]::-webkit-outer-spin-button { 
+#adminAddModalForm input[type=number]::-webkit-outer-spin-button  { 
   -webkit-appearance: none; 
   margin: 0; 
 }
 
-/*UPLOAD IMAGE*/
-
-#adminAddModalForm .upload-image-container input {
+#adminUpdateModalForm .upload-image-container input,
+#adminAddModalForm .upload-image-container input  {
 	flex:1 !important;
 }
-#adminAddModalForm .upload-image-container img {
+#adminUpdateModalForm .upload-image-container img,
+#adminAddModalForm .upload-image-container img  {
 	flex:2;
 }
 
+#adminUpdateModalForm .upload-image-container,
 #adminAddModalForm .upload-image-container {
 	display: flex;
 	justify-content: center;

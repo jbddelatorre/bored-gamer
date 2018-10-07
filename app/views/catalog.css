@@ -58,9 +58,13 @@
 }
 
 .cardContainer {
-	width:50%;
+	/*width:50%;*/
+	/*min-width:50%;*/
 	padding:5px;
 	display: flex;
+	flex:1;
+	flex-direction: column;
+	flex-wrap: wrap;
 }
 
 #rightSide {
@@ -69,17 +73,38 @@
 
 @media only screen and (min-width: 600px) {
 	.cardContainer {
-		width: 25% !important;
+		/*width: 25% !important;*/
+		min-width: 25% !important;
+		max-width: 25% !important;
 		padding:5px;
+		flex:1;
+	}
+	.cardContainer .card {
+		min-width: 100%;
 	}
 }
 
 @media only screen and (min-width: 1600px) {
 	.cardContainer {
-		width: 20% !important;
+		flex:1;
+		/*width: 20% !important;*/
+		min-width: 20% !important;
+		max-width: 20% !important;
 		padding:5px;
 	}	
+	.cardContainer .card {
+		min-width: 100%;
+	}
 }
+
+@media only screen and (max-width: 1100px) {
+	.cardContainer .card-body div i {
+		display: none;
+	}
+}
+
+
+
 /*
 .carousel-item {
 	height:600px;
@@ -87,10 +112,16 @@
 	
 }
 
+.
+
 img {
 	height:40vh;
 	width:70vw;
 }*/
+
+.cardContainer .catalog-item-desc {
+	display: none;
+}
 
 #backdropModal {
 	display: none;
@@ -181,6 +212,7 @@ img {
 
 .cardContainer .card {
 	padding: 20px;
+	height: 100%;
 }
 
 .cardContainer img {
@@ -219,7 +251,7 @@ img {
 	text-align: center;
 } 
 
-.cardContainer .card-body div {
+.cardContainer .card-body div.catalog-buttons-container {
 	display: flex;
 	justify-content: center;
 }

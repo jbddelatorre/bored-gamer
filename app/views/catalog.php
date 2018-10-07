@@ -76,10 +76,14 @@
 						<button id="gridButton"><i class="fas fa-th"></i></button>
 						<button id="listButton"><i class="fas fa-list"></i></button>
 				</div>
+				<div id="navcenter">
+				    <input type="text" id="searchBoardGame" placeholder="Search for a game!">
+				    <span id="searchBoardGameIcon"><i class="fas fa-search"></i></a></span>
+				  </div>
 				<div id='itemsForSale'>
 					
 					<?php
-						$sql = "SELECT * FROM items LIMIT 15";
+						$sql = "SELECT id, name, price, item_image, item_desc FROM items LIMIT 25";
 						$result = mysqli_query($conn, $sql);
 
 						if (mysqli_num_rows($result) > 0) {
@@ -89,7 +93,7 @@
 									  <img class='card-img-top' src='". $row['item_image'] ."' alt='Card image cap' id='".$row['id']."'>
 									  <div class='card-body' id='".$row['id']."'>
 									    <h5 class='card-title' id='".$row['id']."'>". $row['name'] ."</h5>
-									    
+									    <div class='catalog-item-desc'><p>".$row['item_desc']."</p></div>
 									    <h6 id='".$row['id']."'> <strong>PHP</strong> ". number_format($row['price'], 2, '.', ',') ."</h6><div class='catalog-buttons-container'>
 									    ";
 									    	if(isset($_SESSION['user_data'])) {
@@ -175,17 +179,21 @@
 						`<p>Item not found</p>`
 						);
 				}
+			generate_cards(dataFiltered, login);
+			}
+		}), 200)
+	}
 
-				//<input type='number' id=qty${dataFiltered[key]['id']} class='item-qty' name='inputQuantity' min='1' value='1'></span>
-				//<p class='card-text'>${dataFiltered[key]["item_desc"]}</p>
 
-				for (let key in dataFiltered) {
+	const generate_cards = (dataFiltered, login) => {
+		for (let key in dataFiltered) {
 					$('#itemsForSale').append(`
 						<div class='cardContainer'>
 							<div class='card' id='${dataFiltered[key]['id']}'>
 								<img class='card-img-top' src="${dataFiltered[key]['item_image']}" alt='Card image cap' id='${dataFiltered[key]['id']}'>
 								<div class='card-body' id='${dataFiltered[key]['id']}'>
 									<h5 class='card-title' id='${dataFiltered[key]['id']}'>${dataFiltered[key]["name"]}</h5>
+									<div class='catalog-item-desc'><p>${dataFiltered[key]['item_desc']}</p></div>
 									<h6 id='${dataFiltered[key]['id']}'><strong>PHP </strong>${Number(parseFloat(dataFiltered[key]["price"]).toFixed(2)).toLocaleString('en')}</h6>
 									${login 
 										? `<div class='catalog-buttons-container'><button onClick=event.stopPropagation();addToCart(${dataFiltered[key]['id']}) class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button>`
@@ -196,9 +204,7 @@
 							</div>
 					</div>`)
 				}
-				addListenerToCards();
-			}
-		}), 200)
+		addListenerToCards();
 	}
 
 	const addToCart = (id) => {
@@ -227,85 +233,60 @@
 		})
 	}
 
+	/*SEARCH BAR FILTER*/
+
+	const searchDom = document.querySelector('#searchBoardGame');
+	const searchIconDom = document.querySelector('#searchBoardGameIcon');
+
+	searchDom.addEventListener("keypress", (event) => {
+		if (event.keyCode == 13) {
+		  search_game();
+		}
+	})
+	searchIconDom.addEventListener("click", () => {
+		search_game();
+	})
+
+	const search_game = () => {
+		const filtered = searchDom.value;
+
+		if (filtered == '') {
+			return;
+		}
+
+		$('#itemsForSale').empty();
+		$('#itemsForSale').append(`<div class="loader"></div>`);
+		filter('none');
+			setTimeout(() => $.ajax({
+				  url:'../controllers/filter_word.php',
+				  data:{filter: filtered},
+				  type:'GET',
+				  success: (data) => {
+				  	// console.log(data);
+				    let dataParse = JSON.parse(data);
+					
+					const dataFiltered = dataParse.filter;
+					const login = dataParse.login;
+
+					$('#itemsForSale').empty();
+
+					if (dataParse.filter.length === 0) {
+						$('#itemsForSale').append(
+							`<p>Item not found</p>`
+							);
+					}	
+					generate_cards(dataFiltered, login);	
+				  }
+			}), 200)
+	}
+
 	addListenerToCards();
+
+	document.querySelector('#listButton')
+	document.querySelector('#gridButton')
 </script>
 
 <?php 
 	include_once '../partials/footer.php';
 ?>
 
-
-<!-- 	// const set_filter = (filter) => {
-
-	// 	if(filter === 'board_games' || filter === 'card_games' || filter === 'special_games') {
-	// 		const selected_li = document.querySelector(`#${filter}`);
-	// 		const all_game_type = $('.game-filter-list-item')
-
-	// 		$.each(all_game_type, (index, value) => {
-	// 			value.classList.remove('selected-filter');
-	// 		})
-	// 			selected_li.classList.add('selected-filter');
-	// 	} else {
-	// 		if (filter === 'none') {
-	// 			const all_filters = $('.list-group-item');
-	// 			$.each(all_filters, (index, value) => {
-	// 				value.classList.remove('selected-filter');
-	// 			})
-	// 		} else {
-	// 			const selected_li = document.querySelector(`#${filter}`);
-	// 			const all_game_type = $('.type-filter-list-item')
-
-	// 			$.each(all_game_type, (index, value) => {
-	// 				value.classList.remove('selected-filter');
-	// 			})
-	// 				selected_li.classList.add('selected-filter');1
-	// 		}
-	// 	} 
-	
-	// 	$('#itemsForSale').empty();
-	// 	$('#itemsForSale').append(`<div class="loader"></div>`);
-		
-
-
-	// 	setTimeout(() => $.ajax({
-	// 		url: '../controllers/filter_items.php',
-	// 		data: {filter: filter},
-	// 		type: 'GET',
-	// 		success: (data) => {
-
-	// 			let dataParse = JSON.parse(data);
-
-	// 			const dataFiltered = dataParse.filter;
-	// 			const login = dataParse.login;
-
-	// 			$('#itemsForSale').empty();
-
-	// 			if (dataParse.filter.length === 0) {
-	// 				$('#itemsForSale').append(
-	// 					`<p>Item not found</p>`
-	// 					);
-	// 			}
-	// 			for (let key in dataFiltered) {
-	// 				$('#itemsForSale').append(`
-	// 					<div class='cardContainer'>
-	// 						<div class='card' id='${dataFiltered[key]['id']}'>
-	// 							<img class='card-img-top' src="${dataFiltered[key]['item_image']}" alt='Card image cap' id='${dataFiltered[key]['id']}'>
-	// 							<div class='card-body' id='${dataFiltered[key]['id']}'>
-	// 								<h5 class='card-title' id='${dataFiltered[key]['id']}'>${dataFiltered[key]["name"]}</h5>
-	// 								<h6> <strong>PHP</strong>${dataFiltered[key]["price"]}</h6>
-	// 								${login 
-	// 									? `<div><button onClick=addToCart(${dataFiltered[key]['id']}) class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button></div>`
-	// 									: `<div><button onClick=event.stopPropagation();location.href='./login.php' class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i><</button></div>`	
-	// 								}
-	// 								<div><button class='btn btn-outline-danger'> Wishlist <i class='far fa-heart'></i></button></div>
-	// 							</div>
-	// 						</div>
-	// 				</div>`)
-	// 			}
-	// 			addListenerToCards();
-	// 		},
-	// 		error: (error) => {
-	// 			console.log(error)
-	// 		}
-	// 	}), 200)
-	// } -->

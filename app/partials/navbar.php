@@ -122,15 +122,17 @@
   }
 
   #navcenter{
-    flex:2;
+    /*flex:2;*/
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
   }
 
-  #navcenter input {
+  #navcenter input#searchBoardGame {
     width:50%;
     margin-right: 10px;
-    padding: 3px 8px;
+    padding: 5px 9px;
     border-radius: 15px;
     border: 1px solid #000000c9;
     /*background-color: #00000015;*/
@@ -193,10 +195,10 @@
     <a class="navbar-brand" href="./catalog.php"><h1>The Bored Gamer</h1></a>
     <h3 class="navbar-brand">Curing boredom, one boardgame at a time.</h3>
   </div>
-  <div id="navcenter">
-    <input type="text" placeholder="Search for a game!">
-    <span><i class="fas fa-search"></i></a></span>
-  </div>
+<!--   <div id="navcenter">
+    <input type="text" id="searchBoardGame" placeholder="Search for a game!">
+    <span id="searchBoardGameIcon"><i class="fas fa-search"></i></a></span>
+  </div> -->
   <div id="navright">
     <ul>
       <li><i class="fab fa-facebook"></i><span>Facebook</span></li>
@@ -256,3 +258,8 @@
   </div>
 </nav>
 </header>
+
+<script>
+
+
+</script>
