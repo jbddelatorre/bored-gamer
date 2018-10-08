@@ -40,5 +40,11 @@ div.card-orders {
 }
 
 #pendingOrders h5 {
+	margin-bottom: 5px;
+}
+
+#pendingOrders .single-order-container {
 	margin-bottom: 30px;
+	padding-bottom: 30px;
+	border-bottom: 1px solid lightgrey;
 }

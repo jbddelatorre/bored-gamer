@@ -20,6 +20,8 @@ $password = $_POST['inputPassword'];
 			$_SESSION['user_data'] = $row;
 			$_SESSION['cartQuantity'] = 0;
 			$_SESSION['cart'] = array();
+			$_SESSION['wishlist'] = array();
+			$_SESSION['wishlistQuantity'] = 0;
 
 			if ($row['roles_id'] == 2) {
 				$_SESSION['admin'] = 1;

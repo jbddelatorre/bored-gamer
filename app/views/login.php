@@ -24,7 +24,7 @@
 						<h2>Login</h2>
 						<div class="form-group-login">
 							<label>Username</label>
-							<input  class="form-control" type="text" name="inputUsername">
+							<input class="form-control" type="text" name="inputUsername">
 						</div>
 						<div class="form-group-login">
 							<label>Password</label>
@@ -40,7 +40,10 @@
 						</div>
 						<div class="form-group-login">
 							<button type="submit" class="btn btn-outline-dark">Login</button>
-							<button type="submit" class="btn btn-outline-dark">Forgot Password</button>
+							<button type="button" class="btn btn-outline-dark">Forgot Password</button>
+						</div>
+						<div class="form-group-login">
+							<a href="./register.php"><p>No account? Register here</p></a>
 						</div>	
 					</form>	
 				</div>		

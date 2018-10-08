@@ -17,8 +17,13 @@
 
 	<h1>Board Game - Registration Complete</h1>
 
-	<div id='afterRegistrationContainer'>
-		<p>Registration Complete - Go to <a href="./login.php">Login</a></p>
+	<div id='afterRegistrationContainer' style="display:flex; justify-content: center; flex-direction:column; align-items: center;">
+		<div style="display: flex; justify-content: center; margin:10px 0;" >
+			<p style="font-size: 24px;">Registration Complete!</p>
+		</div>
+		<div style="display: flex; justify-content: center; margin:10px 0;" >
+	 		<a href="./login.php"><button id="returnToShopping" class="btn btn-outline-success">You may now Log In</button></a>
+	 	</div>
 	</div>
 
 	</div>

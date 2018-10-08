@@ -46,3 +46,13 @@ form {
 	display: flex;
 	justify-content: center;
 }
+
+#loginForm input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px whitesmoke inset;
+}
+
+#loginForm .form-group-login a:active,
+#loginForm .form-group-login a:link,
+#loginForm .form-group-login a:visited {
+	color:black;
+}

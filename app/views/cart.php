@@ -17,8 +17,7 @@
 	 ?>
 
 	 <div class="appViewBox">
-		<h1>My Cart</h1>
-		<p id="vcvc">asd<span>123</span></p>		
+		<h1>My Cart</h1>		
 		<div id="cartApp">
 			<div id="cartContainer">
 				<a  href="./catalog.php"><button id="returnToShopping" class="btn btn-outline-success">Return to Shopping</button></a>
@@ -81,22 +80,38 @@
 				 ?>
 			</div>
 			<div id="cartSummary">
-				<div>
-					<h4>Cart Summary</h4>
-					<div>
-						<ul>
-							<li>Qty <span id="cartSummaryQty"><?php echo $_SESSION['cartQuantity'] ?></span>Cart Quantity</li>
-							<li>Php <span id="cartSummaryTotalPrice"><?php echo number_format((float)$totalprice, 2, '.', ',') ?></span>Total Amount</li>
-							<li>Delivery <span>FREE</span>Shipping</li>
-						</ul>
+				<div class="card cart-summary-card">
+					<div class="card-header">
+						<h4>Cart Summary</h4>
 					</div>
+					<div class="card-body">
+						<table id="cartSummaryTable">
+							<tr>
+								<td>Qty </td>
+								<td><span id="cartSummaryQty"><?php echo $_SESSION['cartQuantity'] ?></span></td>
+								<td>Qty Cart Quantity</td>
+							</tr>
+							<tr>
+								<td>Php </td>
+								<td><span id="cartSummaryTotalPrice"><?php echo number_format((float)$totalprice, 2, '.', ',') ?></span></td>
+								<td>Php Total Amount</td>
+							</tr>
+							<tr>
+								<td>Delivery</td>
+								<td>Free</td>
+								<td>Shipping</td>
+							</tr>
+						</table>
+					</div>
+					<div class="card-footer">
 					<?php  
 						if ($_SESSION['cartQuantity'] == 0 || !isset($_SESSION['cartQuantity'])) {
 							echo "<a href='../views/checkout.php'><button class='btn btn-outline-dark'>Proceed to Checkout</button></a>";
 						} else {
 							echo "<a href='../views/checkout.php'><button class='btn btn-outline-dark'>Proceed to Checkout</button></a>";
 						}
-					?>					
+					?>	
+					</div>				
 				</div>
 			</div>
 		</div>

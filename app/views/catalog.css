@@ -153,7 +153,7 @@
 @media only screen and (min-width: 600px) {
 	.cardContainer {
 		/*width: 25% !important;*/
-		min-width: 25% !important;
+		min-width: 25%;
 		max-width: 25%;
 		padding:5px;
 		flex:1;
@@ -167,8 +167,8 @@
 	.cardContainer {
 		flex:1;
 		/*width: 20% !important;*/
-		min-width: 20% !important;
-		/*max-width: 20% !important;*/
+		min-width: 20%;
+		max-width: 20%;
 		padding:5px;
 	}	
 	.cardContainer .card {

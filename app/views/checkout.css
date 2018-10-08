@@ -103,7 +103,7 @@ label.label-address {
 }
 
 .update-address-button {
-	width: 200px;
+	min-width: 250px;
 }
 
 /* MODAL */

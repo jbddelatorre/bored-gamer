@@ -60,7 +60,7 @@
 			font-family: 'Raleway', sans-serif;
 		}
 
-		h1,h2,h4 {
+		h1,h2,h4, label {
 			font-family: 'Cabin', sans-serif;
 			/*font-family: 'Titillium Web', sans-serif;*/
 		}

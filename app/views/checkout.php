@@ -14,12 +14,16 @@ session_start();
 <link rel='stylesheet' type='text/css' href='../assets/css/spinner.css'>
 </head>
 <body>
-	<?php include_once '../partials/navbar.php'; ?>
 	<?php 
 	if(!isset($_SESSION['user_data'])) {
 		header('Location: ./catalog.php');
 	}
+	if($_SESSION['cartQuantity'] < 1) {
+		header('Location: ./catalog.php');
+	}
 	?>
+	<?php include_once '../partials/navbar.php'; ?>
+	
 
 	<?php 
 		$id = $_SESSION['user_data']['id'];
@@ -43,52 +47,10 @@ session_start();
 		include_once("../partials/update_address_modal.php");
 	?>
 
-	<!-- <div id="updateModal" class="close-modal">
-		<div id="updateForm">
-			<header>
-				<h2>Update <span id="typeAddress"></span> Address</h2>
-				<div class="close-modal"><i class="fas fa-times close-modal"></i></div>
-			</header>
-			<main>
-				<div class="modal-input-div">
-					<label for="region">Address Number and Street</label>
-					<input class="modal-only" type="text" name="street" id="inputstreet">
-				</div>
-				<div class="modal-input-div">
-					<label for="region">Region</label>
-					<select class="modal-only" name="region" id="selectregions">
-					</select>
-				</div>
-				<div class="modal-input-div">
-					<label for="province">Province</label>
-					<select class="modal-only" name="province" id="selectprovinces">
-						<option value="null"></option>
-					</select>
-				</div>
-				<div class="modal-input-div">
-					<label for="municipality">Municipality</label>
-					<select class="modal-only" name="municipality" id="selectmunicipalities">
-						<option value="null"></option>
-					</select>
-				</div>
-				<div class="modal-input-div">
-					<label for="barangay">Barangay</label>
-					<select class="modal-only" name="barangay" id="selectbarangays">
-						<option value="null"></option>
-					</select>
-				</div>
-			</main>
-			<footer>
-				<button type="button" class="btn btn-secondary close-modal">Close</button>
-        		<button type="button" class="btn btn-primary" id="submitUpdateButton">Update Address</button>
-			</footer>	
-		</div>
-	</div> -->
 	<div id="checkoutModalLoad">a</div>
 
 	<div class="appViewBox">
-		<h1>Board Game Store - Checkout Page</h1>
-		<!-- <a href="./catalog.php">go to catalog</a> -->
+		<h1>Checkout Page</h1>
 
 		<div id="checkoutApp">
 			<form>
@@ -134,58 +96,34 @@ session_start();
 <script type="text/javascript" src="../assets/js/get_update_address.js"></script>
 
 <script type="text/javascript">
-
-// ANIMATION/DESIGN //
-
-	// const closeModal = document.querySelectorAll(".close-modal")
-
-	// closeModal.forEach(ele => {
-	// 	ele.addEventListener("click", (e) => {
-	// 		if(event.target == event.currentTarget) {	
-	// 			document.querySelector('#updateModal').style.opacity = "0";
-	// 			setTimeout(() => {document.querySelector('#updateModal').style.display = "none"}, 300)
-	// 			$('#inputstreet').val('');
-	// 			$('#inputstreet').empty();
-	// 			$('#selectregions').empty();
-	// 			$('#selectprovinces').empty();
-	// 			$('#selectmunicipalities').empty();
-	// 			$('#selectbarangays').empty();
-	// 			get_ph_info("regions", "01");
-	// 		}
-	// 	})
-	// })
 	
 	const updateButton = document.querySelectorAll('[id^="updateAddress"]');
 
 	updateButton.forEach(ele => {
 		ele.addEventListener("click", (event) => {
-			document.querySelector('#updateModal').style.display = "flex";
-			setTimeout(() => {document.querySelector('#updateModal').style.opacity = "1";}, 200)
+			// document.querySelector('#updateModal').style.display = "flex";
+			// setTimeout(() => {document.querySelector('#updateModal').style.opacity = "1";}, 200)
 
-			const typespan = document.querySelector('span#typeAddress');
-			const modalform = document.querySelector('#submitUpdateButton');
+			// const typespan = document.querySelector('span#typeAddress');
+			// const modalform = document.querySelector('#submitUpdateButton');
 
-			if (event.target.id == "updateAddressShipping") {
-				typespan.textContent = "Shipping"
-				modalform.setAttribute("submittal", 1);
-			}
-			else {
-				typespan.textContent = "Billing";
-				modalform.setAttribute("submittal", 2);
-			}
+			// if (event.target.id == "updateAddressShipping") {
+			// 	typespan.textContent = "Shipping"
+			// 	modalform.setAttribute("submittal", 1);
+			// }
+			// else {
+			// 	typespan.textContent = "Billing";
+			// 	modalform.setAttribute("submittal", 2);
+			// }
+			window.location.href = "./account.php";
 		})
 	})
-
-	// const submitUpdateButton = document.querySelector('#submitUpdateButton')
-
-	// submitUpdateButton.addEventListener("click", () => {
-	// 	document.querySelector('#updateModal').style.opacity = "0";
-	// 	setTimeout(() => {document.querySelector('#updateModal').style.display = "none"}, 300)
-	// })
 
 // FUNCTIONALITY //
 
 	const get_checkout = () => {
+		$('#orderItemsCheckout').empty();
+		$('#orderItemsCheckout').append(`<div class="loadermodal"><div class="loader"></div></div>`);
 		$.ajax({
 			url: '../controllers/checkout.php',
 			data:{},
@@ -431,8 +369,7 @@ session_start();
 	document.querySelector('#submitOrder').addEventListener("click", (event) => {
 		
 
-		$('checkoutModalLoad').append('<div class="loadermodal"><div class=".loader"></div></div>')
-
+		$('body').prepend(`<div class="loadermodal"><div class="loader"></div></div>`)
 		const radioButtons = document.querySelectorAll('[name="payment-method"]');
 		const checked = [...radioButtons].filter((button) => button.checked);
 		const totalPriceShown = document.querySelector('#totalPrice').textContent;
@@ -448,7 +385,7 @@ session_start();
 			data: {paymentMethod: paymentMethod},
 			type: 'POST',
 			success: (data) => {
-				$('checkoutModalLoad').empty();
+				$('body').find('div').first().remove();
 				window.location = './view_orders.php';
 			}
 		})

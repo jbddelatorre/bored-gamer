@@ -36,6 +36,24 @@
 	text-align: center;
 }
 
+#cartSummaryTable {
+	background-color: #ffffff;
+}
+
+#cartSummaryTable td {
+	text-align: center;
+	padding: 3px 5px;
+}
+#cartSummaryTable tr {
+	padding: 5px 10px;
+} 
+
+.cart-summary-card .card-footer, 
+.cart-summary-card .card-header {
+	display: flex;
+	justify-content: center;
+}
+
 table {
 	width: 100%;
 	border-radius: 10px; 

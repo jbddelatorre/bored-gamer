@@ -13,7 +13,15 @@
 
 #adminItemsApp .adminItemContainer .adminItemContainerLeft {
 	display: flex;
+	justify-content: center;
 	flex:1;
+}
+
+#adminItemsApp .adminItemContainer .adminItemContainerLeft div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
 #adminItemsApp .adminItemContainer .adminItemContainerRight {
@@ -39,7 +47,10 @@
 	border-bottom: 1px solid lightgrey;
 }
 
-
+.admin-update-button {
+	display: flex;
+	justify-content: center;
+}
 
 
 /*#adminItemsApp div.adminItemContainer:first-of-type {

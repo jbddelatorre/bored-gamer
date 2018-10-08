@@ -72,10 +72,10 @@
 				  </div>
 				</div>
 				<h2 id="forSaleHeader">Board Games</h2> -->
-				<div id="filterToolbar">
+				<!-- <div id="filterToolbar">
 						<button id="gridButton"><i class="fas fa-th"></i></button>
 						<button id="listButton"><i class="fas fa-list"></i></button>
-				</div>
+				</div> -->
 				<div id="navcenter">
 				    <input type="text" id="searchBoardGame" placeholder="Search for a game!">
 				    <span id="searchBoardGameIcon"><i class="fas fa-search"></i></a></span>
@@ -102,7 +102,7 @@
 												echo "<button onClick=event.stopPropagation();location.href='./login.php' class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button>";
 											};
 
-											echo "<button class='btn btn-outline-danger'> Wishlist <i class='far fa-heart'></i></button></div>";
+											echo "<button onClick=event.stopPropagation();addToWishlist(".$row['id'].")  class='btn btn-outline-danger'> Wishlist <i class='far fa-heart'></i></button></div>";
 									     echo "</div>
 									</div>
 								</div>";  
@@ -159,8 +159,7 @@
 			}
 		})
 
-		$('#itemsForSale').empty();
-		$('#itemsForSale').append(`<div class="loader"></div>`);
+		$('body').prepend(`<div class="loadermodal"><div class="loader"></div></div>`)
 
 		setTimeout(() => $.ajax({
 			url: '../controllers/filter_items.php',
@@ -174,6 +173,8 @@
 
 				$('#itemsForSale').empty();
 
+				$('body').find('div').first().remove();
+
 				if (dataParse.filter.length === 0) {
 					$('#itemsForSale').append(
 						`<p>Item not found</p>`
@@ -181,7 +182,7 @@
 				}
 			generate_cards(dataFiltered, login);
 			}
-		}), 200)
+		}), 150)
 	}
 
 
@@ -199,7 +200,7 @@
 										? `<div class='catalog-buttons-container'><button onClick=event.stopPropagation();addToCart(${dataFiltered[key]['id']}) class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button>`
 										: `<div class='catalog-buttons-container'><button onClick=event.stopPropagation();location.href='./login.php' class='btn btn-outline-dark'>Add To Cart <i class='fas fa-shopping-cart'></i></button>`	
 									}
-									<button class='btn btn-outline-danger'> Wishlist <i class='far fa-heart'></i></button></div>
+									<button onClick=event.stopPropagation();addToWishlist(${dataFiltered[key]['id']})  class='btn btn-outline-danger'> Wishlist <i class='far fa-heart'></i></button></div>
 								</div>
 							</div>
 					</div>`)
@@ -217,6 +218,19 @@
 				const cartQty = document.querySelector('#cartQuantity')
 				cartQty.textContent = data;
 				alert('Item Added!')
+			}
+		})
+	}
+
+	const addToWishlist = (id) => {
+		$.ajax({
+			url:'../controllers/add_wishlist.php',
+			data:{id:id},
+			type:'POST',
+			success:(data) => {
+				const wishlistQty = document.querySelector('#wishlistQuantity')
+				wishlistQty.textContent = data;
+				alert('Item Added To Wishlist!')
 			}
 		})
 	}
@@ -241,23 +255,27 @@
 
 	searchDom.addEventListener("keypress", (event) => {
 		if (event.keyCode == 13) {
-		  search_game();
+			if (searchDom.value == '') {
+				return
+			} else {
+				$('body').prepend(`<div class="loadermodal"><div class="loader"></div></div>`)
+		 		 search_game();
+			}
 		}
 	})
 	searchIconDom.addEventListener("click", () => {
-		search_game();
+		if (searchDom.value == '') {
+				return
+			} else {
+				$('body').prepend(`<div class="loadermodal"><div class="loader"></div></div>`)
+				search_game();
+			}
 	})
 
 	const search_game = () => {
 		const filtered = searchDom.value;
+			filter('none');
 
-		if (filtered == '') {
-			return;
-		}
-
-		$('#itemsForSale').empty();
-		$('#itemsForSale').append(`<div class="loader"></div>`);
-		filter('none');
 			setTimeout(() => $.ajax({
 				  url:'../controllers/filter_word.php',
 				  data:{filter: filtered},
@@ -269,6 +287,7 @@
 					const dataFiltered = dataParse.filter;
 					const login = dataParse.login;
 
+					$('body').find('div').first().remove();
 					$('#itemsForSale').empty();
 
 					if (dataParse.filter.length === 0) {

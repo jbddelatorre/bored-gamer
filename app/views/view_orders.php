@@ -16,6 +16,9 @@ session_start();
 
 	<div class="appViewBox">
 		<h1>View Orders</h1>
+		<div style="display: flex; justify-content: center; margin:10px 0;" >
+	 		<a href="./catalog.php"><button id="returnToShopping" class="btn btn-outline-success">Return to Shopping</button></a>
+	 	</div>
 		<div id="viewOrdersApp">
 			<div id="pendingOrders" class="card card-orders">
 				<div class="card-header">
@@ -37,7 +40,7 @@ session_start();
 
 
 							$result_order_item = mysqli_query($conn, $sql_order_item);
-
+							echo '<div class="single-order-container">';
 							echo '<h5>Reference Number: '.$ro['transaction_num'].'</h5>';
 							echo '<p>Date Ordered: '.$ro['order_timestamp'].'</p>';
 							echo '<table>';
@@ -65,16 +68,19 @@ session_start();
 								echo '</tr>';
 							}
 							echo '</table>';
-							echo '<h6> Net Amount: Php '. number_format($ro['total_price'], 2, '.', ',') .'</h6>';
+							echo '<h5> Net Amount: Php '. number_format($ro['total_price'], 2, '.', ',') .'</h5>';
+							echo '</div>';
 						}
-						echo '<br>';
+						
 					} else {
 						echo 'You have no current order.';
 					}
 
 					?>
+					
 				</div>
 			</div>
+
 			<div id="ordersHistory" class="card card-orders">
 				<div class="card-header">
 					Orders History
